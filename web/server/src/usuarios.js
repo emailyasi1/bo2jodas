@@ -11,6 +11,9 @@
 import { createHmac, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 
 const COOKIE = "bo2jodas_sesion";
+// Cuentas que pueden borrar partidas (clave en minusculas). Se pueden anadir
+// mas con la variable ADMINS="usuario1,usuario2".
+const ADMINS = new Set(["lalay", ...(process.env.ADMINS || "").split(",").map((x) => x.trim().toLowerCase()).filter(Boolean)]);
 const DIAS_SESION = 90;
 const USUARIO_RE = /^[a-zA-Z0-9_]{3,20}$/;
 
@@ -118,6 +121,10 @@ export class Usuarios {
     return t;
   }
 
+  esAdmin(clave) {
+    return Boolean(clave) && this.porUsuario.has(clave) && ADMINS.has(clave);
+  }
+
   // Para la subida: devuelve el nombre del dueno del token o null.
   duenoDelToken(token) {
     if (typeof token !== "string") return null;
@@ -128,7 +135,7 @@ export class Usuarios {
   publico(clave) {
     const u = this.porUsuario.get(clave);
     if (!u) return null;
-    return { usuario: u.nombre, token: u.token, creado: u.creado };
+    return { usuario: u.nombre, token: u.token, creado: u.creado, admin: ADMINS.has(clave) };
   }
 
   // ------------------------------------------------------------ sesion

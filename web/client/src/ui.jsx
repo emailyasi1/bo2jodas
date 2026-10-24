@@ -10,6 +10,11 @@ import { ARQUETIPOS, CLASES, carta, colorArquetipo, nombreArquetipo, nombreClase
 // ------------------------------------------------------------ datos con cache
 const cache = new Map();
 
+// Tras borrar o subir algo, que todas las paginas vuelvan a pedir los datos.
+export function vaciarCache() {
+  cache.clear();
+}
+
 export function useDatos(ruta) {
   const [estado, setEstado] = useState(() => (cache.has(ruta) ? { datos: cache.get(ruta) } : { cargando: true }));
   useEffect(() => {

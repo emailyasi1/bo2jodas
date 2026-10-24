@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Search } from "lucide-react";
 import { Cargando, Fallo, useDatos } from "../ui.jsx";
 import { Desplegable, Segmentos } from "../controles.jsx";
@@ -15,6 +16,7 @@ export default function Partidas() {
   const [clase, setClase] = useState("");
   const [arq, setArq] = useState("");
   const [buscar, setBuscar] = useState("");
+  const { state } = useLocation();
 
   const lista = useMemo(() => {
     if (!datos) return [];
@@ -39,6 +41,8 @@ export default function Partidas() {
           <p className="mut">Todas las partidas subidas, con la build de cada jugador. Pasa el ratón por una carta para ver qué es y cuánto llevaba.</p>
         </div>
       </div>
+
+      {state?.borrada && <p className="aviso" style={{ marginBottom: 16 }}>Partida borrada.</p>}
 
       <div className="filtros">
         <Segmentos valor={orden} onCambio={setOrden} opciones={ORDEN} ariaLabel="Ordenar" />

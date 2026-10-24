@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Copy, FileUp, Check, X } from "lucide-react";
 import { subirPartida } from "../api.js";
+import { vaciarCache } from "../ui.jsx";
 import { useSesion } from "../sesion.jsx";
 
 const CARPETA = "%localappdata%\\Plutonium\\storage\\t6\\mods\\zm_bo2jodas\\scriptdata\\bo2jodas_partidas";
@@ -28,6 +29,7 @@ export default function Subir() {
         setEstados((x) => [...x, { ok: false, t: `${f.name}: ${e.message}` }]);
       }
     }
+    vaciarCache();
     if (archivos.length === 1 && ultimo) navegar(`/partida/${ultimo}`);
   }
 

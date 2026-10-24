@@ -6,7 +6,7 @@
 //
 // Tipos que usa el servidor: "run" (partidas), "usuario" (cuentas), "config".
 // Todo se carga en memoria al arrancar y cada cambio se escribe al momento.
-import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, unlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const CARPETAS = { run: "runs", usuario: "usuarios", config: "config" };
@@ -43,6 +43,10 @@ function almacenArchivos(dataDir) {
       const ruta = join(carpeta(tipo), `${claveSegura(clave)}.json`);
       writeFileSync(ruta + ".tmp", JSON.stringify(datos, null, 1));
       renameSync(ruta + ".tmp", ruta);
+    },
+    async borrar(tipo, clave) {
+      const ruta = join(carpeta(tipo), `${claveSegura(clave)}.json`);
+      if (existsSync(ruta)) unlinkSync(ruta);
     },
   };
 }
@@ -86,6 +90,9 @@ async function almacenPostgres(url) {
          ON CONFLICT (tipo, clave) DO UPDATE SET datos = EXCLUDED.datos, actualizado = now()`,
         [tipo, claveSegura(clave), JSON.stringify(datos)]
       );
+    },
+    async borrar(tipo, clave) {
+      await pool.query("DELETE FROM bo2jodas_datos WHERE tipo = $1 AND clave = $2", [tipo, claveSegura(clave)]);
     },
   };
 }

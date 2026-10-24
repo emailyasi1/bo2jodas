@@ -87,6 +87,8 @@ Hay una partida de ejemplo en `ejemplos/`: `curl -X POST localhost:3000/api/runs
 | `POST /api/auth/contrasena` | `{actual, nueva}`. |
 | `POST /api/auth/logout` | Cierra la sesión. |
 | `GET /api/salud` | Health check: `{ok, partidas, cuentas}`. |
+| `DELETE /api/runs/:id` | Borra una partida (solo administradores: `lalay` y los de la variable `ADMINS`). Queda una línea en `borrado` con qué, quién y cuándo. |
+| `GET /api/jugadores/:nombre` | Perfil de un jugador: totales, cartas favoritas y sus partidas. |
 
 El formato del JSON lo escribe `mod/scripts/zm/bo2jodas_stats.gsc`; los nombres de las cartas para la web salen de `tools/generar_cartas_json.py` (hay que ejecutarlo cuando cambien las cartas del mod).
 

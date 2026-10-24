@@ -3,6 +3,7 @@
 //   POST /api/runs                sube el JSON de una partida (cabecera x-token con el token de tu cuenta)
 //   GET  /api/runs                lista de partidas (resumen), las mas recientes primero
 //   GET  /api/runs/:id            una partida entera
+//   DELETE /api/runs/:id          borra una partida (solo administradores)
 //   GET  /api/leaderboards        mejores rondas por jugador, clase y arquetipo, records y su historia
 //   GET  /api/stats               totales del grupo
 //   GET  /api/jugadores/:nombre   perfil de un jugador: totales, cartas favoritas y sus partidas
@@ -106,6 +107,25 @@ app.get("/api/runs/:id", (req, res) => {
   if (!p) return res.status(404).json({ error: "no existe" });
   res.json(p);
 });
+
+// Borrar una partida mal subida: desaparece de la lista, la clasificacion, los
+// records y los perfiles (todo se calcula a partir de las partidas). Queda una
+// linea en el almacen (tipo "borrado") con que se borro, quien y cuando.
+app.delete("/api/runs/:id", asinc(async (req, res) => {
+  const clave = usuarios.deCookie(req);
+  if (!usuarios.esAdmin(clave)) return res.status(403).json({ error: "solo un administrador puede borrar partidas" });
+  const p = partidas.get(req.params.id);
+  if (!p) return res.status(404).json({ error: "no existe" });
+  await almacen.borrar("run", p.id);
+  partidas.delete(p.id);
+  const quien = usuarios.publico(clave).usuario;
+  await almacen.guardar("borrado", `${p.id}-${Date.now()}`, {
+    id: p.id, ronda: p.ronda, fecha: p.fecha, subido_por: p.subido_por || null,
+    jugadores: p.jugadores.map((j) => j.nombre), borrado_por: quien, borrado: new Date().toISOString(),
+  });
+  console.log(`partida ${p.id} borrada por ${quien}`);
+  res.json({ ok: true });
+}));
 
 app.get("/api/leaderboards", (_req, res) => {
   res.json(leaderboards([...partidas.values()]));

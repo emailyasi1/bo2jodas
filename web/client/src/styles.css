@@ -573,3 +573,10 @@ details.plegable > summary::after { transition: transform 0.25s var(--suave); }
   .desp.abierto .desp-op, .desp.abierto .desp-grupo, [data-tip]:hover::after { animation: none; }
   .seg-ind, .desp-chev, .casilla-caja svg { transition: none; }
 }
+
+/* administracion */
+.admin-barra { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 12px; margin-top: 16px; padding: 10px 14px; border: 1px dashed color-mix(in srgb, var(--sangre) 45%, var(--line)); border-radius: var(--r2); }
+.boton.peligro { color: #ff8a7a; border-color: color-mix(in srgb, var(--sangre) 50%, transparent); }
+.boton.peligro:hover { background: color-mix(in srgb, var(--sangre) 14%, transparent); border-color: var(--sangre); color: #ffb3a8; }
+.boton.peligro-lleno { background: var(--sangre); border-color: var(--sangre); color: #fff; }
+.boton.peligro-lleno:hover { background: #e85645; border-color: #e85645; color: #fff; }

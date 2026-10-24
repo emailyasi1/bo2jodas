@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { CalendarDays, ChevronRight, Clock, Tag, Upload, Users } from "lucide-react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { CalendarDays, ChevronRight, Clock, Tag, Trash2, Upload, Users } from "lucide-react";
 import {
-  Cargando, Fallo, Ficha, FilaBarra, Ronda, Seccion, TagArquetipo, TagClase, TagMitica, grupo, useDatos, valorCarta,
+  Cargando, Fallo, Ficha, FilaBarra, Ronda, Seccion, TagArquetipo, TagClase, TagMitica, grupo, useDatos, valorCarta, vaciarCache,
 } from "../ui.jsx";
+import { borrarPartida } from "../api.js";
+import { useSesion } from "../sesion.jsx";
 import { ARQUETIPOS, RAREZAS, carta, colorArquetipo, duracion, fecha, fmt, nombreArma, nombreBebida, nombreCarta, nombreMapa } from "../nombres.js";
 
 const JEFES = { brutus: "Brutus", bruja: "Bruja", leroy: "Leroy" };
@@ -53,6 +55,8 @@ export default function Partida() {
         )}
       </header>
 
+      <BorrarPartida p={p} />
+
       {p.jugadores.length > 1 && (
         <div className="pestanas-j" role="tablist">
           {p.jugadores.map((x, i) => (
@@ -65,6 +69,51 @@ export default function Partida() {
       )}
       <Jugador j={j} solo={p.jugadores.length === 1} />
     </>
+  );
+}
+
+// Solo para administradores: borrar una partida mal subida. Dos pasos (pide
+// confirmacion en la misma linea) y luego vuelve a la lista de partidas.
+function BorrarPartida({ p }) {
+  const { yo } = useSesion();
+  const navegar = useNavigate();
+  const [paso, setPaso] = useState(0);
+  const [error, setError] = useState("");
+  if (!yo || !yo.admin) return null;
+
+  async function borrar() {
+    setPaso(2);
+    setError("");
+    try {
+      await borrarPartida(p.id);
+      vaciarCache();
+      navegar("/partidas", { replace: true, state: { borrada: p.id } });
+    } catch (e) {
+      setError(e.message);
+      setPaso(1);
+    }
+  }
+
+  return (
+    <div className="admin-barra">
+      <span className="mayus ten">Administración</span>
+      {paso === 0 ? (
+        <button type="button" className="boton sec peq peligro" onClick={() => setPaso(1)}>
+          <Trash2 size={14} /> Borrar partida
+        </button>
+      ) : (
+        <>
+          <span className="peq">
+            ¿Borrar esta partida de ronda {p.ronda} ({p.jugadores.map((x) => x.nombre).join(", ")})? Desaparece de la lista, la clasificación, los récords y los perfiles. No se puede deshacer.
+          </span>
+          <button type="button" className="boton peq peligro-lleno" disabled={paso === 2} onClick={borrar}>
+            {paso === 2 ? "Borrando…" : "Sí, borrar"}
+          </button>
+          <button type="button" className="boton texto peq" disabled={paso === 2} onClick={() => setPaso(0)}>Cancelar</button>
+        </>
+      )}
+      {error && <span className="error">{error}</span>}
+    </div>
   );
 }
 

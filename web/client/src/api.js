@@ -16,6 +16,13 @@ async function post(ruta, cuerpo, cabeceras = {}) {
   return datos;
 }
 
+export async function borrarPartida(id) {
+  const r = await fetch(`/api/runs/${encodeURIComponent(id)}`, { method: "DELETE", credentials: "same-origin" });
+  const datos = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(datos.error || `${r.status}`);
+  return datos;
+}
+
 export function subirPartida(json, token) {
   return post("/runs", json, token ? { "x-token": token } : {});
 }
