@@ -8,6 +8,16 @@ export { DATOS };
 const CFG = DATOS.cfg;
 const JUEGO = DATOS.juego;
 
+import { acentuar } from "../acentos.js";
+for (const c of DATOS.cartas) {
+  c.nombre = acentuar(c.nombre);
+  c.desc = acentuar(c.desc);
+}
+for (const m of DATOS.miticas) {
+  m.nombre = acentuar(m.nombre);
+  m.desc = acentuar(m.desc);
+}
+for (const c of DATOS.clases) c.desc = acentuar(c.desc);
 export const CARTAS = Object.fromEntries(DATOS.cartas.map((c) => [c.id, c]));
 export const RAREZAS = ["Común", "Poco común", "Rara", "Épica", "Legendaria"];
 

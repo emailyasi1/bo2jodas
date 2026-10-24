@@ -58,73 +58,64 @@ export default function Perfil() {
   }
 
   return (
-    <section className="perfil">
-      <div className="detalle-cabecera">
-        <h1>{yo.usuario}</h1>
-        <span className="nivel">
-          cuenta creada el {new Date(yo.creado).toLocaleDateString("es-ES")} · {yo.subidas} partida{yo.subidas === 1 ? "" : "s"} subida{yo.subidas === 1 ? "" : "s"}
-        </span>
-        <button type="button" className="boton secundario" onClick={async () => { await salir(); navegar("/"); }}>
-          Salir
-        </button>
-      </div>
-
-      {state?.nuevo && <p className="estado">Cuenta creada. Ya puedes subir partidas.</p>}
-
-      <div className="tarjeta">
-        <h2 style={{ marginTop: 0 }}>Subir una partida</h2>
-        <p>
-          Ve a <Link className="boton" to="/subir">Subir JSON</Link> y arrastra el archivo que deja el mod al acabar la partida (en el PC del anfitrión). Ahí
-          está la ruta de la carpeta. Cada uno sube las runs que quiera; las repetidas no se duplican.
-        </p>
-      </div>
-
-      <details className="tarjeta">
-        <summary>Opcional: subida automática con script</summary>
-        <p className="nota">
-          Si eres anfitrión a menudo, el script <code>subir_partidas.bat</code> de la carpeta <code>web/subidor/</code> del{" "}
-          <a href="https://github.com/emailyasi0-a11y/bo2jodas/tree/main/web/subidor" target="_blank" rel="noreferrer">
-            repositorio
-          </a>{" "}
-          vigila esa carpeta y sube cada partida nueva solo. Necesita este token de tu cuenta en <code>subir_partidas.cfg</code>.
-        </p>
-        <div className="token-fila">
-          <code className="token">{verToken ? yo.token : "•".repeat(32)}</code>
-          <button type="button" className="boton secundario" onClick={() => setVerToken((v) => !v)}>
-            {verToken ? "Ocultar" : "Mostrar"}
-          </button>
-          <button type="button" className="boton" onClick={copiar}>
-            Copiar
-          </button>
-          <a className="boton secundario" href={urlCfg} download="subir_partidas.cfg">
-            Descargar subir_partidas.cfg relleno
-          </a>
+    <>
+      <div className="pagina-cab">
+        <div>
+          <span className="mayus ten">Tu cuenta</span>
+          <h1>{yo.usuario}</h1>
+          <p className="mut">
+            Desde el {new Date(yo.creado).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })} · {yo.subidas} partida{yo.subidas === 1 ? "" : "s"} subida{yo.subidas === 1 ? "" : "s"}
+          </p>
         </div>
-        <p className="nota">
-          Es personal: lo que se suba con él aparece como subido por <b>{yo.usuario}</b>. Si se te escapa, genera otro y el viejo deja de valer.
-        </p>
-        <button type="button" className="boton secundario" onClick={regenerar}>
-          Generar un token nuevo
-        </button>
-      </details>
+        <div className="fila-acciones">
+          <Link className="boton" to="/subir">Subir una partida</Link>
+          <Link className="boton sec" to={`/jugador/${encodeURIComponent(yo.usuario)}`}>Mi ficha de jugador</Link>
+          <button type="button" className="boton texto" onClick={async () => { await salir(); navegar("/"); }}>Salir</button>
+        </div>
+      </div>
 
-      <details className="tarjeta">
-        <summary>Cambiar la contraseña</summary>
-        <form className="formulario" onSubmit={cambiar}>
-          <label className="campo">
-            Contraseña actual
-            <input type="password" value={actual} onChange={(e) => setActual(e.target.value)} autoComplete="current-password" required />
-          </label>
-          <label className="campo">
-            Nueva contraseña
-            <input type="password" value={nueva} onChange={(e) => setNueva(e.target.value)} autoComplete="new-password" minLength={6} required />
-          </label>
-          <button type="submit" className="boton">
-            Cambiar
-          </button>
-        </form>
-      </details>
-      {aviso && <p className="estado">{aviso}</p>}
-    </section>
+      {state?.nuevo && <p className="aviso" style={{ marginBottom: 18 }}>Cuenta creada. Ya puedes subir partidas.</p>}
+      {aviso && <p className="aviso" style={{ marginBottom: 18 }}>{aviso}</p>}
+
+      <div style={{ display: "grid", gap: 10, maxWidth: 820 }}>
+        <details className="plegable">
+          <summary>Subida automática con script (opcional)</summary>
+          <div>
+            <p className="mut">
+              Si eres anfitrión a menudo, el script <code>subir_partidas.bat</code> de la carpeta{" "}
+              <a href="https://github.com/emailyasi0-a11y/bo2jodas/tree/main/web/subidor" target="_blank" rel="noreferrer" style={{ color: "var(--lava)" }}>web/subidor</a>{" "}
+              vigila la carpeta de partidas y sube cada una al acabar. Usa este token de tu cuenta:
+            </p>
+            <div className="token">{verToken ? yo.token : "•".repeat(32)}</div>
+            <div className="fila-acciones">
+              <button type="button" className="boton sec peq" onClick={() => setVerToken((v) => !v)}>{verToken ? "Ocultar" : "Mostrar"}</button>
+              <button type="button" className="boton sec peq" onClick={copiar}>Copiar</button>
+              <a className="boton peq" href={urlCfg} download="subir_partidas.cfg">Descargar subir_partidas.cfg</a>
+            </div>
+            <p className="ten peq">
+              Es personal: lo que se suba con él aparece como subido por {yo.usuario}. Si se te escapa, genera otro y el viejo deja de valer.
+            </p>
+            <div><button type="button" className="boton texto peq" style={{ padding: 0 }} onClick={regenerar}>Generar un token nuevo</button></div>
+          </div>
+        </details>
+
+        <details className="plegable">
+          <summary>Cambiar la contraseña</summary>
+          <div>
+            <form className="formulario" onSubmit={cambiar} style={{ maxWidth: 380 }}>
+              <label className="campo">
+                Contraseña actual
+                <input type="password" value={actual} onChange={(e) => setActual(e.target.value)} autoComplete="current-password" required />
+              </label>
+              <label className="campo">
+                Nueva contraseña
+                <input type="password" value={nueva} onChange={(e) => setNueva(e.target.value)} autoComplete="new-password" minLength={6} required />
+              </label>
+              <div><button type="submit" className="boton">Cambiar</button></div>
+            </form>
+          </div>
+        </details>
+      </div>
+    </>
   );
 }

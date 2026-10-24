@@ -28,9 +28,59 @@ export function resumen(p) {
       mitica: j.mitica,
       nivel: j.nivel,
       bajas: j.bajas,
+      cabezas: j.cabezas,
       caidas: j.caidas,
       danio_total: j.danio_total,
+      puntos_total: j.puntos_total,
+      // Lo justo para pintar la build: id, valor acumulado y veces cogida.
+      cartas: (j.cartas || []).map((c) => ({ id: c.id, valor: c.valor, veces: c.veces })),
     })),
+    jefes_muertos: p.jefes_muertos,
+  };
+}
+
+// Perfil de un jugador: sus partidas (resumen) y las cartas que mas usa.
+export function jugador(partidas, nombre) {
+  const suyas = partidas.filter((p) => p.jugadores.some((j) => j.nombre === nombre));
+  if (!suyas.length) return null;
+  const cartas = {};
+  const clases = {};
+  const arquetipos = {};
+  const miticas = {};
+  const t = { partidas: suyas.length, bajas: 0, cabezas: 0, caidas: 0, reanimaciones: 0, danio_total: 0, segundos: 0, mejorRonda: 0, mejorPartida: null, nivelMax: 0, comboMax: 0 };
+  for (const p of suyas) {
+    const j = p.jugadores.find((x) => x.nombre === nombre);
+    t.bajas += j.bajas || 0;
+    t.cabezas += j.cabezas || 0;
+    t.caidas += j.caidas || 0;
+    t.reanimaciones += j.reanimaciones || 0;
+    t.danio_total += j.danio_total || 0;
+    t.segundos += p.duracion_s || 0;
+    t.nivelMax = Math.max(t.nivelMax, j.nivel || 0);
+    t.comboMax = Math.max(t.comboMax, j.max_combo || 0);
+    if (p.ronda > t.mejorRonda) {
+      t.mejorRonda = p.ronda;
+      t.mejorPartida = p.id;
+    }
+    if (j.clase) clases[j.clase] = (clases[j.clase] || 0) + 1;
+    if (j.arquetipo) arquetipos[j.arquetipo] = (arquetipos[j.arquetipo] || 0) + 1;
+    if (j.mitica) miticas[j.mitica] = (miticas[j.mitica] || 0) + 1;
+    for (const c of j.cartas || []) {
+      const x = cartas[c.id] || { id: c.id, partidas: 0, veces: 0, danio: 0 };
+      x.partidas++;
+      x.veces += c.veces || 0;
+      x.danio += (j.danio_cartas && j.danio_cartas[c.id]) || 0;
+      cartas[c.id] = x;
+    }
+  }
+  return {
+    nombre,
+    totales: t,
+    clases,
+    arquetipos,
+    miticas,
+    cartas: Object.values(cartas).sort((a, b) => b.partidas - a.partidas || b.veces - a.veces),
+    partidas: suyas.map(resumen).sort((a, b) => (b.fecha > a.fecha ? 1 : -1)),
   };
 }
 

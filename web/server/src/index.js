@@ -5,6 +5,7 @@
 //   GET  /api/runs/:id            una partida entera
 //   GET  /api/leaderboards        mejores rondas por jugador, clase y arquetipo, records y su historia
 //   GET  /api/stats               totales del grupo
+//   GET  /api/jugadores/:nombre   perfil de un jugador: totales, cartas favoritas y sus partidas
 //   POST /api/auth/registro       { usuario, contrasena } -> crea la cuenta y entra
 //   POST /api/auth/login          { usuario, contrasena } -> entra (cookie de sesion)
 //   POST /api/auth/logout
@@ -23,7 +24,7 @@ import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { resumen, leaderboards, totales, validar } from "./partidas.js";
+import { resumen, leaderboards, totales, validar, jugador } from "./partidas.js";
 import { cargarTokens, comprobarToken } from "./tokens.js";
 import { Usuarios } from "./usuarios.js";
 import { crearAlmacen } from "./almacen.js";
@@ -112,6 +113,12 @@ app.get("/api/leaderboards", (_req, res) => {
 
 app.get("/api/stats", (_req, res) => {
   res.json(totales([...partidas.values()]));
+});
+
+app.get("/api/jugadores/:nombre", (req, res) => {
+  const j = jugador([...partidas.values()], req.params.nombre);
+  if (!j) return res.status(404).json({ error: "no existe" });
+  res.json(j);
 });
 
 // ---------------------------------------------------------------- cuentas

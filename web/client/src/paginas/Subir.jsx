@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Copy, FileUp, Check, X } from "lucide-react";
 import { subirPartida } from "../api.js";
 import { useSesion } from "../sesion.jsx";
 
@@ -10,12 +11,9 @@ const CARPETA = "%localappdata%\\Plutonium\\storage\\t6\\mods\\zm_bo2jodas\\scri
 export default function Subir() {
   const [estados, setEstados] = useState([]);
   const [copiado, setCopiado] = useState(false);
+  const [sobre, setSobre] = useState(false);
   const { yo } = useSesion();
   const navegar = useNavigate();
-
-  function anotar(texto) {
-    setEstados((e) => [...e, texto]);
-  }
 
   async function procesar(archivos) {
     setEstados([]);
@@ -24,10 +22,10 @@ export default function Subir() {
       try {
         const json = JSON.parse(await f.text());
         const r = await subirPartida(json);
-        anotar(r.repetida ? `${f.name}: ya estaba subida.` : `${f.name}: subida.`);
+        setEstados((e) => [...e, { ok: true, t: r.repetida ? `${f.name}: ya estaba subida` : `${f.name}: subida` }]);
         ultimo = r.id;
       } catch (e) {
-        anotar(`${f.name}: ${e.message}`);
+        setEstados((x) => [...x, { ok: false, t: `${f.name}: ${e.message}` }]);
       }
     }
     if (archivos.length === 1 && ultimo) navegar(`/partida/${ultimo}`);
@@ -38,65 +36,74 @@ export default function Subir() {
       await navigator.clipboard.writeText(CARPETA);
       setCopiado(true);
       setTimeout(() => setCopiado(false), 2000);
-    } catch {}
+    } catch {
+      /* sin portapapeles: la ruta se puede seleccionar a mano */
+    }
   }
 
-  if (yo === undefined) return <p className="cargando">Cargando…</p>;
-
   return (
-    <section className="subir">
-      <h1>Subir una partida</h1>
-      <ol className="pasos">
-        <li>
-          Al acabar cada partida, el mod deja un JSON en el PC del <b>anfitrión</b> (quien creó la sala), en esta carpeta. Pégala en la barra de direcciones del
-          Explorador de Windows:
-          <div className="token-fila">
-            <code className="token ruta">{CARPETA}</code>
-            <button type="button" className="boton secundario" onClick={copiarRuta}>
-              {copiado ? "Copiada" : "Copiar ruta"}
-            </button>
-          </div>
-        </li>
-        <li>Arrastra aquí el archivo de la partida que quieras subir (o varios). Si ya estaba subida, no se duplica.</li>
-      </ol>
-
-      {yo ? (
-        <>
-          <p className="nota">
-            Subes como <b>{yo.usuario}</b>.
-          </p>
-          <div
-            className="zona-soltar"
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => {
-              e.preventDefault();
-              procesar([...e.dataTransfer.files]);
-            }}
-          >
-            Arrastra aquí los .json
-            <input type="file" accept=".json" multiple onChange={(e) => procesar([...e.target.files])} />
-          </div>
-        </>
-      ) : (
-        <div className="tarjeta aviso-entrar">
-          Para subir hace falta una cuenta (solo usuario y contraseña).{" "}
-          <Link className="boton" to="/entrar">
-            Entrar
-          </Link>{" "}
-          <Link className="boton secundario" to="/registro">
-            Registrarse
-          </Link>
+    <>
+      <div className="pagina-cab">
+        <div>
+          <span className="mayus ten">Partidas</span>
+          <h1>Subir una partida</h1>
+          <p className="mut">El mod guarda un JSON al acabar cada partida en el PC de quien hizo de anfitrión. Cada uno sube las que quiera; si una ya estaba, no se duplica.</p>
         </div>
-      )}
-      {estados.length > 0 && (
-        <ul className="estados">
-          {estados.map((t, i) => (
-            <li key={i} className="estado">
-              {t}
+      </div>
+
+      <div className="rejilla">
+        <div>
+          {yo === undefined ? null : yo ? (
+            <>
+              <label
+                className={sobre ? "zona-soltar sobre" : "zona-soltar"}
+                onDragOver={(e) => { e.preventDefault(); setSobre(true); }}
+                onDragLeave={() => setSobre(false)}
+                onDrop={(e) => { e.preventDefault(); setSobre(false); procesar([...e.dataTransfer.files]); }}
+              >
+                <FileUp size={30} strokeWidth={1.6} />
+                <span><b style={{ color: "var(--tx)" }}>Arrastra aquí los .json</b> o pulsa para elegirlos</span>
+                <span className="ten peq">Subes como {yo.usuario}</span>
+                <input type="file" accept=".json,application/json" multiple hidden onChange={(e) => procesar([...e.target.files])} />
+              </label>
+              {estados.length > 0 && (
+                <ul style={{ listStyle: "none", padding: 0, margin: "12px 0 0", display: "grid", gap: 6 }}>
+                  {estados.map((s, i) => (
+                    <li key={i} className={s.ok ? "estado-ok" : "estado-mal"} style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                      {s.ok ? <Check size={15} /> : <X size={15} />} {s.t}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          ) : (
+            <div className="panel panel-cuerpo" style={{ display: "grid", gap: 12 }}>
+              <h3>Hace falta una cuenta</h3>
+              <p className="mut">Solo usuario y contraseña. Así cada partida queda con el nombre de quien la subió.</p>
+              <div className="fila-acciones">
+                <Link className="boton" to="/registro">Crear cuenta</Link>
+                <Link className="boton sec" to="/entrar">Ya tengo cuenta</Link>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <aside className="panel panel-cuerpo" style={{ display: "grid", gap: 14 }}>
+          <h3>Dónde está el archivo</h3>
+          <ol className="pasos">
+            <li>Al acabar la partida, el juego enseña “Partida guardada” con el nombre del archivo.</li>
+            <li>
+              En el PC del anfitrión, pega esta ruta en la barra del Explorador de Windows:
+              <div className="token" style={{ fontSize: 13, marginTop: 8 }}>{CARPETA}</div>
+              <button type="button" className="boton sec peq" style={{ marginTop: 8 }} onClick={copiarRuta}>
+                {copiado ? <Check size={14} /> : <Copy size={14} />} {copiado ? "Copiada" : "Copiar ruta"}
+              </button>
             </li>
-          ))}
-        </ul>
-      )}
-    </section>
+            <li>Arrastra el archivo que empieza por <code>zm_transit_</code> al recuadro.</li>
+          </ol>
+          <p className="ten peq">¿Eres anfitrión a menudo? En tu <Link to="/perfil" style={{ color: "var(--lava)" }}>perfil</Link> tienes un script que las sube solas.</p>
+        </aside>
+      </div>
+    </>
   );
 }

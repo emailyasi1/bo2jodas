@@ -42,8 +42,8 @@ export default function Entrar({ registro = false }) {
           Registrarse
         </button>
       </div>
-      <form className="tarjeta formulario" onSubmit={enviar}>
-        <h1>{esRegistro ? "Crear cuenta" : "Entrar"}</h1>
+      <form className="panel panel-cuerpo formulario" onSubmit={enviar}>
+        <h1 style={{ fontSize: 30 }}>{esRegistro ? "Crear cuenta" : "Entrar"}</h1>
         <label className="campo">
           Usuario
           <input
@@ -77,7 +77,7 @@ export default function Entrar({ registro = false }) {
         <button type="submit" className="boton" disabled={enviando}>
           {enviando ? "…" : esRegistro ? "Crear cuenta" : "Entrar"}
         </button>
-        <p className="nota">
+        <p className="ten peq">
           {esRegistro
             ? "Solo hace falta usuario y contraseña. Con la cuenta creada ya puedes subir partidas."
             : "¿Sin cuenta? Pulsa Registrarse arriba."}

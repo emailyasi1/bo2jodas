@@ -1,5 +1,7 @@
 // Nombres, colores y textos a partir de los ids que manda el mod.
 import cartasJson from "./cartas.json";
+import calc from "./calculadora.json";
+import { acentuar } from "./acentos.js";
 
 export const ARQUETIPOS = {
   piromano: { nombre: "Pirómano", color: "#ff7a1f" },
@@ -54,7 +56,7 @@ const ESPECIALES = {
   none: { nombre: "Sin arma", arquetipo: "" },
 };
 
-const CARTAS = Object.fromEntries(cartasJson.map((c) => [c.id, c]));
+const CARTAS = Object.fromEntries(cartasJson.map((c) => [c.id, { ...c, nombre: acentuar(c.nombre) }]));
 
 export function carta(id) {
   if (CARTAS[id]) return CARTAS[id];
@@ -121,11 +123,25 @@ export const ARMAS = {
   blundergat_zm: "Blundergat",
   blundergat_upgraded_zm: "Blundergat mejorada",
   knife_zm: "Cuchillo",
+  bowie_knife_zm: "Bowie",
+  tazer_knuckles_zm: "Galvanudillos",
+  frag_grenade_zm: "Granada",
+  sticky_grenade_zm: "Semtex",
+  claymore_zm: "Claymore",
+  cymbal_monkey_zm: "Mono",
+  emp_grenade_zm: "EMP",
   none: "Sin arma / efecto",
 };
 
+// Nombres reales de las armas (displayName del juego), desde calculadora.json.
+const ARMAS_JUEGO = Object.fromEntries(
+  calc.armas.flatMap((g) => g.armas.flatMap((a) => [[a.id, a.nombre], ...(a.mejorada ? [[a.mejorada.id, a.mejorada.nombre]] : [])]))
+);
+
 export function nombreArma(id) {
   if (ARMAS[id]) return ARMAS[id];
+  if (id.startsWith("zombie_perk_bottle")) return "Botella de bebida";
+  if (ARMAS_JUEGO[id]) return ARMAS_JUEGO[id];
   let s = id.replace(/_zm$/, "");
   const mejorada = s.endsWith("_upgraded");
   s = s.replace(/_upgraded$/, "").replace(/_/g, " ");
@@ -150,7 +166,7 @@ export function fecha(iso) {
 }
 
 export const MAPAS = {
-  zm_transit: "Pueblo (Green Run)",
+  zm_transit: "Town",
   zm_nuked: "Nuketown",
   zm_highrise: "Die Rise",
   zm_buried: "Buried",
@@ -160,6 +176,6 @@ export const MAPAS = {
 
 export function nombreMapa(id, sitio) {
   const base = MAPAS[id] || id;
-  if (id === "zm_transit" && sitio && sitio !== "town") return `Green Run (${sitio})`;
+  if (id === "zm_transit" && sitio && sitio !== "town") return `TranZit (${sitio})`;
   return base;
 }
