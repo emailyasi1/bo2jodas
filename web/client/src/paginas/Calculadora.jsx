@@ -6,6 +6,7 @@ import {
 } from "../calc/motor.js";
 import { ARQUETIPOS, RAREZAS as COLOR_RAREZA, fmt } from "../nombres.js";
 import { Ficha, Seccion, colorRonda } from "../ui.jsx";
+import { Casilla, Desplegable } from "../controles.jsx";
 
 const CFG = DATOS.cfg;
 const ZONAS = [["cabeza", "Cabeza"], ["cuello", "Cuello"], ["pecho", "Pecho"], ["tripa", "Tripa"], ["brazo", "Brazo"], ["pierna", "Pierna"]];
@@ -37,12 +38,13 @@ function valorTxt(c, v) {
 const pct = (a, b) => (b > 0 ? `${((100 * a) / b).toFixed(a / b >= 0.1 ? 0 : 1)} %` : "");
 const n = (x) => (Number.isFinite(x) ? fmt(x) : "—");
 
-function Campo({ etiqueta, children, ayuda }) {
+function Campo({ etiqueta, children, ayuda, div }) {
+  const Etiqueta = div ? "div" : "label";
   return (
-    <label className="calc-campo" title={ayuda}>
+    <Etiqueta className="calc-campo" title={ayuda}>
       <span>{etiqueta}</span>
       {children}
-    </label>
+    </Etiqueta>
   );
 }
 
@@ -51,11 +53,7 @@ function Numero({ valor, set, min = 0, max = 999999, paso = 1 }) {
 }
 
 function Check({ etiqueta, valor, set, ayuda }) {
-  return (
-    <label className="calc-check" title={ayuda}>
-      <input type="checkbox" checked={valor} onChange={(e) => set(e.target.checked)} /> {etiqueta}
-    </label>
-  );
+  return <Casilla etiqueta={etiqueta} valor={valor} onCambio={set} ayuda={ayuda} />;
 }
 
 // Selector grande de ronda con botones -/+.
@@ -182,17 +180,13 @@ export default function Calculadora() {
           <div className="calc-bloque">
             <h3>Clase y mítica</h3>
             <div className="calc-fila">
-              <Campo etiqueta="Clase">
-                <select value={clase} onChange={(e) => setClase(e.target.value)}>
-                  <option value="">Ninguna</option>
-                  {CLASES.map((c) => <option key={c.id} value={c.id}>{c.nombre}: {c.desc}</option>)}
-                </select>
+              <Campo etiqueta="Clase" div>
+                <Desplegable valor={clase} onCambio={setClase} ariaLabel="Clase"
+                  opciones={[{ v: "", t: "Ninguna" }, ...CLASES.map((c) => ({ v: c.id, t: `${c.nombre}: ${c.desc}` }))]} />
               </Campo>
-              <Campo etiqueta="Mítica">
-                <select value={mitica} onChange={(e) => setMitica(e.target.value)}>
-                  <option value="">Ninguna</option>
-                  {DATOS.miticas.map((m) => <option key={m.id} value={m.id}>{m.nombre}: {m.desc}</option>)}
-                </select>
+              <Campo etiqueta="Mítica" div>
+                <Desplegable valor={mitica} onCambio={setMitica} ariaLabel="Mítica"
+                  opciones={[{ v: "", t: "Ninguna" }, ...DATOS.miticas.map((m) => ({ v: m.id, t: `${m.nombre}: ${m.desc}` }))]} />
               </Campo>
             </div>
           </div>
@@ -200,25 +194,19 @@ export default function Calculadora() {
           <div className="calc-bloque">
             <h3>Arma</h3>
             <div className="calc-fila">
-              <Campo etiqueta="Arma">
-                <select value={armaId} onChange={(e) => setArmaId(e.target.value)}>
-                  {DATOS.armas.map((g) => (
-                    <optgroup key={g.nombre} label={g.nombre}>
-                      {g.armas.map((a) => <option key={a.id} value={a.id}>{a.nombre}</option>)}
-                    </optgroup>
-                  ))}
-                </select>
+              <Campo etiqueta="Arma" div>
+                <Desplegable valor={armaId} onCambio={setArmaId} ariaLabel="Arma"
+                  opciones={DATOS.armas.flatMap((g) => g.armas.map((a) => ({ v: a.id, t: a.nombre, g: g.nombre })))} />
               </Campo>
               {esBaston && arma.id !== "staff_fire_zm" && (
-                <Campo etiqueta="Disparo">
-                  <select value={carga} onChange={(e) => setCarga(e.target.value)}>
-                    {["staff_fire_upgraded_zm", "staff_fire_upgraded2_zm", "staff_fire_upgraded3_zm"].map((id) => <option key={id} value={id}>{BASTON[id].nombre}</option>)}
-                  </select>
+                <Campo etiqueta="Disparo" div>
+                  <Desplegable valor={carga} onCambio={setCarga} ariaLabel="Disparo del bastón"
+                    opciones={["staff_fire_upgraded_zm", "staff_fire_upgraded2_zm", "staff_fire_upgraded3_zm"].map((id) => ({ v: id, t: BASTON[id].nombre }))} />
                 </Campo>
               )}
               {(arma.tipo === "bullet" || arma.tipo === "projectile") && (
-                <Campo etiqueta="Zona del cuerpo">
-                  <select value={zona} onChange={(e) => setZona(e.target.value)}>{ZONAS.map(([id, t]) => <option key={id} value={id}>{t} (×{arma.zonas[id]})</option>)}</select>
+                <Campo etiqueta="Zona del cuerpo" div>
+                  <Desplegable valor={zona} onCambio={setZona} ariaLabel="Zona del cuerpo" opciones={ZONAS.map(([id, t]) => ({ v: id, t: `${t} (×${arma.zonas[id]})` }))} />
                 </Campo>
               )}
               {arma.tipo === "bullet" && (
@@ -226,10 +214,9 @@ export default function Calculadora() {
                   <Numero valor={distancia} set={setDistancia} min={0} max={10000} paso={50} />
                 </Campo>
               )}
-              <Campo etiqueta="Golpe crítico" ayuda="×2.5 con la probabilidad de la carta">
-                <select value={critico} onChange={(e) => setCritico(e.target.value)}>
-                  <option value="nunca">No sale</option><option value="media">Media</option><option value="siempre">Sale siempre</option>
-                </select>
+              <Campo etiqueta="Golpe crítico" ayuda="×2.5 con la probabilidad de la carta" div>
+                <Desplegable valor={critico} onCambio={setCritico} ariaLabel="Golpe crítico"
+                  opciones={[{ v: "nunca", t: "No sale" }, { v: "media", t: "Media" }, { v: "siempre", t: "Sale siempre" }]} />
               </Campo>
             </div>
             {base.mejorada && <Check etiqueta={`Pack-a-Punch: ${base.mejorada.nombre}`} valor={pap} set={setPap} />}
@@ -282,16 +269,9 @@ export default function Calculadora() {
               </ul>
             )}
             {cartas.length < huecos && (
-              <select className="select calc-anadir" value="" onChange={(e) => anadir(e.target.value)}>
-                <option value="">Añadir carta…</option>
-                {GRUPOS_CARTAS.map((g) => (
-                  <optgroup key={g.id || "gen"} label={g.nombre}>
-                    {g.cartas.filter((c) => !cartas.some((x) => x.id === c.id)).map((c) => (
-                      <option key={c.id} value={c.id}>{c.nombre}{DE_DANIO.has(c.id) ? "" : " (no afecta al daño)"}</option>
-                    ))}
-                  </optgroup>
-                ))}
-              </select>
+              <Desplegable valor="" onCambio={anadir} ariaLabel="Añadir carta" className="calc-anadir" fijo="Añadir carta…"
+                opciones={GRUPOS_CARTAS.flatMap((g) => g.cartas.filter((c) => !cartas.some((x) => x.id === c.id))
+                  .map((c) => ({ v: c.id, t: `${c.nombre}${DE_DANIO.has(c.id) ? "" : " (no afecta al daño)"}`, g: g.nombre })))} />
             )}
           </div>
         </div>

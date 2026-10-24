@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
 import { Cargando, Fallo, TagArquetipo, TagClase, colorRonda, useDatos } from "../ui.jsx";
 import { fmt } from "../nombres.js";
+import { Segmentos } from "../controles.jsx";
 
 const favorito = (obj) => Object.entries(obj || {}).sort((a, b) => b[1] - a[1])[0]?.[0] || "";
 
@@ -26,11 +27,7 @@ export default function Jugadores() {
         </div>
       </div>
       <div className="filtros">
-        <div className="segmentos" role="group" aria-label="Ordenar">
-          {[["mejorRonda", "Mejor ronda"], ["partidas", "Partidas"], ["bajas", "Bajas"], ["danio_total", "Daño"]].map(([v, t]) => (
-            <button key={v} type="button" aria-pressed={orden === v} onClick={() => setOrden(v)}>{t}</button>
-          ))}
-        </div>
+        <Segmentos valor={orden} onCambio={setOrden} ariaLabel="Ordenar" opciones={[["mejorRonda", "Mejor ronda"], ["partidas", "Partidas"], ["bajas", "Bajas"], ["danio_total", "Daño"]]} />
         <label className="buscador">
           <Search size={15} />
           <input className="entrada" placeholder="Buscar jugador" value={buscar} onChange={(e) => setBuscar(e.target.value)} />

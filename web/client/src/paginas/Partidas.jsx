@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { Cargando, Fallo, useDatos } from "../ui.jsx";
+import { Desplegable, Segmentos } from "../controles.jsx";
 import { FilaPartida } from "./comun.jsx";
 import { ARQUETIPOS, CLASES } from "../nombres.js";
 
@@ -40,20 +41,10 @@ export default function Partidas() {
       </div>
 
       <div className="filtros">
-        <div className="segmentos" role="group" aria-label="Ordenar">
-          {ORDEN.map(([v, t]) => <button key={v} type="button" aria-pressed={orden === v} onClick={() => setOrden(v)}>{t}</button>)}
-        </div>
-        <select className="select" value={tam} onChange={(e) => setTam(e.target.value)} aria-label="Jugadores">
-          {TAMANO.map(([v, t]) => <option key={v} value={v}>{v ? t : "Cualquier grupo"}</option>)}
-        </select>
-        <select className="select" value={clase} onChange={(e) => setClase(e.target.value)} aria-label="Clase">
-          <option value="">Cualquier clase</option>
-          {Object.entries(CLASES).map(([id, c]) => <option key={id} value={id}>{c.nombre}</option>)}
-        </select>
-        <select className="select" value={arq} onChange={(e) => setArq(e.target.value)} aria-label="Arquetipo">
-          <option value="">Cualquier arquetipo</option>
-          {Object.entries(ARQUETIPOS).map(([id, a]) => <option key={id} value={id}>{a.nombre}</option>)}
-        </select>
+        <Segmentos valor={orden} onCambio={setOrden} opciones={ORDEN} ariaLabel="Ordenar" />
+        <Desplegable valor={tam} onCambio={setTam} ariaLabel="Jugadores" opciones={TAMANO.map(([v, t]) => ({ v, t: v ? t : "Cualquier grupo" }))} />
+        <Desplegable valor={clase} onCambio={setClase} ariaLabel="Clase" opciones={[{ v: "", t: "Cualquier clase" }, ...Object.entries(CLASES).map(([id, c]) => ({ v: id, t: c.nombre }))]} />
+        <Desplegable valor={arq} onCambio={setArq} ariaLabel="Arquetipo" opciones={[{ v: "", t: "Cualquier arquetipo" }, ...Object.entries(ARQUETIPOS).map(([id, a]) => ({ v: id, t: a.nombre }))]} />
         <label className="buscador">
           <Search size={15} />
           <input className="entrada" placeholder="Buscar jugador" value={buscar} onChange={(e) => setBuscar(e.target.value)} />

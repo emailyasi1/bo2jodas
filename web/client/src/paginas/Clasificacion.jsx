@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Build, Cargando, Fallo, Seccion, Top, TagArquetipo, TagClase, colorRonda, grupo, hace, useDatos } from "../ui.jsx";
 import { ARQUETIPOS, CLASES, MITICAS, duracion, fmt } from "../nombres.js";
+import { Desplegable, Segmentos } from "../controles.jsx";
 
 const TAMANO = [["", "Todos"], ["1", "Solo"], ["2", "Dúo"], ["3", "Trío"], ["4", "Cuarteto"], ["5", "5+"]];
 const RECORDS = [
@@ -51,21 +52,10 @@ export default function Clasificacion() {
       </div>
 
       <div className="filtros">
-        <div className="segmentos" role="group" aria-label="Tamaño del grupo">
-          {TAMANO.map(([v, t]) => <button key={v} type="button" aria-pressed={tam === v} onClick={() => setTam(v)}>{t}</button>)}
-        </div>
-        <select className="select" value={clase} onChange={(e) => setClase(e.target.value)} aria-label="Clase">
-          <option value="">Todas las clases</option>
-          {Object.entries(CLASES).map(([id, c]) => <option key={id} value={id}>{c.nombre}</option>)}
-        </select>
-        <select className="select" value={arq} onChange={(e) => setArq(e.target.value)} aria-label="Arquetipo">
-          <option value="">Todos los arquetipos</option>
-          {Object.entries(ARQUETIPOS).map(([id, a]) => <option key={id} value={id}>{a.nombre}</option>)}
-        </select>
-        <select className="select" value={mitica} onChange={(e) => setMitica(e.target.value)} aria-label="Mítica">
-          <option value="">Cualquier mítica</option>
-          {Object.entries(MITICAS).filter(([id]) => id !== "leaper").map(([id, n]) => <option key={id} value={id}>{n}</option>)}
-        </select>
+        <Segmentos valor={tam} onCambio={setTam} opciones={TAMANO} ariaLabel="Tamaño del grupo" />
+        <Desplegable valor={clase} onCambio={setClase} ariaLabel="Clase" opciones={[{ v: "", t: "Todas las clases" }, ...Object.entries(CLASES).map(([id, c]) => ({ v: id, t: c.nombre }))]} />
+        <Desplegable valor={arq} onCambio={setArq} ariaLabel="Arquetipo" opciones={[{ v: "", t: "Todos los arquetipos" }, ...Object.entries(ARQUETIPOS).map(([id, a]) => ({ v: id, t: a.nombre }))]} />
+        <Desplegable valor={mitica} onCambio={setMitica} ariaLabel="Mítica" opciones={[{ v: "", t: "Cualquier mítica" }, ...Object.entries(MITICAS).filter(([id]) => id !== "leaper").map(([id, n]) => ({ v: id, t: n }))]} />
       </div>
 
       {runs.cargando && <Cargando filas={5} />}
