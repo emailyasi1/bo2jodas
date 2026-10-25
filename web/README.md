@@ -79,6 +79,7 @@ Hay una partida de ejemplo en `ejemplos/`: `curl -X POST localhost:3000/api/runs
 | `POST /api/auth/registro`, `POST /api/auth/login` | `{usuario, contrasena}`. Devuelven el perfil y ponen la cookie de sesión. |
 | `GET /api/auth/yo` | Perfil: usuario, token de subida, fecha de alta, partidas subidas. |
 | `POST /api/auth/token` | Genera un token nuevo (el anterior deja de valer). |
+| `POST /api/runs/comprobar` | `{ ids: [...] }` (ids del mod, hasta 500): qué hay ya de cada uno, `{ id: { terminada, ronda } }`. Lo usa la autosubida para no mandar partidas repetidas. |
 | `POST /api/auth/contrasena` | `{actual, nueva}`. |
 | `POST /api/auth/logout` | Cierra la sesión. |
 | `GET /api/salud` | Health check: `{ok, partidas, cuentas}`. |

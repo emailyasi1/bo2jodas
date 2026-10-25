@@ -8,13 +8,13 @@
 // "acabada", o lleva 40 min parado (juego cerrado o colgado; una pausa normal
 // no llega). Sin latido (carpeta vieja), 40 min sin cambiar el JSON.
 import { useSyncExternalStore } from "react";
-import { subirPartida } from "./api.js";
+import { comprobarPartidas, subirPartida } from "./api.js";
 import { vaciarCache } from "./ui.jsx";
 
 const SIN_TERMINAR_MS = 40 * 60_000;
 const LATIDO = "en_partida.txt";
 const CADA_MS = 60_000;
-const MAX_POR_REVISION = 15; // el servidor admite 20 subidas por hora
+const MAX_POR_REVISION = 15; // el servidor admite 30 subidas por hora
 const CLAVE_SUBIDAS = "jodas_autosubida_subidas";
 
 export const soportado = () => typeof window !== "undefined" && "showDirectoryPicker" in window;
@@ -152,15 +152,36 @@ export async function revisar() {
   poner({ revisando: true });
   try {
     const hechas = subidas();
+    // Archivos que el navegador no tiene apuntados. Antes de leer ninguno se
+    // pregunta al servidor que tiene ya de ellos (el id del mod va en el nombre:
+    // zm_transit_<id>.json): lo que ya esta terminado alli ni se lee.
+    const pendientes = [];
+    for await (const [nombre, entrada] of h.entries()) {
+      if (entrada.kind !== "file" || !nombre.endsWith(".json") || hechas[nombre]) continue;
+      const f = await entrada.getFile(); // solo metadatos, no se lee
+      if (hechas[`${nombre}@${f.lastModified}`]) continue;
+      pendientes.push([nombre, f]);
+    }
+    if (!pendientes.length) return;
+    const idDe = (nombre) => nombre.slice(0, -5).split("_").pop();
+    let enServidor = {};
+    try {
+      enServidor = await comprobarPartidas(pendientes.map(([nombre]) => idDe(nombre)));
+    } catch (e) {
+      // Servidor dormido o sin red: a la siguiente pasada.
+      anotar(e.estado ? `No se pudo comprobar con la web (${e.message}); se reintenta en un minuto` : "No se pudo contactar con la web; se reintenta en un minuto", false);
+      return;
+    }
     const latido = await leerLatido(h);
     let n = 0;
     let subido = false;
-    for await (const [nombre, entrada] of h.entries()) {
-      if (entrada.kind !== "file" || !nombre.endsWith(".json")) continue;
-      if (hechas[nombre]) continue;
-      const f = await entrada.getFile();
+    for (const [nombre, f] of pendientes) {
+      const alli = enServidor[idDe(nombre)];
+      if (alli && alli.terminada) {
+        apuntar(nombre, "en la web");
+        continue;
+      }
       const claveMod = `${nombre}@${f.lastModified}`;
-      if (hechas[claveMod]) continue;
       let json;
       try {
         json = JSON.parse(await f.text());
@@ -170,6 +191,12 @@ export async function revisar() {
         continue;
       }
       const terminada = json.terminada === undefined || json.terminada === 1;
+      // La web ya tiene esta partida sin terminar hasta esa ronda: solo se
+      // vuelve a mandar si trae mas rondas o ya esta terminada.
+      if (alli && !terminada && Number(json.ronda) <= alli.ronda) {
+        apuntar(claveMod, "en la web");
+        continue;
+      }
       if (!terminada && !muerta(json, latido, f)) continue;
       if (n >= MAX_POR_REVISION) break;
       n++;
