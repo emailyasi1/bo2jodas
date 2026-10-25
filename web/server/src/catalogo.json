@@ -93,7 +93,7 @@
   },
   "botin": {
    "tipo": "normal",
-   "tope": 150,
+   "tope": 50,
    "arquetipo": "suertudo"
   },
   "aliento": {
@@ -897,7 +897,7 @@
   "cartas_base": 9.0,
   "cartas_paso": 5.0,
   "max_cartas": 15.0,
-  "pistolas_huecos": 5.0,
+  "pistolas_huecos": 0.0,
   "zombies_mult": 1.5,
   "zombies_extra_jugador": 0.2
  }

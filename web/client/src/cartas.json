@@ -332,7 +332,7 @@
   "prefijo": "",
   "sufijo": "%",
   "decimal": 1,
-  "tope": 150,
+  "tope": 50,
   "valores": [
    4,
    8,

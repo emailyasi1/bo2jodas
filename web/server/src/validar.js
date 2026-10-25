@@ -21,6 +21,14 @@ const RAREZAS = new Set(CAT.rarezas);
 const MOTIVOS = new Set(CAT.motivos_perdida);
 const CFG = CAT.cfg;
 
+// Hasta la 1.10.2 Pistolas tenia 5 huecos mas y el Buscador de botin llegaba
+// al 15 %: las partidas de esas versiones se validan con sus limites.
+const ANTES_1103 = { pistolas_huecos: 5, topes: { botin: 150 } };
+const antesDe1103 = (v) => {
+  const [a, b, c = 0] = String(v).split(".").map(Number);
+  return a * 1e6 + b * 1e3 + c < 1010003;
+};
+
 // Campos de analisis (1.10.3): valores permitidos.
 const CAUSAS = new Set(["zombie", "tanque", "brutus", "bruja", "leroy", "caida", "fuego", "propio", "explosion", "otro"]);
 const PUNTOS = new Set(["clase", "cartas"]);
@@ -177,7 +185,8 @@ function jugador(j, i, p) {
     if (vistas.has(id)) fallo(`${nombre}: carta repetida: ${id}`);
     vistas.add(id);
     const valor = entero(c.valor, `${nombre}: valor de ${id}`, 1);
-    if (valor > def.tope) fallo(`${nombre}: ${id} vale ${valor} y su tope es ${def.tope}`);
+    const tope = antesDe1103(p.version) ? Math.max(def.tope, ANTES_1103.topes[id] || 0) : def.tope;
+    if (valor > tope) fallo(`${nombre}: ${id} vale ${valor} y su tope es ${tope}`);
     return {
       id,
       nombre: texto(c.nombre, `${nombre}: nombre de ${id}`, 48),
@@ -252,7 +261,8 @@ function coherencia(p) {
     if (j.nivel > maxNivel) fallo(`${n}: nivel ${j.nivel} imposible con ${j.bajas} bajas (máximo ${maxNivel})`);
     // Huecos de carta: las de tipo normal (equipo, power-ups e instantaneas no gastan hueco).
     const huecos = j.cartas.filter((c) => c.tipo === "normal").length;
-    const maxHuecos = CFG.max_cartas + (j.clase === "pistolas" ? CFG.pistolas_huecos : 0);
+    const extra = antesDe1103(p.version) ? ANTES_1103.pistolas_huecos : CFG.pistolas_huecos;
+    const maxHuecos = CFG.max_cartas + (j.clase === "pistolas" ? extra : 0);
     if (huecos > maxHuecos) fallo(`${n}: ${huecos} cartas ocupando hueco y su clase admite ${maxHuecos}`);
   }
   // Bajas del equipo frente a los zombies que han salido (con un jugador mas

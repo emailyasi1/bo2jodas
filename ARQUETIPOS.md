@@ -36,7 +36,7 @@ stateDiagram-v2
     Niveles1a7 --> Arquetipo: nivel 8 (3 de los 10 al azar)
     Arquetipo --> Bienvenida: 3 cartas de tu arquetipo, eliges 1
     Bienvenida --> Mezcla: cada hueco de la oferta 35% de arquetipo (+1% por Trebol) y el resto general
-    Mezcla --> Build: 15 huecos (20 Pistolas) + 1 mitica aparte
+    Mezcla --> Build: 15 huecos (15 Pistolas) + 1 mitica aparte
     Mezcla --> Firma: con las 2 cartas que pide, aparece la firma del arquetipo
     Build --> Caida: al caer pierdes 1 tipo de carta entero (eliges entre 3)
     Caida --> Mezcla
@@ -212,8 +212,8 @@ flowchart LR
     rescoldos["Rescoldos"]
     mecha["Mecha corta"]
     pirotecnico{{"Pirotecnico (firma)"}}
-    EXPLO(["Explosiones: granadas, Mecha corta, Bomberman, Reaccion en cadena, PhD"])
     BALAS(["Impactos de bala (MOD_RIFLE_BULLET / MOD_PISTOL_BULLET)"])
+    EXPLO(["Explosiones: granadas, Mecha corta, Bomberman, Reaccion en cadena, PhD"])
     FUEGO(["Zombie ardiendo: pierde 4% de su vida maxima por segundo durante 6 s (cada impacto reinicia). El jefe, un cuarto. Al apagarse queda quemado: el Napalm ya no lo contagia"])
     BALAS -->|"6-26% por impacto (tope 80%)"| fosforo
     fosforo -->|"prende (impacto directo: tambien a quemados)"| FUEGO
@@ -247,10 +247,10 @@ flowchart LR
     condensador["Condensador"]
     tormenta["Tormenta"]
     tesla{{"Tesla (firma)"}}
-    DISPARO(["Siguiente impacto de bala"])
     BAJA(["Baja tuya (cualquier arma)"])
-    RAYO(["Rayo: dano fijo en % de la vida maxima del zombie (100% o mas = mata; al jefe 15%) y luego se multiplica por tus cartas de dano. Alcance 350 u"])
+    DISPARO(["Siguiente impacto de bala"])
     RECARGA(["Empezar a recargar"])
+    RAYO(["Rayo: dano fijo en % de la vida maxima del zombie (100% o mas = mata; al jefe 15%) y luego se multiplica por tus cartas de dano. Alcance 350 u"])
     BAJA -->|"8-34% (tope 80%)"| pararrayos
     pararrayos -->|"1 rayo del 15% a otro zombie"| RAYO
     BAJA -->|"3-16% (tope 60%): explosion de 0.6x vida de ronda + 100 a 160 u"| cadena
@@ -316,11 +316,11 @@ flowchart LR
     pulso["Pulso firme"]
     unabala["Una bala basta"]
     elites{{"Cazador de elites (firma)"}}
-    CABEZA(["Tiro a la cabeza (head / helmet; el arma ya multiplica por su locHead)"])
-    MATA(["Muerte instantanea"])
-    MIRA(["Apuntando con la mira"])
     QUIETO2S(["2 s sin disparar"])
+    MIRA(["Apuntando con la mira"])
+    CABEZA(["Tiro a la cabeza (head / helmet; el arma ya multiplica por su locHead)"])
     ELITE(["Tanque (x4 vida) o jefe"])
+    MATA(["Muerte instantanea"])
     CABEZA -->|"+8-48% (tope 400%)"| cabeza
     MIRA -->|"apuntando: +4-20% (tope 100%)"| punteria
     ELITE -->|"solo tanques: +12-72% (tope 400%)"| cazatanques
@@ -351,9 +351,9 @@ flowchart LR
     coraza["Coraza"]
     masa["Masa"]
     coloso{{"Coloso (firma)"}}
-    CUCHILLO(["Cuchillo"])
     GOLPE(["Golpe de zombie recibido (60; tanque x2; jefe x2.5)"])
     PASIVA(["Pasiva del arquetipo: vida x2 con Juggernog (500) y escudo de zombies (2250 de dano) en la espalda, nuevo o reparado cada ronda"])
+    CUCHILLO(["Cuchillo"])
     QUIETO(["Quieto (velocidad &lt; 10)"])
     GOLPE -->|"el zombie pierde 12-72% de su vida (tope 500%)"| espinas
     CUCHILLO -->|"+40-240% (tope 3000%)"| melee
@@ -385,8 +385,8 @@ flowchart LR
     cajaeco["Caja economica"]
     plutocrata{{"Plutocrata (firma)"}}
     BAJA(["Baja tuya"])
-    CABEZA(["Baja a la cabeza"])
     CAJA(["Caja de cartas (2500 x1.17 por tirada)"])
+    CABEZA(["Baja a la cabeza"])
     PUNTOS(["Tus puntos (sin gastar)"])
     PERKS(["Bebidas que llevas"])
     BAJA -->|"+4-32 puntos (tope 300)"| puntos
@@ -419,11 +419,11 @@ flowchart LR
     plomo["Plomo"]
     cinta["Cinta de balas"]
     continuo{{"Fuego continuo (firma)"}}
-    CARGADOR(["Cargador del arma de la mano"])
     BAJA(["Baja tuya (cualquier arma)"])
-    DT(["Double Tap comprado"])
-    RAFAGA(["Disparando seguido (menos de 0.4 s entre tiros)"])
     COMBO10(["Combo 10: 10 bajas seguidas con menos de 2 s entre ellas"])
+    CARGADOR(["Cargador del arma de la mano"])
+    RAFAGA(["Disparando seguido (menos de 0.4 s entre tiros)"])
+    DT(["Double Tap comprado"])
     cadencia -->|"da Double Tap gratis y +2-14% dano (tope 150%); con Double Tap comprado el % se dobla"| DT
     CARGADOR -->|"por debajo del 30%: +8-36% (tope 200%)"| ultimas
     RAFAGA -->|"tras 1 s seguido: +8-36% (tope 150%); se pierde al parar 0.5 s"| tambor
@@ -453,11 +453,11 @@ flowchart LR
     zancada["Zancada"]
     estela["Estela"]
     ciclon{{"Ciclon (firma)"}}
-    ESPRINT(["Esprintando"])
     BAJA(["Baja tuya"])
     GOLPE(["Golpe de zombie recibido"])
     FRENO(["Zombie frenado (velocidad de animacion reducida; no al jefe ni a uno ya frenado por el Paralizador)"])
     CERCA3(["3 o mas zombies a menos de 150 u"])
+    ESPRINT(["Esprintando"])
     BAJA -->|"+4-18% velocidad 3 s (tope 60%)"| sed
     GOLPE -->|"te ignoran 0.4 s-1.8 s (tope 6.0 s)"| escurridizo
     CERCA3 -->|"+5-24% velocidad (tope 40%)"| resbaladizo
@@ -539,7 +539,7 @@ flowchart LR
 
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
-| Buscador de botin | Probabilidad de power-up por baja | 0.4% / 0.8% / 1.2% / 2.0% / 3.2% | 15.0% | variable |
+| Buscador de botin | Probabilidad de power-up por baja | 0.4% / 0.8% / 1.2% / 2.0% / 3.2% | 5.0% | variable |
 | Pata de conejo | +rerolls ahora y +1 cada 3 niveles | +1 / +2 / +2 / +3 / +4 | +20 | variable |
 | Dados | % de que la carta que cojas valga el doble | 15% / 22% / 30% / 42% / 60% | 80% | variable |
 | Amuleto | % de ver 4 cartas en vez de 3 | 20% / 30% / 45% / 60% / 80% | 100% | variable |
@@ -555,10 +555,10 @@ flowchart LR
     herradura["Herradura"]
     jackpot{{"Jackpot (firma)"}}
     BAJA(["Baja tuya"])
-    RONDA(["Empieza una ronda"])
-    NIVEL(["Subida de nivel (menu de 3 cartas)"])
     REROLL(["Rerolls (3 por partida, Granada)"])
-    BAJA -->|"0.4%-3.2% de soltar power-up (tope 15.0%)"| botin
+    NIVEL(["Subida de nivel (menu de 3 cartas)"])
+    RONDA(["Empieza una ronda"])
+    BAJA -->|"0.4%-3.2% de soltar power-up (tope 5.0%)"| botin
     conejo -->|"+1-4 rerolls al cogerla (tope 20) y +1 cada 3 niveles"| REROLL
     NIVEL -->|"15-60% de que la carta cogida valga el doble (tope 80%; no a firmas ni Silbato)"| dados
     NIVEL -->|"20-80% de ver 4 cartas en vez de 3 (tope 100%)"| amuleto

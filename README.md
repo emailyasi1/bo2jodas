@@ -38,6 +38,16 @@ En la web, cada partida enseña **gráficas por ronda** (bajas, puntos, daño y 
 
 **Actualiza el script de subida** (`web/subidor/subir_partidas.ps1`) si lo usas: el nuevo espera a que la partida acabe (o lleve 10 minutos sin cambiar) antes de subirla. El viejo subiría el JSON en cada ronda y se comería el límite de 20 subidas por hora.
 
+**Cambios de juego**:
+
+| | Antes | Ahora | |
+|---|---|---|---|
+| **Pistolas: huecos de carta** | 20 | **15**, como el resto | 🔻 NERF |
+| **Pistolas: carta inicial** | Trébol legendario | **Trébol épico** | 🔻 NERF |
+| **Ray Gun Mark II** | Salía en el sorteo de armas especiales (8 %, la mitad de las veces) | **1 % fijo por ronda**; el sorteo de especiales de Pistolas ya solo da la Ray Gun | 🔻 NERF |
+| **Buscador de botín** | Tope 15 % | **Tope 5 %** | 🔻 NERF |
+| **Caja misteriosa** | Desde la tirada 39 costaba más de 1.000.000 y no se podía usar nunca más (el juego no deja pasar de 1.000.000 de puntos) | El precio deja de subir en **999.999** | 🔧 ARREGLO |
+
 **Arreglo**: con Leroy vivo, la tercera carta del menú podía salir en blanco (se llenaba el tope de elementos de pantalla). El nivel, las bajas para la siguiente carta y la ayuda del menú usan ahora menos elementos.
 
 ## Novedades de la 1.10.2: zombies atascados fuera del mapa
@@ -405,7 +415,7 @@ Al empezar eliges clase (los zombies no salen hasta que todos eligen). Al **empe
 | **Escopetas** | Remington 870, Olympia, S12, M1216, KSG, DSR 50, Barrett M82A1, SVU-AS, Ballista | Blundergat | 15 % de que un perdigón mate de golpe; 35 % por bala con francotirador. **Speed Cola de clase** (recargas en la mitad de tiempo) | −5 % de velocidad |
 | **Automáticas** | Galil, AK74u (y cargador ampliado), MP5K, PDW-57, MTAR, AN-94, SCAR-H, M27, AK-47, STG-44, Thompson, MP40 (y Stalker), Uzi, Skorpion EVO, HAMR, RPD, LSAT, MG08/15 | Sliquifier | +0.5 % de daño por tiro seguido acertado, hasta +15 % (se pierde al fallar) | 25 % de que un tiro gaste 2 balas |
 | **Rifles** | M14, FAL, SMR (×4 de daño por bala), M16, Type 25, M8A1, Chicom CQB | Paralizador | **Ejecutor**: la bala que deja a un zombie por debajo del 20 % de su vida lo remata (al jefe no) | Ninguna |
-| **Pistolas** | M1911 (siempre Mustang & Sally), Five-seven (y dual), B23R (y cargador ampliado), KAP-45, Python, Executioner, Remington New Model Army, Mauser C96 (siempre Boomhilda) | Ray Gun o Ray Gun Mark II | +40 % de daño, ×1.3 de velocidad, −50 % de daño explosivo recibido, **20 huecos de carta** en vez de 15 y **empiezan con un Trébol LEGENDARIO** | Ninguna |
+| **Pistolas** | M1911 (siempre Mustang & Sally), Five-seven (y dual), B23R (y cargador ampliado), KAP-45, Python, Executioner, Remington New Model Army, Mauser C96 (siempre Boomhilda) | Ray Gun (la Mark II, 1 % por ronda) | +40 % de daño, ×1.3 de velocidad, −50 % de daño explosivo recibido, 15 huecos de carta y **empiezan con un Trébol ÉPICO** | Ninguna |
 
 - **Bonus de puntos por baja**: el juego da 10 puntos por cada impacto, y Automáticas necesita muchos más impactos por zombie que el resto. Para igualarlo, Escopetas cobra un extra del **7.5 %** de la vida del zombie por cada baja, Pistolas el **5.1 %** y Rifles el **0.13 %** (sus balas ya necesitan casi tantos impactos como Automáticas). El extra se divide entre tus cartas de Calibre y Gatillo loco, porque con ellas Automáticas también necesita menos impactos. Al jefe no. Así las cuatro clases sacan casi los mismos puntos por zombie en cualquier ronda.
 - Las paredes funcionan normal. **La caja da cartas, no armas**. **El Pack-a-Punch no se puede usar pagando**: las armas solo se mejoran con cartas.
@@ -450,7 +460,7 @@ Valores por rareza: común / poco común / rara / épica / legendaria. Las marca
 | Codicia (A: Banquero) | +puntos por baja | 4 / 8 / 12 / 20 / 32 | 300 |
 | Reacción en cadena (A: Electricista) | % de que el zombie explote al morir | 3 / 5 / 7 / 10 / 16 % | 60 % |
 | Imán | Atrae power-ups en este radio | 250 / 360 / 520 / 720 / 1040 | 5000 |
-| Buscador de botín (A: Suertudo) | % de power-up por baja | 0.4 / 0.8 / 1.2 / 2.0 / 3.2 % | 15 % |
+| Buscador de botín (A: Suertudo) | % de power-up por baja | 0.4 / 0.8 / 1.2 / 2.0 / 3.2 % | 5 % |
 | Segundo aliento | % de evitar un golpe mortal (quedas a media vida) | 8 / 12 / 18 / 24 / 36 % | 90 % |
 | Escurridizo (A: Velocista) | Segundos que te ignoran tras un golpe | 0.4 / 0.6 / 1.0 / 1.3 / 1.8 s | 6 s |
 | Suerte del Pack | % de que el arma de ronda venga mejorada | 4 / 6 / 10 / 14 / 20 % | 100 % |
@@ -506,7 +516,7 @@ Gira como siempre, pero da **una carta** al azar (misma tabla de rarezas y 5 % d
 |---|---|---|---|---|---|---|
 | Precio | 2500 | 2925 | 3422 | 4004 | 4684 | 5480 |
 
-El precio es **de cada jugador** (×1.17 por cada tirada tuya). Si no te llega, se cierra sin cobrar. No se mueve.
+El precio es **de cada jugador** (×1.17 por cada tirada tuya, hasta un máximo de **999.999**). Si no te llega, se cierra sin cobrar. No se mueve.
 
 ### Penalización al caer
 
@@ -624,7 +634,7 @@ Se escriben en la consola antes de entrar o antes de `map_restart`.
 | `set jodas_mitica_pct 100` | Siempre sale una mítica. |
 | `set jodas_mitica_forzar bruja` | La mítica que sale es esa (`bomberman`, `fenix`, `cristal`, `zeus`, `midas`, `infinito`, `bruja`). |
 | `set jodas_dar_arma slipgun_zm` | En partida: da esa arma con munición a todos los jugadores (`slipgun_zm` Sliquifier, `slowgun_zm` Paralizador, `ray_gun_zm`, `staff_fire_zm`, `staff_fire_upgraded_zm`...). |
-| `set jodas_max_cartas 3` | Número de huecos de carta (15 por defecto; Pistolas suma `jodas_pistolas_huecos`, 5). |
+| `set jodas_max_cartas 3` | Número de huecos de carta (15 por defecto; Pistolas suma `jodas_pistolas_huecos`, 0). |
 | `set jodas_zombies_extra_jugador 0.2` | Zombies extra por cada jugador por encima de 4 (20 % por defecto). |
 | `set jodas_arq_nivel 1` | Elegir arquetipo en la primera subida de nivel (8 por defecto). |
 | `set jodas_bruja_minutos 1` | Hora bruja cada minuto (3 por defecto). |
@@ -639,6 +649,8 @@ Se escriben en la consola antes de entrar o antes de `map_restart`.
 | `set jodas_lista_tecla siempre` | Lista de cartas siempre visible. |
 | `set jodas_sprint 1` | Todos los zombies corren (2 = super sprint). |
 | `set jodas_caja_cartas 0` | Caja original (armas). |
+| `set jodas_caja_max 50000` | Precio máximo de la caja (999999 por defecto). |
+| `set jodas_mark2_pct 100` | % por ronda de que Pistolas reciba la Ray Gun Mark II (1 por defecto). |
 | `set jodas_super_pct 0` | Sin super sprinters. |
 | `set jodas_torreta_bajas 10` | Bajas que aguanta una torreta antes de romperse (100 por defecto). |
 | `set jodas_torreta_reparar 100` | Coste de reparar una torreta (2500 por defecto). |

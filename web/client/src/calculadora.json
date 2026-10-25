@@ -11,6 +11,7 @@
   "tanque_danio": 2.0,
   "tanque_pct": 10.0,
   "especial_pct": 8.0,
+  "mark2_pct": 1.0,
   "mitica_pct": 5.0,
   "cartas_base": 9.0,
   "cartas_paso": 5.0,
@@ -41,7 +42,7 @@
   "tab_nivel": 1.0,
   "caida_penal": 1.0,
   "max_cartas": 15.0,
-  "pistolas_huecos": 5.0,
+  "pistolas_huecos": 0.0,
   "rerolls": 3.0,
   "bloqueos": 1.0,
   "atasco_seg": 15.0,
@@ -172,7 +173,7 @@
   {
    "id": "pistolas",
    "nombre": "Pistolas",
-   "desc": "+40% dano, +30% vel, 20 cartas, Trebol legendario",
+   "desc": "+40% dano, +30% vel, Trebol epico al empezar",
    "especial": "Ray Gun",
    "armas": [
     "m1911_zm",
@@ -663,7 +664,7 @@
     20,
     32
    ],
-   "tope": 150,
+   "tope": 50,
    "decimal": 1,
    "prefijo": "",
    "sufijo": "%"
