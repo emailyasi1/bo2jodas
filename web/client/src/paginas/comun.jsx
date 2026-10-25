@@ -12,6 +12,8 @@ export function FilaPartida({ p, resaltar }) {
         <div className="pf-titulo">
           <b>{nombreMapa(p.mapa, p.sitio)} · {grupo(p.jugadores.length)}</b>
           <span className="pf-meta">{hace(p.fecha)} · {duracion(p.duracion_s)}</span>
+          {p.terminada === 0 && <span className="tag tag-linea">Sin terminar</span>}
+          {p.prueba && <span className="tag tag-linea">Prueba</span>}
         </div>
         <div className="pf-jugadores">
           {p.jugadores.map((j) => (

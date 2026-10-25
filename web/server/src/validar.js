@@ -21,6 +21,14 @@ const RAREZAS = new Set(CAT.rarezas);
 const MOTIVOS = new Set(CAT.motivos_perdida);
 const CFG = CAT.cfg;
 
+// Campos de analisis (1.10.3): valores permitidos.
+const CAUSAS = new Set(["zombie", "tanque", "brutus", "bruja", "leroy", "caida", "fuego", "propio", "explosion", "otro"]);
+const PUNTOS = new Set(["clase", "cartas"]);
+const GASTOS = new Set(["caja", "torreta", "bruja"]);
+const TORRETA = new Set(["colocadas", "bajas", "roturas", "reparaciones", "morteros", "rebotes"]);
+const TECNICO = new Set(["max_vivos", "atascos_recolocados", "atascos_muertos", "limpiezas_textos"]);
+export const HITOS = ["30", "50", "100", "200"];
+
 const MAX_INT = 2147483647; // los numeros del mod son enteros de 32 bits
 const MAX_JUGADORES = 8;
 const MAPA_PUEBLO = "zm_transit";
@@ -78,6 +86,19 @@ function lista(v, que, max) {
 }
 
 const suma = (t) => Object.values(t).reduce((a, b) => a + b, 0);
+
+// Lista de filas de enteros con un numero fijo de columnas ([[ronda, ...], ...]).
+function filas(v, que, columnas, max) {
+  return lista(v, que, max).map((f, i) => {
+    if (!Array.isArray(f) || f.length !== columnas) fallo(`${que}: la fila ${i + 1} no tiene ${columnas} números`);
+    return f.map((x) => entero(x, `${que} (fila ${i + 1})`, -MAX_INT));
+  });
+}
+
+// Pone en out[clave] el campo si viene en la entrada (los JSON antiguos no lo traen).
+function opcional(out, entrada, clave, fn) {
+  if (entrada[clave] !== undefined && entrada[clave] !== null) out[clave] = fn(entrada[clave]);
+}
 
 // ---------------------------------------------------------------- formulas del mod
 
@@ -174,6 +195,30 @@ function jugador(j, i, p) {
     if (!RAREZAS.has(rareza)) fallo(`${nombre}: rareza desconocida: ${rareza}`);
     return { ronda: entero(h.ronda, `${nombre}: ronda del historial`, 0, p.ronda), id, rareza, valor: entero(h.valor, `${nombre}: valor del historial`) };
   });
+  // Analisis (1.10.3)
+  for (const k of ["desangrados", "clase_letales", "racha_max", "caja_usos"]) opcional(out, j, k, (v) => entero(v, `${nombre}: ${k}`));
+  opcional(out, j, "danio_recibido", (v) => tabla(v, `${nombre}: daño recibido`, (k) => CAUSAS.has(k)));
+  opcional(out, j, "puntos_fuente", (v) => tabla(v, `${nombre}: puntos por fuente`, (k) => PUNTOS.has(k)));
+  opcional(out, j, "gastos", (v) => tabla(v, `${nombre}: gastos`, (k) => GASTOS.has(k)));
+  opcional(out, j, "torretas", (v) => tabla(v, `${nombre}: torretas`, (k) => TORRETA.has(k)));
+  for (const k of ["arma_tiempo", "disparos_armas", "impactos_armas", "cabezas_armas"]) opcional(out, j, k, (v) => tabla(v, `${nombre}: ${k}`, armaValida));
+  opcional(out, j, "rondas", (v) => filas(v, `${nombre}: rondas`, 6, 300));
+  opcional(out, j, "caidas_detalle", (v) => lista(v, `${nombre}: caídas`, 1000).map((c) => ({
+    ronda: entero(c?.ronda, `${nombre}: ronda de la caída`, 0, p.ronda),
+    causa: deLista(c?.causa, `${nombre}: causa de la caída`, CAUSAS),
+    segundos: entero(c?.segundos, `${nombre}: segundos en el suelo`, 0, 86400),
+    reanimo: texto(c?.reanimo, `${nombre}: quién reanimó`, 32),
+    desangrado: entero(c?.desangrado, `${nombre}: desangrado`, 0, 1),
+  })));
+  opcional(out, j, "bebidas_ronda", (v) => lista(v, `${nombre}: bebidas por ronda`, 50).map((b) => ({
+    ronda: entero(b?.ronda, `${nombre}: ronda de la bebida`, 0, p.ronda),
+    id: texto(b?.id, `${nombre}: bebida`, 48, /^specialty_[a-z0-9_]+$/),
+  })));
+  opcional(out, j, "especiales", (v) => lista(v, `${nombre}: armas especiales`, 300).map((e) => {
+    const arma = texto(e?.arma, `${nombre}: arma especial`, 48);
+    if (!armaValida(arma)) fallo(`${nombre}: arma especial desconocida: ${arma}`);
+    return { ronda: entero(e?.ronda, `${nombre}: ronda del arma especial`, 0, p.ronda), arma };
+  }));
   out.cartas_perdidas = lista(j.cartas_perdidas, `${nombre}: cartas perdidas`, 500).map((c) => {
     if (!c || typeof c !== "object") fallo(`${nombre}: carta perdida con formato no válido`);
     const id = texto(c.id, `${nombre}: carta perdida`, 40);
@@ -226,8 +271,22 @@ function coherencia(p) {
   if (bajasEquipo < minBajas) fallo(`${bajasEquipo} bajas son muy pocas para llegar a la ronda ${p.ronda} (hacen falta al menos ${minBajas})`);
   // Duracion: entre ronda y ronda hay 10 s de pausa y los zombies salen de uno
   // en uno (como mucho cada 0.08 s). Se pide la mitad, de margen.
-  const minDur = Math.floor(((p.ronda - 1) * 10 + zombiesHasta(p.ronda - 1, 1) * 0.08) * 0.5);
-  if (p.duracion_s < minDur) fallo(`duración imposible: ${p.duracion_s} s para llegar a la ronda ${p.ronda} (mínimo ${minDur} s)`);
+  const minDur = (r) => Math.floor(((r - 1) * 10 + zombiesHasta(r - 1, 1) * 0.08) * 0.5);
+  if (p.duracion_s < minDur(p.ronda)) fallo(`duración imposible: ${p.duracion_s} s para llegar a la ronda ${p.ronda} (mínimo ${minDur(p.ronda)} s)`);
+  // Speedrun: el tiempo de llegada a cada ronda tiene que ser posible, ir en
+  // orden y no pasar de la duracion de la partida.
+  if (p.hitos) {
+    let antes = 0;
+    for (const k of HITOS) {
+      if (p.hitos[k] === undefined) continue;
+      const r = Number(k);
+      if (r > p.ronda) fallo(`tiempo de la ronda ${r} en una partida que acabó en la ${p.ronda}`);
+      if (p.hitos[k] > p.duracion_s) fallo(`el tiempo de la ronda ${r} pasa de la duración de la partida`);
+      if (p.hitos[k] < antes) fallo("los tiempos de las rondas no van en orden");
+      if (p.hitos[k] < minDur(r)) fallo(`tiempo imposible para llegar a la ronda ${r}: ${p.hitos[k]} s (mínimo ${minDur(r)} s)`);
+      antes = p.hitos[k];
+    }
+  }
   // Jefes
   for (const t of JEFES) {
     const muertos = p.jefes_muertos[t] || 0;
@@ -253,6 +312,47 @@ export function limpiar(entrada) {
     if (!p.version) fallo("sin versión del mod");
     if (!p.id) fallo("sin id de partida");
     if (!p.mapa) fallo("sin mapa");
+    // Analisis (1.10.3). terminada: 0 = punto de control de una partida sin acabar
+    // (reinicio con map_restart / fast_restart o juego cerrado).
+    p.terminada = entrada.terminada === undefined ? 1 : entero(entrada.terminada, "terminada", 0, 1);
+    opcional(p, entrada, "primera_caida_ronda", (v) => entero(v, "ronda de la primera caída", 0, p.ronda));
+    opcional(p, entrada, "fin", (v) => ({
+      ronda: entero(v?.ronda, "ronda final", 0, 255),
+      ultimo: texto(v?.ultimo, "último jugador", 32),
+      causa: v?.causa ? deLista(v.causa, "causa del final", CAUSAS) : "",
+    }));
+    opcional(p, entrada, "hitos", (v) => tabla(v, "tiempos de ronda", (k) => HITOS.includes(k), 10));
+    opcional(p, entrada, "rondas", (v) => filas(v, "rondas", 3, 300));
+    opcional(p, entrada, "tecnico", (v) => tabla(v, "datos técnicos", (k) => TECNICO.has(k), 20));
+    opcional(p, entrada, "jefes", (v) => lista(v, "jefes", 200).map((j) => {
+      if (!j || typeof j !== "object") fallo("jefe con formato no válido");
+      return {
+        tipo: deLista(j.tipo, "tipo de jefe", JEFES, false),
+        ronda: entero(j.ronda, "ronda del jefe", 0, p.ronda),
+        segundos: entero(j.segundos, "segundos del jefe", 0, 7 * 24 * 3600),
+        muerto: entero(j.muerto, "jefe muerto", 0, 1),
+        remato: texto(j.remato, "quién remató al jefe", 32),
+        robadas: entero(j.robadas, "cartas robadas", 0, 1000),
+        recuperadas: entero(j.recuperadas, "cartas recuperadas", 0, 1000),
+        toques: entero(j.toques, "toques de la Bruja", 0, 1000),
+        danio: tabla(j.danio, "daño al jefe", (k) => k.length > 0 && k.length <= 32, 16),
+      };
+    }));
+    opcional(p, entrada, "abandonos", (v) => lista(v, "abandonos", 64).map((a) => ({
+      nombre: texto(a?.nombre, "jugador que se fue", 32),
+      ronda: entero(a?.ronda, "ronda del abandono", 0, p.ronda),
+    })));
+    opcional(p, entrada, "dvars", (v) => {
+      if (typeof v !== "object" || Array.isArray(v)) fallo("dvars: tiene que ser una tabla");
+      const claves = Object.keys(v);
+      if (claves.length > 100) fallo("dvars: demasiados");
+      const out = {};
+      for (const k of claves) {
+        if (!/^jodas_[a-z0-9_]{1,40}$/.test(k)) fallo(`dvar desconocido: ${k.slice(0, 40)}`);
+        out[k] = texto(v[k], `dvar ${k}`, 40);
+      }
+      return out;
+    });
     p.jefes_aparecidos = tabla(entrada.jefes_aparecidos, "jefes aparecidos", (k) => JEFES.has(k));
     p.jefes_muertos = tabla(entrada.jefes_muertos, "jefes muertos", (k) => JEFES.has(k));
     const jugadores = lista(entrada.jugadores, "jugadores", MAX_JUGADORES);

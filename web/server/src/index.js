@@ -26,7 +26,7 @@ import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { resumen, leaderboards, totales, descartar, jugador } from "./partidas.js";
+import { resumen, leaderboards, totales, categoria, esPrueba, jugador } from "./partidas.js";
 import { limpiar } from "./validar.js";
 import { cargarTokens, comprobarToken } from "./tokens.js";
 import { Usuarios } from "./usuarios.js";
@@ -145,11 +145,25 @@ app.post("/api/runs", asinc(async (req, res) => {
     error = null;
   }
   if (error) return res.status(400).json({ error });
-  // 422 = partida valida pero filtrada (reset): el subidor la da por hecha.
-  const motivo = descartar(p);
-  if (motivo) return res.status(422).json({ error: motivo, descartada: true });
+  // Resets (ronda < 10) y partidas de prueba (dvars cambiados) se guardan
+  // marcadas: salen aparte y no cuentan para clasificaciones ni totales.
+  p.categoria = categoria(p);
+  p.prueba = esPrueba(p);
+  if (p.terminada === undefined) p.terminada = 1;
+  p.id_mod = p.id;
   const r = buscarRepetida(p);
   if (r.repetida) return res.json({ ok: true, id: r.id, repetida: true });
+  // Puntos de control: el mod guarda la partida al acabar cada ronda con
+  // terminada = 0. La version que llega despues sustituye a la sin terminar;
+  // una sin terminar de una partida que ya esta (terminada o mas avanzada) se ignora.
+  const mismas = [...partidas.values()].filter((x) => (x.id_mod || x.id) === p.id_mod);
+  const masAvanzada = mismas.find((x) => x.terminada !== 0 || x.ronda > p.ronda || (x.ronda === p.ronda && x.duracion_s >= p.duracion_s));
+  if (p.terminada === 0 && masAvanzada) return res.json({ ok: true, id: masAvanzada.id, repetida: true });
+  for (const x of mismas.filter((x) => x.terminada === 0)) {
+    await almacen.borrar("run", x.id);
+    partidas.delete(x.id);
+    console.log(`partida ${x.id} (sin terminar) sustituida por la nueva`);
+  }
   p.id = r.id;
   p.recibido = new Date().toISOString();
   if (!p.fecha) p.fecha = p.recibido;
@@ -162,8 +176,11 @@ app.post("/api/runs", asinc(async (req, res) => {
 
 app.get("/api/runs", (req, res) => {
   const limite = Math.min(Number(req.query.limit) || 100, 1000);
+  // ?categoria=reset: solo los resets; si no, todas menos los resets.
+  const resets = req.query.categoria === "reset";
   const lista = [...partidas.values()]
     .map(resumen)
+    .filter((p) => (p.categoria === "reset") === resets)
     .sort((a, b) => (b.fecha > a.fecha ? 1 : b.fecha < a.fecha ? -1 : 0))
     .slice(0, limite);
   res.json(lista);

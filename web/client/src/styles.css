@@ -580,3 +580,27 @@ details.plegable > summary::after { transition: transform 0.25s var(--suave); }
 .boton.peligro:hover { background: color-mix(in srgb, var(--sangre) 14%, transparent); border-color: var(--sangre); color: #ffb3a8; }
 .boton.peligro-lleno { background: var(--sangre); border-color: var(--sangre); color: #fff; }
 .boton.peligro-lleno:hover { background: #e85645; border-color: #e85645; color: #fff; }
+
+/* ------------------------------------------------------------ graficas (graficas.jsx) */
+.grafica { position: relative; width: 100%; }
+.grafica-cab { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; min-height: 26px; }
+.grafica-cab .boton { margin-left: auto; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 6px 14px; list-style: none; padding: 0; margin: 0; font-size: 13px; color: var(--tx-2); }
+.leyenda li { display: inline-flex; align-items: center; gap: 6px; }
+.leyenda i, .ficha-grafica i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; flex: none; }
+.grafica-lienzo { position: relative; }
+.grafica svg { display: block; overflow: visible; }
+.grafica .rejilla { stroke: var(--line); stroke-width: 1; }
+.grafica .eje { fill: var(--tx-3); font-size: 11px; font-family: var(--f-txt); }
+.grafica .etiqueta-linea { fill: var(--tx-2); font-size: 12px; font-family: var(--f-txt); }
+.grafica .cruz { stroke: var(--tx-3); stroke-width: 1; stroke-dasharray: 3 3; }
+.grafica .punto { stroke: var(--s1); stroke-width: 2; }
+.ficha-grafica { position: absolute; pointer-events: none; background: var(--s3); border: 1px solid var(--line-2); border-radius: var(--r2); padding: 8px 10px; font-size: 13px; min-width: 150px; display: grid; gap: 4px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35); z-index: 5; }
+.ficha-grafica b { color: var(--tx); font-weight: 600; }
+.ficha-grafica span { display: flex; align-items: center; gap: 6px; color: var(--tx-2); }
+.ficha-grafica em { font-style: normal; margin-left: auto; padding-left: 12px; color: var(--tx); font-variant-numeric: tabular-nums; }
+.grafica-tabla { max-height: 320px; overflow: auto; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; flex-direction: column; gap: 2px; background: var(--s2); border: 1px solid var(--line); border-radius: var(--r2); padding: 8px 12px; min-width: 110px; }
+.chip small { color: var(--tx-3); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+.chip b { font-size: 18px; color: var(--tx); font-variant-numeric: tabular-nums; }

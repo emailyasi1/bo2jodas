@@ -5,6 +5,14 @@ import { ARQUETIPOS, CLASES, MITICAS, duracion, fmt } from "../nombres.js";
 import { Desplegable, Segmentos } from "../controles.jsx";
 
 const TAMANO = [["", "Todos"], ["1", "Solo"], ["2", "Dúo"], ["3", "Trío"], ["4", "Cuarteto"], ["5", "5+"]];
+// Categorias: High Rounds (la tabla de siempre), Flawless y speedruns.
+const CATEGORIAS = [["high", "High Rounds"], ["flawless", "Flawless"], ["30", "Speedrun R30"], ["50", "R50"], ["100", "R100"], ["200", "R200"]];
+const reloj = (s) => {
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const x = Math.floor(s % 60);
+  return `${h ? `${h}:` : ""}${String(m).padStart(h ? 2 : 1, "0")}:${String(x).padStart(2, "0")}`;
+};
 const RECORDS = [
   ["danio", "Daño en una partida", (f) => fmt(f.danio_total), (f) => f.danio_total],
   ["bajas", "Bajas en una partida", (f) => fmt(f.bajas), (f) => f.bajas],
@@ -18,6 +26,7 @@ const RECORDS = [
 function ranking(partidas, filtro) {
   const mejor = new Map();
   for (const p of partidas) {
+    if (p.prueba) continue;
     const n = p.jugadores.length;
     if (filtro.tam && (filtro.tam === "5" ? n < 5 : n !== Number(filtro.tam))) continue;
     for (const j of p.jugadores) {
@@ -39,6 +48,7 @@ export default function Clasificacion() {
   const [clase, setClase] = useState("");
   const [arq, setArq] = useState("");
   const [mitica, setMitica] = useState("");
+  const [cat, setCat] = useState("high");
   const filas = useMemo(() => (runs.datos ? ranking(runs.datos, { tam, clase, arq, mitica }) : []), [runs.datos, tam, clase, arq, mitica]);
 
   return (
@@ -51,6 +61,13 @@ export default function Clasificacion() {
         </div>
       </div>
 
+      <div className="filtros">
+        <Segmentos valor={cat} onCambio={setCat} opciones={CATEGORIAS} ariaLabel="Categoría" />
+      </div>
+
+      {cat !== "high" && <TablaPartidas lb={lb} cat={cat} />}
+
+      {cat === "high" && <>
       <div className="filtros">
         <Segmentos valor={tam} onCambio={setTam} opciones={TAMANO} ariaLabel="Tamaño del grupo" />
         <Desplegable valor={clase} onCambio={setClase} ariaLabel="Clase" opciones={[{ v: "", t: "Todas las clases" }, ...Object.entries(CLASES).map(([id, c]) => ({ v: id, t: c.nombre }))]} />
@@ -102,6 +119,7 @@ export default function Clasificacion() {
       ) : (
         <p className="vacio">Nadie ha jugado todavía con esa combinación.</p>
       ))}
+      </>}
 
       <div className="rejilla" style={{ marginTop: 36 }}>
         <Seccion titulo="Récords por partida">
@@ -134,6 +152,56 @@ export default function Clasificacion() {
           ) : <p className="vacio">Sin récords todavía.</p>)}
         </Seccion>
       </div>
+    </>
+  );
+}
+
+// Flawless (ronda alcanzada sin que nadie cayera) y speedrun (tiempo hasta
+// empezar la ronda 30, 50, 100 o 200): una fila por partida.
+function TablaPartidas({ lb, cat }) {
+  if (lb.error) return <Fallo error={lb.error} />;
+  if (!lb.datos) return <Cargando filas={4} />;
+  const flawless = cat === "flawless";
+  const filas = flawless ? lb.datos.flawless || [] : (lb.datos.speedrun || {})[cat] || [];
+  return (
+    <>
+      <p className="mut" style={{ marginBottom: 14 }}>
+        {flawless
+          ? "Hasta qué ronda llegó el grupo sin que nadie cayera. Solo partidas desde la versión 1.10.3."
+          : `Tiempo desde el inicio hasta que empieza la ronda ${cat}. Solo partidas desde la versión 1.10.3.`}
+      </p>
+      {filas.length ? (
+        <div className="tabla-env">
+          <table className="tabla">
+            <thead>
+              <tr>
+                <th className="pos">#</th>
+                <th>Jugadores</th>
+                <th className="der">{flawless ? "Ronda sin caer" : "Tiempo"}</th>
+                <th className="der m-oculta">Ronda final</th>
+                <th className="der m-oculta">Cuándo</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filas.map((f, i) => (
+                <tr key={f.partida} className={i < 3 ? `p${i + 1}` : ""}>
+                  <td className="pos">{i + 1}</td>
+                  <td>
+                    {f.jugadores.map((n, k) => (
+                      <span key={n}>{k > 0 && ", "}<Link to={`/jugador/${encodeURIComponent(n)}`} className="nombre">{n}</Link></span>
+                    ))}
+                  </td>
+                  <td className="der">
+                    <Link to={`/partida/${f.partida}`} className="grande" style={flawless ? { color: colorRonda(f.valor) } : undefined}>{flawless ? f.valor : reloj(f.valor)}</Link>
+                  </td>
+                  <td className="der num m-oculta">{f.ronda}</td>
+                  <td className="der ten m-oculta">{[grupo(f.jugadores_n), hace(f.fecha)].filter(Boolean).join(" · ")}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : <p className="vacio">Todavía no hay partidas en esta categoría.</p>}
     </>
   );
 }

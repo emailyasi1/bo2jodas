@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { Link, Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
-import { Home, Trophy, ScrollText, Users, Calculator, Upload, User, LogIn } from "lucide-react";
+import { Home, Trophy, ScrollText, Users, Calculator, Upload, User, LogIn, RotateCcw } from "lucide-react";
 import Inicio from "./paginas/Inicio.jsx";
 import Partidas from "./paginas/Partidas.jsx";
 import Partida from "./paginas/Partida.jsx";
+import Resets from "./paginas/Resets.jsx";
 import Clasificacion from "./paginas/Clasificacion.jsx";
 import Jugadores from "./paginas/Jugadores.jsx";
 import Jugador from "./paginas/Jugador.jsx";
@@ -17,6 +18,7 @@ const NAV = [
   { a: "/", t: "Inicio", i: Home, end: true },
   { a: "/clasificacion", t: "Clasificación", i: Trophy },
   { a: "/partidas", t: "Partidas", i: ScrollText },
+  { a: "/resets", t: "Resets", i: RotateCcw },
   { a: "/jugadores", t: "Jugadores", i: Users },
   { a: "/calculadora", t: "Calculadora", i: Calculator },
   { a: "/subir", t: "Subir partida", i: Upload },
@@ -73,6 +75,7 @@ export default function App() {
               <Route path="/leaderboards" element={<Navigate to="/clasificacion" replace />} />
               <Route path="/partidas" element={<Partidas />} />
               <Route path="/partida/:id" element={<Partida />} />
+              <Route path="/resets" element={<Resets />} />
               <Route path="/jugadores" element={<Jugadores />} />
               <Route path="/jugador/:nombre" element={<Jugador />} />
               <Route path="/calculadora" element={<Calculadora />} />

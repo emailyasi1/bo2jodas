@@ -3,15 +3,31 @@
 
 // La validacion de las partidas subidas esta en validar.js.
 
-// Filtro de "resets": partidas en las que nadie paso del nivel 10 al acabar no
-// se guardan (ni a mano ni con el script). En cooperativo cuenta el jugador de
-// mas nivel, para no tirar una partida buena porque alguien entro tarde.
-export const NIVEL_MINIMO = 10;
+// Resets: las partidas que acaban antes de la ronda RONDA_RESET (tambien las
+// que se quedaron a medias por map_restart / fast_restart) se guardan aparte:
+// salen en la pagina de Resets y no cuentan para clasificaciones ni totales.
+export const RONDA_RESET = 10;
 
-export function descartar(p) {
-  const nivel = Math.max(...p.jugadores.map((j) => Number(j.nivel) || 0));
-  if (nivel <= NIVEL_MINIMO) return `no se sube: nadie pasó del nivel ${NIVEL_MINIMO} (nivel máximo ${nivel}). Las partidas cortas se filtran como resets`;
-  return null;
+export function categoria(p) {
+  return p.ronda < RONDA_RESET ? "reset" : "normal";
+}
+
+// Partida de prueba: algun dvar del mod cambiado que no sea solo de pantalla.
+// Se guarda y se ve, pero no cuenta para clasificaciones ni totales.
+const DVARS_DE_PANTALLA = new Set(["jodas_lista_tecla", "jodas_pct", "jodas_hud_zombies", "jodas_hud_cartas", "jodas_textos_limite", "jodas_tiempo_clase", "jodas_tiempo_carta"]);
+
+export function esPrueba(p) {
+  return Object.keys(p.dvars || {}).some((k) => !DVARS_DE_PANTALLA.has(k));
+}
+
+// Lo que cuenta para clasificaciones, records, totales y perfiles.
+export const cuenta = (p) => (p.categoria || categoria(p)) !== "reset" && !p.prueba;
+
+// Ronda alcanzada sin que nadie cayera: la de la primera caida o, si nadie
+// cayo, la ultima (solo partidas que traen el dato, desde la 1.10.3).
+export function rondaSinCaer(p) {
+  if (p.primera_caida_ronda === undefined) return null;
+  return p.primera_caida_ronda > 0 ? p.primera_caida_ronda : p.ronda;
 }
 
 export function resumen(p) {
@@ -24,6 +40,11 @@ export function resumen(p) {
     duracion_s: p.duracion_s,
     version: p.version,
     subido_por: p.subido_por,
+    categoria: p.categoria || categoria(p),
+    prueba: !!p.prueba,
+    terminada: p.terminada === undefined ? 1 : p.terminada,
+    sin_caer: rondaSinCaer(p),
+    hitos: p.hitos || {},
     jugadores: p.jugadores.map((j) => ({
       nombre: j.nombre,
       clase: j.clase,
@@ -44,7 +65,7 @@ export function resumen(p) {
 
 // Perfil de un jugador: sus partidas (resumen) y las cartas que mas usa.
 export function jugador(partidas, nombre) {
-  const suyas = partidas.filter((p) => p.jugadores.some((j) => j.nombre === nombre));
+  const suyas = partidas.filter(cuenta).filter((p) => p.jugadores.some((j) => j.nombre === nombre));
   if (!suyas.length) return null;
   const cartas = {};
   const clases = {};
@@ -154,9 +175,38 @@ function top(lista, clave, n = 10) {
   return [...lista].sort((a, b) => b[clave] - a[clave]).slice(0, n);
 }
 
-export function leaderboards(partidas) {
+// Una fila por partida para las clasificaciones de High Rounds, Flawless y speedrun.
+function filaPartida(p, valor) {
+  return { partida: p.id, fecha: p.fecha, ronda: p.ronda, jugadores: p.jugadores.map((j) => j.nombre), jugadores_n: p.jugadores.length, valor };
+}
+
+export function leaderboards(todas) {
+  const partidas = todas.filter(cuenta);
   const lista = entradas(partidas);
+  // Flawless y speedrun solo con partidas que pasaron la validacion nueva (la
+  // que comprueba los tiempos de ronda), no las aceptadas con la antigua.
+  const validadas = partidas.filter((p) => p.validacion !== "antigua");
+  const flawless = validadas
+    .filter((p) => rondaSinCaer(p) !== null)
+    .map((p) => filaPartida(p, rondaSinCaer(p)))
+    .sort((a, b) => b.valor - a.valor || (a.fecha < b.fecha ? -1 : 1))
+    .slice(0, 20);
+  const speedrun = {};
+  for (const r of ["30", "50", "100", "200"]) {
+    speedrun[r] = validadas
+      .filter((p) => p.hitos && p.hitos[r] !== undefined)
+      .map((p) => filaPartida(p, p.hitos[r]))
+      .sort((a, b) => a.valor - b.valor || (a.fecha < b.fecha ? -1 : 1))
+      .slice(0, 20);
+  }
+  const highRounds = partidas
+    .map((p) => filaPartida(p, p.ronda))
+    .sort((a, b) => b.valor - a.valor || (a.fecha < b.fecha ? -1 : 1))
+    .slice(0, 20);
   return {
+    highRounds,
+    flawless,
+    speedrun,
     mejorRonda: mejor(lista, (e) => e.nombre),
     porClase: mejor(lista, (e) => (e.clase ? `${e.clase}|${e.nombre}` : null)),
     porArquetipo: mejor(lista, (e) => (e.arquetipo ? `${e.arquetipo}|${e.nombre}` : null)),
@@ -175,7 +225,8 @@ export function leaderboards(partidas) {
   };
 }
 
-export function totales(partidas) {
+export function totales(todas) {
+  const partidas = todas.filter(cuenta);
   const lista = entradas(partidas);
   const jugadores = new Map();
   for (const e of lista) {

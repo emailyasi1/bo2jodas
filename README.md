@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.2** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.3** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,29 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.3: estadísticas para balancear, resets y nuevas clasificaciones
+
+**El JSON de cada partida trae mucho más**, para balancear y encontrar fallos:
+
+| | Qué se guarda |
+|---|---|
+| **Caídas** | Cada caída con su ronda, el segundo, **qué te tumbó** (zombie, tanque, Brutus, Bruja, Leroy, caída, fuego, tu propia explosión...), quién te levantó o si te desangraste. Ronda de la primera caída del equipo y qué acabó la partida. |
+| **Ronda a ronda** | Duración de cada ronda, máximo de zombies vivos a la vez y, por jugador, bajas, puntos, daño, caídas y nivel en cada ronda. Segundo en el que empieza la **ronda 30, 50, 100 y 200**. |
+| **Economía** | De dónde salen los puntos (bajas, clase, cartas, Mercenario...) y en qué se gastan (caja, Bruja, torretas...), usos de la caja. |
+| **Armas y clase** | Tiempo con cada arma en la mano, disparos, impactos y cabezas por arma, bajas rematadas por la clase (Ejecutor), racha máxima, armas especiales y en qué ronda, bebidas por ronda, daño recibido por fuente. |
+| **Jefes y torretas** | Cada jefe con su ronda, cuánto duró, si murió, quién lo remató, cartas robadas y recuperadas, toques de la Bruja y daño de cada jugador. Torretas: colocadas, bajas, roturas, reparaciones, rebotes y morteros. |
+| **Técnico** | Zombies atascados recolocados o muertos, limpiezas de textos, quién se salió y en qué ronda, y los **dvars `jodas_*` cambiados** (las partidas con dvars de prueba se marcan como **Prueba** y no entran en la clasificación). |
+
+En la web, cada partida enseña **gráficas por ronda** (bajas, puntos, daño y nivel de cada jugador; duración de cada ronda), la tabla de caídas, el daño recibido, puntos ganados y gastados, jefes y torretas.
+
+**Resets**: las partidas que acaban **antes de la ronda 10** ya no se tiran, van a la página nueva **Resets** y no cuentan para la clasificación ni los totales (sustituye al filtro de nivel 10). El mod guarda el JSON **al acabar cada ronda**, así que una partida reiniciada con `fast_restart` o `map_restart` también queda guardada hasta la última ronda terminada (sale como *Sin terminar*).
+
+**Clasificación con categorías**: **High Rounds** (la de siempre), **Flawless** (hasta qué ronda llegó el grupo sin que nadie cayera) y **Speedrun R30 / R50 / R100 / R200** (tiempo hasta que empieza esa ronda). Flawless y speedrun solo cuentan partidas desde esta versión.
+
+**Actualiza el script de subida** (`web/subidor/subir_partidas.ps1`) si lo usas: el nuevo espera a que la partida acabe (o lleve 10 minutos sin cambiar) antes de subirla. El viejo subiría el JSON en cada ronda y se comería el límite de 20 subidas por hora.
+
+**Arreglo**: con Leroy vivo, la tercera carta del menú podía salir en blanco (se llenaba el tope de elementos de pantalla). El nivel, las bajas para la siguiente carta y la ayuda del menú usan ahora menos elementos.
 
 ## Novedades de la 1.10.2: zombies atascados fuera del mapa
 
@@ -114,7 +137,7 @@ Al acabar cada partida, el mod escribe un **JSON con todo lo que ha pasado** en 
 
 1. Regístrate en la web (solo usuario y contraseña).
 2. Al acabar una partida, quien hizo de anfitrión tiene el JSON en la carpeta de arriba (el juego lo avisa en pantalla).
-3. En **Subir JSON**, arrastra la partida que quieras subir. Las repetidas no se duplican y cada partida queda con el nombre de quien la subió. Las partidas en las que **nadie pasa del nivel 10** no se suben (ni a mano ni con el script): se filtran como resets.
+3. En **Subir JSON**, arrastra la partida que quieras subir. Las repetidas no se duplican y cada partida queda con el nombre de quien la subió. Las partidas que acaban **antes de la ronda 10** van a la página **Resets** (desde la 1.10.3).
 
 La web comprueba cada partida antes de guardarla: solo se quedan los campos que escribe el mod (lo demás se descarta), cada número tiene que estar en su rango, las cartas, armas, clases y arquetipos tienen que existir y no pasar de su tope, y los números tienen que cuadrar entre sí (nivel con bajas, bajas con los zombies que salen hasta esa ronda, bajas por arma con el total, duración posible, huecos de carta de la clase). Si algo no cuadra, dice el motivo. Como mucho **1 MB** por archivo, **20 subidas por hora** por cuenta y **3 cuentas nuevas por conexión al día**.
 
