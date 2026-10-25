@@ -12,7 +12,6 @@
     "version": "1.10.3",
     "fecha": "2026-10-25",
     "titulo": "Estadísticas para balancear, resets y nuevas clasificaciones",
-    "pruebas": true,
     "cambios": [
       { "tipo": "nerf", "que": "Pistolas: huecos de carta", "antes": "20", "ahora": "15, como el resto" },
       { "tipo": "nerf", "que": "Pistolas: carta inicial", "antes": "Trébol legendario", "ahora": "Trébol épico" },
