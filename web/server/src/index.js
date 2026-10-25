@@ -73,6 +73,22 @@ function buscarRepetida(p) {
   return { id, repetida: false };
 }
 
+// TEMPORAL: un amigo esta en una partida empezada antes de la validacion
+// nueva. Mientras esto este a true, un JSON que no pase validar.js se acepta
+// con la comprobacion de antes (jugadores con nombre y ronda). Ponerlo a false
+// (y borrar validacionAntigua) cuando se haya subido esa partida.
+const ACEPTAR_FORMATO_ANTIGUO = true;
+
+function validacionAntigua(p) {
+  if (!p || typeof p !== "object") return "cuerpo vacio";
+  if (!Array.isArray(p.jugadores) || p.jugadores.length === 0) return "sin jugadores";
+  if (typeof p.ronda !== "number") return "sin ronda";
+  for (const j of p.jugadores) {
+    if (!j || typeof j.nombre !== "string" || !j.nombre.trim()) return "jugador sin nombre";
+  }
+  return null;
+}
+
 // Como mucho SUBIDAS_HORA subidas por cuenta (o IP) cada hora.
 const SUBIDAS_HORA = 20;
 const subidas = new Map(); // quien -> [instantes]
@@ -120,7 +136,14 @@ app.post("/api/runs", asinc(async (req, res) => {
   if (frenarSubida(auth.nombre ? `cuenta:${auth.nombre.toLowerCase()}` : `ip:${req.ip}`))
     return res.status(429).json({ error: `demasiadas subidas: como mucho ${SUBIDAS_HORA} por hora` });
   // Solo los campos que escribe el mod, con su tipo y rango, y que cuadren.
-  const { partida: p, error } = limpiar(req.body);
+  let { partida: p, error } = limpiar(req.body);
+  if (error && ACEPTAR_FORMATO_ANTIGUO && !validacionAntigua(req.body)) {
+    console.log(`partida aceptada con la validacion antigua (${error})`);
+    p = { ...req.body, validacion: "antigua" };
+    delete p.subido_por;
+    p.id = String(p.id ?? "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40) || createHash("sha1").update(JSON.stringify(req.body)).digest("hex").slice(0, 12);
+    error = null;
+  }
   if (error) return res.status(400).json({ error });
   // 422 = partida valida pero filtrada (reset): el subidor la da por hecha.
   const motivo = descartar(p);
