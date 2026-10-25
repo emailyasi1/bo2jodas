@@ -106,7 +106,7 @@ export default function Subir() {
             </li>
             <li>Arrastra el archivo que empieza por <code>zm_transit_</code> al recuadro.</li>
           </ol>
-          <p className="ten peq">Con la subida automática de arriba no hace falta nada más. Si prefieres que se suban sin tener el navegador abierto, en tu <Link to="/perfil" style={{ color: "var(--lava)" }}>perfil</Link> hay un script opcional.</p>
+          <p className="ten peq">Con la subida automática de arriba no hace falta nada más: deja la web abierta mientras juegas, o entra cuando acabes.</p>
         </aside>
       </div>
     </>

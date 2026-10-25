@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { cambiarContrasena, tokenNuevo } from "../api.js";
+import { cambiarContrasena } from "../api.js";
 import { useSesion } from "../sesion.jsx";
 
-// Perfil: cuenta, como subir partidas, y el token de subida de la cuenta
-// (32 caracteres) para quien prefiera el script automatico.
+// Perfil: cuenta y cambio de contrasena.
 export default function Perfil() {
   const { yo, poner, salir } = useSesion();
   const navegar = useNavigate();
   const { state } = useLocation();
-  const [verToken, setVerToken] = useState(false);
   const [aviso, setAviso] = useState("");
   const [actual, setActual] = useState("");
   const [nueva, setNueva] = useState("");
@@ -19,31 +17,6 @@ export default function Perfil() {
   }, [yo, navegar]);
 
   if (!yo) return <p className="cargando">Cargando…</p>;
-
-  const origen = window.location.origin;
-  const cfg = `# subir_partidas.cfg de ${yo.usuario}\nurl=${origen}\ntoken=${yo.token}\nnombre=${yo.usuario}\n`;
-  const urlCfg = `data:text/plain;charset=utf-8,${encodeURIComponent(cfg)}`;
-
-  async function copiar() {
-    try {
-      await navigator.clipboard.writeText(yo.token);
-      setAviso("Token copiado.");
-    } catch {
-      setVerToken(true);
-      setAviso("No se pudo copiar solo: selecciónalo y copia.");
-    }
-  }
-
-  async function regenerar() {
-    if (!window.confirm("El token actual dejará de valer y tendrás que cambiarlo en subir_partidas.cfg. ¿Seguir?")) return;
-    try {
-      poner(await tokenNuevo());
-      setVerToken(true);
-      setAviso("Token nuevo generado.");
-    } catch (e) {
-      setAviso(e.message);
-    }
-  }
 
   async function cambiar(e) {
     e.preventDefault();
@@ -78,27 +51,6 @@ export default function Perfil() {
       {aviso && <p className="aviso" style={{ marginBottom: 18 }}>{aviso}</p>}
 
       <div style={{ display: "grid", gap: 10, maxWidth: 820 }}>
-        <details className="plegable">
-          <summary>Subida automática con script (opcional)</summary>
-          <div>
-            <p className="mut">
-              Lo normal es usar la <b>subida automática</b> de la página <a href="/subir" style={{ color: "var(--lava)" }}>Subir partida</a> (elegir la carpeta una vez, sin scripts). Si quieres que se suban aunque no tengas el navegador abierto, el script <code>subir_partidas.bat</code> de la carpeta{" "}
-              <a href="https://github.com/emailyasi0-a11y/bo2jodas/tree/main/web/subidor" target="_blank" rel="noreferrer" style={{ color: "var(--lava)" }}>web/subidor</a>{" "}
-              vigila la carpeta de partidas y sube cada una al acabar. Usa este token de tu cuenta:
-            </p>
-            <div className="token">{verToken ? yo.token : "•".repeat(32)}</div>
-            <div className="fila-acciones">
-              <button type="button" className="boton sec peq" onClick={() => setVerToken((v) => !v)}>{verToken ? "Ocultar" : "Mostrar"}</button>
-              <button type="button" className="boton sec peq" onClick={copiar}>Copiar</button>
-              <a className="boton peq" href={urlCfg} download="subir_partidas.cfg">Descargar subir_partidas.cfg</a>
-            </div>
-            <p className="ten peq">
-              Es personal: lo que se suba con él aparece como subido por {yo.usuario}. Si se te escapa, genera otro y el viejo deja de valer.
-            </p>
-            <div><button type="button" className="boton texto peq" style={{ padding: 0 }} onClick={regenerar}>Generar un token nuevo</button></div>
-          </div>
-        </details>
-
         <details className="plegable">
           <summary>Cambiar la contraseña</summary>
           <div>

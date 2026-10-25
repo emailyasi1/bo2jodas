@@ -2,13 +2,17 @@
 // mod deja los JSON (File System Access API, solo navegadores con motor
 // Chromium: Chrome, Edge, Opera, Vivaldi; Brave la tiene tras una flag) y,
 // mientras la web este abierta y con sesion, se suben solas las partidas que
-// falten. Mismas reglas que el script subir_partidas.ps1: una partida sin
-// terminar (terminada:0) solo se sube cuando lleva 10 min sin cambiar.
+// falten. Las terminadas, al momento. Una sin terminar (terminada:0) solo
+// cuando su partida ya no esta viva, segun el latido en_partida.txt que el mod
+// escribe cada minuto: el latido es de otra partida (reinicio), dice
+// "acabada", o lleva 40 min parado (juego cerrado o colgado; una pausa normal
+// no llega). Sin latido (carpeta vieja), 40 min sin cambiar el JSON.
 import { useSyncExternalStore } from "react";
 import { subirPartida } from "./api.js";
 import { vaciarCache } from "./ui.jsx";
 
-const SIN_TERMINAR_MS = 10 * 60_000;
+const SIN_TERMINAR_MS = 40 * 60_000;
+const LATIDO = "en_partida.txt";
 const CADA_MS = 60_000;
 const MAX_POR_REVISION = 15; // el servidor admite 20 subidas por hora
 const CLAVE_SUBIDAS = "jodas_autosubida_subidas";
@@ -120,13 +124,35 @@ function anotar(texto, ok) {
   poner({ registro: [{ t: new Date(), texto, ok }, ...estado.registro].slice(0, 30) });
 }
 
-// Mira la carpeta y sube lo que falte. hay_sesion: solo con cuenta.
+// Latido del mod: { id, estado: "jugando" | "acabada", modificado } o null.
+async function leerLatido(h) {
+  try {
+    const f = await (await h.getFileHandle(LATIDO)).getFile();
+    const j = JSON.parse(await f.text());
+    return { id: String(j.id ?? ""), estado: j.estado, modificado: f.lastModified };
+  } catch (e) {
+    // No existe (carpeta de un mod viejo) o esta a medias de escribirse.
+    return e && e.name === "NotFoundError" ? null : { id: "", estado: "ilegible", modificado: Date.now() };
+  }
+}
+
+// Una partida sin terminar se sube solo si su partida ya no esta viva.
+function muerta(json, latido, archivo) {
+  if (!latido) return Date.now() - archivo.lastModified > SIN_TERMINAR_MS;
+  if (latido.estado === "ilegible") return false;
+  if (latido.id !== String(json.id ?? "")) return true; // ya hay otra partida
+  if (latido.estado === "acabada") return true;
+  return Date.now() - latido.modificado > SIN_TERMINAR_MS;
+}
+
+// Mira la carpeta y sube lo que falte.
 export async function revisar() {
   const h = estado.carpeta;
   if (!h || estado.revisando || estado.permiso !== "ok" || !haySesion) return;
   poner({ revisando: true });
   try {
     const hechas = subidas();
+    const latido = await leerLatido(h);
     let n = 0;
     let subido = false;
     for await (const [nombre, entrada] of h.entries()) {
@@ -139,12 +165,12 @@ export async function revisar() {
       try {
         json = JSON.parse(await f.text());
       } catch {
-        // A medias de escribirse o roto: si lleva 10 min asi, se da por perdido.
+        // A medias de escribirse o roto: si lleva 40 min asi, se da por perdido.
         if (Date.now() - f.lastModified > SIN_TERMINAR_MS) apuntar(claveMod, "roto");
         continue;
       }
       const terminada = json.terminada === undefined || json.terminada === 1;
-      if (!terminada && Date.now() - f.lastModified < SIN_TERMINAR_MS) continue;
+      if (!terminada && !muerta(json, latido, f)) continue;
       if (n >= MAX_POR_REVISION) break;
       n++;
       try {

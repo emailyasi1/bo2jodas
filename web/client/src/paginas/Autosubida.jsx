@@ -46,7 +46,7 @@ export default function Autosubida({ usuario }) {
       {!a.carpeta ? (
         <>
           <p className="mut">
-            Elige <b>una sola vez</b> la carpeta donde el mod guarda las partidas y, mientras tengas esta web abierta con tu cuenta, se subirán solas al acabar (también las que tengas pendientes). Sin scripts ni tokens.
+            Elige <b>una sola vez</b> la carpeta donde el mod guarda las partidas y, mientras tengas esta web abierta con tu cuenta, se subirán solas al acabar (también las que tengas pendientes). No hay que instalar ni ejecutar nada.
           </p>
           <div className="fila-acciones">
             <button type="button" className="boton" onClick={() => accion(elegirCarpeta)}><FolderOpen size={15} /> Elegir carpeta de partidas</button>
@@ -84,7 +84,7 @@ export default function Autosubida({ usuario }) {
               ))}
             </ul>
           )}
-          <p className="ten peq">Las partidas sin terminar (reinicio o juego cerrado) se suben cuando llevan 10 minutos sin cambiar. Lo que ya está subido no se repite.</p>
+          <p className="ten peq">Las terminadas se suben al momento. Una sin terminar se sube cuando el mod avisa de que esa partida ya no sigue (reinicio) o lleva 40 minutos sin dar señales (juego cerrado). Lo que ya está subido no se repite.</p>
         </>
       )}
       {error && <p className="error">{error}</p>}
