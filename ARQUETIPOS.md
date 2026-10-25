@@ -141,6 +141,15 @@ flowchart LR
         manada["Manada<br/>+1 / +1 / +1 / +1 / +1"]
         alfa["Alfa (firma)<br/>FIRMA (una vez)"]
     end
+    subgraph mecanico["Mecanico: Torretas que disparan por ti"]
+        herramientas["Caja de herramientas<br/>1 / 1 / 1 / 1 / 1"]
+        engranajes["Engranajes<br/>+10% / +15% / +22% / +30% / +42%"]
+        recargatorreta["Recarga rapida<br/>-10% / -15% / -22% / -30% / -40%"]
+        calibre50["Calibre .50<br/>+15% / +25% / +35% / +50% / +70%"]
+        rebote["Rebote<br/>10% / 15% / 22% / 30% / 40%"]
+        montaje["Cadena de montaje<br/>+1 / +1 / +1 / +1 / +1"]
+        mortero["Mortero (firma)<br/>FIRMA (una vez)"]
+    end
     subgraph suertudo["Suertudo: Rerolls, dados y cartas mejores"]
         botin["Buscador de botin*<br/>0.4% / 0.8% / 1.2% / 2.0% / 3.2%"]
         conejo["Pata de conejo<br/>+1 / +2 / +2 / +3 / +4"]
@@ -171,6 +180,13 @@ flowchart LR
     silbato -->|requiere| manada
     collar -->|requiere| alfa
     manada -->|requiere| alfa
+    herramientas -->|requiere| engranajes
+    herramientas -->|requiere| recargatorreta
+    herramientas -->|requiere| calibre50
+    herramientas -->|requiere| rebote
+    herramientas -->|requiere| montaje
+    calibre50 -->|requiere| mortero
+    montaje -->|requiere| mortero
     dados -->|requiere| jackpot
     conejo -->|requiere| jackpot
 ```
@@ -232,9 +248,9 @@ flowchart LR
     tormenta["Tormenta"]
     tesla{{"Tesla (firma)"}}
     BAJA(["Baja tuya (cualquier arma)"])
-    DISPARO(["Siguiente impacto de bala"])
-    RAYO(["Rayo: dano fijo en % de la vida maxima del zombie (100% o mas = mata; al jefe 15%) y luego se multiplica por tus cartas de dano. Alcance 350 u"])
     RECARGA(["Empezar a recargar"])
+    RAYO(["Rayo: dano fijo en % de la vida maxima del zombie (100% o mas = mata; al jefe 15%) y luego se multiplica por tus cartas de dano. Alcance 350 u"])
+    DISPARO(["Siguiente impacto de bala"])
     BAJA -->|"8-34% (tope 80%)"| pararrayos
     pararrayos -->|"1 rayo del 15% a otro zombie"| RAYO
     BAJA -->|"3-16% (tope 60%): explosion de 0.6x vida de ronda + 100 a 160 u"| cadena
@@ -268,8 +284,8 @@ flowchart LR
     sangre["Sangre caliente"]
     ultimo["Ultimo aliento"]
     imparable{{"Imparable (firma)"}}
-    BAJA(["Baja tuya (cualquier arma)"])
     GOLPE(["Golpe de zombie recibido"])
+    BAJA(["Baja tuya (cualquier arma)"])
     VIDA(["Tu vida (100, 250 con Juggernog, 500 si eres Tanque con Juggernog)"])
     VIDA -->|"con menos de la mitad: +6-32% dano (tope 200%)"| adrenalina
     VIDA -->|"con menos de la mitad: +2-9 vida/s (tope 40)"| sangre
@@ -300,11 +316,11 @@ flowchart LR
     pulso["Pulso firme"]
     unabala["Una bala basta"]
     elites{{"Cazador de elites (firma)"}}
-    CABEZA(["Tiro a la cabeza (head / helmet; el arma ya multiplica por su locHead)"])
     ELITE(["Tanque (x4 vida) o jefe"])
+    MATA(["Muerte instantanea"])
     MIRA(["Apuntando con la mira"])
     QUIETO2S(["2 s sin disparar"])
-    MATA(["Muerte instantanea"])
+    CABEZA(["Tiro a la cabeza (head / helmet; el arma ya multiplica por su locHead)"])
     CABEZA -->|"+8-48% (tope 400%)"| cabeza
     MIRA -->|"apuntando: +4-20% (tope 100%)"| punteria
     ELITE -->|"solo tanques: +12-72% (tope 400%)"| cazatanques
@@ -335,10 +351,10 @@ flowchart LR
     coraza["Coraza"]
     masa["Masa"]
     coloso{{"Coloso (firma)"}}
-    QUIETO(["Quieto (velocidad &lt; 10)"])
-    CUCHILLO(["Cuchillo"])
-    PASIVA(["Pasiva del arquetipo: vida x2 con Juggernog (500) y escudo de zombies (2250 de dano) en la espalda, nuevo o reparado cada ronda"])
     GOLPE(["Golpe de zombie recibido (60; tanque x2; jefe x2.5)"])
+    PASIVA(["Pasiva del arquetipo: vida x2 con Juggernog (500) y escudo de zombies (2250 de dano) en la espalda, nuevo o reparado cada ronda"])
+    CUCHILLO(["Cuchillo"])
+    QUIETO(["Quieto (velocidad &lt; 10)"])
     GOLPE -->|"el zombie pierde 12-72% de su vida (tope 500%)"| espinas
     CUCHILLO -->|"+40-240% (tope 3000%)"| melee
     QUIETO -->|"golpes -10-40% (tope 60%)"| piedra
@@ -368,11 +384,11 @@ flowchart LR
     mercenario["Mercenario"]
     cajaeco["Caja economica"]
     plutocrata{{"Plutocrata (firma)"}}
-    CABEZA(["Baja a la cabeza"])
-    PERKS(["Bebidas que llevas"])
     BAJA(["Baja tuya"])
     PUNTOS(["Tus puntos (sin gastar)"])
+    PERKS(["Bebidas que llevas"])
     CAJA(["Caja de cartas (2500 x1.17 por tirada)"])
+    CABEZA(["Baja a la cabeza"])
     BAJA -->|"+4-32 puntos (tope 300)"| puntos
     CABEZA -->|"+8-48 puntos (tope 400)"| oro
     PUNTOS -->|"+1% dano por cada 1000 puntos, tope 10-35% (maximo 50%)"| interes
@@ -404,8 +420,8 @@ flowchart LR
     cinta["Cinta de balas"]
     continuo{{"Fuego continuo (firma)"}}
     RAFAGA(["Disparando seguido (menos de 0.4 s entre tiros)"])
-    DT(["Double Tap comprado"])
     BAJA(["Baja tuya (cualquier arma)"])
+    DT(["Double Tap comprado"])
     CARGADOR(["Cargador del arma de la mano"])
     COMBO10(["Combo 10: 10 bajas seguidas con menos de 2 s entre ellas"])
     cadencia -->|"da Double Tap gratis y +2-14% dano (tope 150%); con Double Tap comprado el % se dobla"| DT
@@ -437,11 +453,11 @@ flowchart LR
     zancada["Zancada"]
     estela["Estela"]
     ciclon{{"Ciclon (firma)"}}
-    CERCA3(["3 o mas zombies a menos de 150 u"])
-    ESPRINT(["Esprintando"])
     BAJA(["Baja tuya"])
-    FRENO(["Zombie frenado (velocidad de animacion reducida; no al jefe ni a uno ya frenado por el Paralizador)"])
     GOLPE(["Golpe de zombie recibido"])
+    FRENO(["Zombie frenado (velocidad de animacion reducida; no al jefe ni a uno ya frenado por el Paralizador)"])
+    ESPRINT(["Esprintando"])
+    CERCA3(["3 o mas zombies a menos de 150 u"])
     BAJA -->|"+4-18% velocidad 3 s (tope 60%)"| sed
     GOLPE -->|"te ignoran 0.4 s-1.8 s (tope 6.0 s)"| escurridizo
     CERCA3 -->|"+5-24% velocidad (tope 40%)"| resbaladizo
@@ -472,8 +488,8 @@ flowchart LR
     carne["Carne fresca"]
     manada["Manada"]
     alfa{{"Alfa (firma)"}}
-    LEAPER(["Leaper: mordisco de 1000 (o un tercio de la vida del zombie de la ronda si es mas), no se le puede matar, maximo 3 en total"])
     BAJA(["Baja tuya"])
+    LEAPER(["Leaper: mordisco de 1000 (o un tercio de la vida del zombie de la ronda si es mas), no se le puede matar, maximo 3 en total"])
     silbato -->|"1 leaper (sin Silbato las demas no hacen nada; si lo pierdes se van todos)"| LEAPER
     manada -->|"+1 leaper por carta (tope 2)"| LEAPER
     correa -->|"+10-40% velocidad (tope 100%)"| LEAPER
@@ -482,6 +498,41 @@ flowchart LR
     collar -->|"requiere"| alfa
     manada -->|"requiere"| alfa
     BAJA -->|"3 s: mordiscos x2 y prenden fuego (como Fosforo)"| alfa
+```
+
+### Mecanico: Torretas que disparan por ti
+
+| Carta | Efecto | Valores | Tope | Rareza |
+|---|---|---|---|---|
+| Caja de herramientas | Construyes una torreta automatica | 1 / 1 / 1 / 1 / 1 | 1 | Rara |
+| Engranajes | Tus torretas disparan +% mas rapido | +10% / +15% / +22% / +30% / +42% | +100% | variable |
+| Recarga rapida | Tus torretas recargan en -% de tiempo | -10% / -15% / -22% / -30% / -40% | -70% | variable |
+| Calibre .50 | Balas de tus torretas +% dano | +15% / +25% / +35% / +50% / +70% | +200% | variable |
+| Rebote | % de que la bala salte a otro zombie cercano | 10% / 15% / 22% / 30% / 40% | 80% | variable |
+| Cadena de montaje | +1 torreta (maximo 3) | +1 / +1 / +1 / +1 / +1 | +2 | Rara |
+| **Mortero** | FIRMA: cada 8 s tus torretas lanzan mortero | FIRMA (una vez) | — | Epica |
+
+```mermaid
+flowchart LR
+    herramientas["Caja de herramientas"]
+    engranajes["Engranajes"]
+    recargatorreta["Recarga rapida"]
+    calibre50["Calibre .50"]
+    rebote["Rebote"]
+    montaje["Cadena de montaje"]
+    mortero{{"Mortero (firma)"}}
+    TORRETA(["Torreta: 6% de la vida del zombie de la ronda por bala (minimo 300), cargador de 30, recarga de 4 s, maximo 3 por jugador; sus bajas dan puntos y cuentan x0.75 para subir de nivel, no hace dano a jugadores y los zombies no la atacan"])
+    DESGASTE(["A las 100 bajas se rompe: repararla cuesta 2500 (mantener USAR junto a ella)"])
+    herramientas -->|"1 torreta (kit en la tecla de accion 1, se coloca como en TranZit; sin esta carta las demas no hacen nada)"| TORRETA
+    montaje -->|"+1 torreta por carta (tope 2, maximo 3)"| TORRETA
+    engranajes -->|"+10-42% velocidad de disparo (tope 100%)"| TORRETA
+    recargatorreta -->|"-10-40% tiempo de recarga (tope 70%)"| TORRETA
+    calibre50 -->|"+15-70% dano por bala (tope 200%)"| TORRETA
+    TORRETA -->|"10-40% de que la bala salte al zombie mas cercano (4 m) con el 60% del dano (tope 80%)"| rebote
+    TORRETA -->|"cada baja de la torreta"| DESGASTE
+    calibre50 -->|"requiere"| mortero
+    montaje -->|"requiere"| mortero
+    TORRETA -->|"cada 8 s cada torreta lanza un mortero al zombie con mas zombies alrededor: 250% del dano de una bala en 160 u"| mortero
 ```
 
 ### Suertudo: Rerolls, dados y cartas mejores
@@ -503,10 +554,10 @@ flowchart LR
     amuleto["Amuleto"]
     herradura["Herradura"]
     jackpot{{"Jackpot (firma)"}}
-    RONDA(["Empieza una ronda"])
-    NIVEL(["Subida de nivel (menu de 3 cartas)"])
     BAJA(["Baja tuya"])
+    RONDA(["Empieza una ronda"])
     REROLL(["Rerolls (3 por partida, Granada)"])
+    NIVEL(["Subida de nivel (menu de 3 cartas)"])
     BAJA -->|"0.4%-3.2% de soltar power-up (tope 15.0%)"| botin
     conejo -->|"+1-4 rerolls al cogerla (tope 20) y +1 cada 3 niveles"| REROLL
     NIVEL -->|"15-60% de que la carta cogida valga el doble (tope 80%; no a firmas ni Silbato)"| dados

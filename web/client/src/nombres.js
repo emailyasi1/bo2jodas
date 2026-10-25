@@ -14,6 +14,7 @@ export const ARQUETIPOS = {
   velocista: { nombre: "Velocista", color: "#33f2cc" },
   domador: { nombre: "Domador", color: "#b35cf2" },
   suertudo: { nombre: "Suertudo", color: "#ff99d6" },
+  mecanico: { nombre: "Mecánico", color: "#f29a33" },
 };
 
 export const CLASES = {
@@ -53,6 +54,7 @@ const ESPECIALES = {
   bomberman: { nombre: "Bomberman (mítica)", arquetipo: "" },
   rayo: { nombre: "Rayo", arquetipo: "electricista" },
   bebida_cherry: { nombre: "Electric Cherry (bebida)", arquetipo: "" },
+  torreta: { nombre: "Torreta", arquetipo: "mecanico" },
   none: { nombre: "Sin arma", arquetipo: "" },
 };
 
@@ -141,6 +143,7 @@ const ARMAS_JUEGO = Object.fromEntries(
 export function nombreArma(id) {
   if (ARMAS[id]) return ARMAS[id];
   if (id.startsWith("zombie_perk_bottle")) return "Botella de bebida";
+  if (id === "zombie_bullet_crouch_zm") return "Torreta";
   if (ARMAS_JUEGO[id]) return ARMAS_JUEGO[id];
   let s = id.replace(/_zm$/, "");
   const mejorada = s.endsWith("_upgraded");

@@ -31,6 +31,8 @@
   "bruja_toques": 2.0,
   "leroy_vida": 50.0,
   "leroy_velocidad": 1.3,
+  "leroy_robos": 3.0,
+  "leroy_cuenco": 15.0,
   "baston_piezas": 3.0,
   "caja_cartas": 1.0,
   "caja_base": 2500.0,
@@ -234,6 +236,11 @@
    "id": "domador",
    "nombre": "Domador",
    "desc": "Leapers que luchan por ti"
+  },
+  {
+   "id": "mecanico",
+   "nombre": "Mecanico",
+   "desc": "Torretas que disparan por ti"
   },
   {
    "id": "suertudo",
@@ -1961,6 +1968,159 @@
    "requiere": [
     "collar",
     "manada"
+   ],
+   "valores": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "tope": 1,
+   "decimal": 0,
+   "prefijo": "",
+   "sufijo": ""
+  },
+  {
+   "id": "herramientas",
+   "nombre": "Caja de herramientas",
+   "desc": "Construyes una torreta automatica",
+   "arquetipo": "mecanico",
+   "tipo": "normal",
+   "firma": false,
+   "requiere": [],
+   "valores": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "tope": 1,
+   "decimal": 0,
+   "prefijo": "",
+   "sufijo": ""
+  },
+  {
+   "id": "engranajes",
+   "nombre": "Engranajes",
+   "desc": "Tus torretas disparan +% mas rapido",
+   "arquetipo": "mecanico",
+   "tipo": "normal",
+   "firma": false,
+   "requiere": [
+    "herramientas"
+   ],
+   "valores": [
+    10,
+    15,
+    22,
+    30,
+    42
+   ],
+   "tope": 100,
+   "decimal": 0,
+   "prefijo": "+",
+   "sufijo": "%"
+  },
+  {
+   "id": "recargatorreta",
+   "nombre": "Recarga rapida",
+   "desc": "Tus torretas recargan en -% de tiempo",
+   "arquetipo": "mecanico",
+   "tipo": "normal",
+   "firma": false,
+   "requiere": [
+    "herramientas"
+   ],
+   "valores": [
+    10,
+    15,
+    22,
+    30,
+    40
+   ],
+   "tope": 70,
+   "decimal": 0,
+   "prefijo": "-",
+   "sufijo": "%"
+  },
+  {
+   "id": "calibre50",
+   "nombre": "Calibre .50",
+   "desc": "Balas de tus torretas +% dano",
+   "arquetipo": "mecanico",
+   "tipo": "normal",
+   "firma": false,
+   "requiere": [
+    "herramientas"
+   ],
+   "valores": [
+    15,
+    25,
+    35,
+    50,
+    70
+   ],
+   "tope": 200,
+   "decimal": 0,
+   "prefijo": "+",
+   "sufijo": "%"
+  },
+  {
+   "id": "rebote",
+   "nombre": "Rebote",
+   "desc": "% de que la bala salte a otro zombie cercano",
+   "arquetipo": "mecanico",
+   "tipo": "normal",
+   "firma": false,
+   "requiere": [
+    "herramientas"
+   ],
+   "valores": [
+    10,
+    15,
+    22,
+    30,
+    40
+   ],
+   "tope": 80,
+   "decimal": 0,
+   "prefijo": "",
+   "sufijo": "%"
+  },
+  {
+   "id": "montaje",
+   "nombre": "Cadena de montaje",
+   "desc": "+1 torreta (maximo 3)",
+   "arquetipo": "mecanico",
+   "tipo": "normal",
+   "firma": false,
+   "requiere": [
+    "herramientas"
+   ],
+   "valores": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "tope": 2,
+   "decimal": 0,
+   "prefijo": "+",
+   "sufijo": ""
+  },
+  {
+   "id": "mortero",
+   "nombre": "Mortero",
+   "desc": "FIRMA: cada 8 s tus torretas lanzan mortero",
+   "arquetipo": "mecanico",
+   "tipo": "normal",
+   "firma": true,
+   "requiere": [
+    "calibre50",
+    "montaje"
    ],
    "valores": [
     1,

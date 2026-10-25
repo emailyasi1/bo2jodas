@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.9.2** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.0** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -17,7 +17,37 @@ Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el d
 
 ---
 
-## Novedades de la 1.9.2: estadísticas y web
+## Novedades de la 1.10.0: el Mecánico
+
+**Arquetipo nuevo: Mecánico.** Construye **torretas** que disparan solas, y sus cartas mejoran las torretas, no a ti.
+
+- **Colocar**: con la carta **Caja de herramientas** recibes el kit de la torreta en la **tecla de acción 1** (la que indica el juego al recibirlo; en mando, cruceta arriba). Al sacarlo sale el fantasma de colocación de TranZit (verde / rojo) y al disparar se planta en el suelo. No necesita electricidad ni turbina.
+- **Disparo**: cada bala hace el **6 % de la vida de un zombie de la ronda** (nunca menos de 300), cargador de 30 y 4 s de recarga. Apunta sola al zombie más cercano que ve.
+- **Bajas**: son tuyas. **Dan puntos** y cuentan **×0.75** para subir de nivel (los efectos de baja de tus cartas, como Vampiro o Cinta de balas, no saltan con ellas).
+- **Desgaste**: a las **100 bajas** la torreta se rompe (deja de disparar y echa chispas). Mantén **USAR** junto a ella para **repararla por 2500**.
+- **Recoger**: mantén **USAR** junto a tu torreta para recogerla y ponerla en otro sitio. Conserva su desgaste.
+- **Seguras**: sus balas **no hacen daño a ningún jugador** y **los zombies no van a por ellas**.
+- Si pierdes la Caja de herramientas (al caer o porque te la roba Leroy), tus torretas desaparecen.
+
+| Carta | Efecto | Valores | Tope |
+|---|---|---|---|
+| **Caja de herramientas** (base) | Puedes construir 1 torreta. Sin ella las demás no hacen nada. Siempre RARA, una sola vez | — | 1 |
+| **Engranajes** | Tus torretas disparan +% más rápido | 10 / 15 / 22 / 30 / 42 % | 100 % |
+| **Recarga rápida** | Tus torretas recargan en −% de tiempo | 10 / 15 / 22 / 30 / 40 % | 70 % |
+| **Calibre .50** | +% de daño por bala de tus torretas | 15 / 25 / 35 / 50 / 70 % | 200 % |
+| **Rebote** | % de que la bala salte al zombie más cercano (4 m) con el 60 % del daño | 10 / 15 / 22 / 30 / 40 % | 80 % |
+| **Cadena de montaje** | +1 torreta, hasta 3. Siempre RARA | — | 2 |
+| **Mortero** (firma) | Requiere Calibre .50 + Cadena de montaje. Cada 8 s cada torreta lanza un mortero al zombie que tenga más zombies alrededor: 250 % del daño de una bala en 1.6 m | — | — |
+
+**Leroy**: roba como mucho **3 cartas a cada jugador**. En cooperativo, cuando ya le ha robado 3 a uno, va directo a por otro; si no puede robar a nadie (o en solo), solo pega. Los cuencos de caramelos duran **15 s** (antes 30).
+
+**Arreglos**
+
+- **Jefes que no pegaban**: si el zombie que se convertía en jefe venía por una ventana, el juego lo seguía mandando a la ventana y nunca le dejaba atacar (Leroy corría detrás de ti sin pegar, y le pasaba a todos los jefes mientras estuvierais en una zona con ventanas). Ahora el jefe sale del suelo o la ventana, aparece en la lava y ataca siempre.
+- **Overflow de textos**: el juego guarda cada texto distinto que sale en pantalla y no lo libera; en partidas largas se llenaba y la partida se cerraba (pasó al recoger varios cuencos de Leroy a la vez). Ahora el mod vacía esa tabla sola cada 100 textos nuevos (`jodas_textos_limite`) y vuelve a escribir lo que hay en pantalla, así que no debería volver a pasar dure lo que dure la partida.
+
+<details>
+<summary><b>Novedades de la 1.9.2: estadísticas y web</b></summary>
 
 Al acabar cada partida, el mod escribe un **JSON con todo lo que ha pasado** en el PC del anfitrión (`%localappdata%\Plutonium\storage\t6\mods\zm_bo2jodas\scriptdata\bo2jodas_partidas\`): por jugador, clase, arquetipo, mítica, nivel, build completa, cartas por orden, **daño de cada carta** (cada disparo se reparte entre el arma y las cartas según lo que cada una puso en el multiplicador; el fuego, los rayos y los leapers cuentan por su carta), daño y bajas por arma, bajas, cabezas, caídas, reanimaciones, combo máximo, puntos, rerolls, bloqueos, saltos, cartas perdidas, jefes rematados y bebidas de la Bruja; y de la partida: ronda, duración, jefes aparecidos y muertos, bastones construidos y forjados.
 
@@ -32,6 +62,8 @@ Al acabar cada partida, el mod escribe un **JSON con todo lo que ha pasado** en 
 **Al elegir carta**, cada carta dice cuánto tienes ya de ella ("Ya tienes: +22pct x2") y tu lista se ve abajo a tamaño normal.
 
 Si eres anfitrión a menudo, `web/subidor/` las sube solas con el token de tu perfil. El código de la web está en [`web/`](web/) (Node + React; instrucciones de despliegue en [web/README.md](web/README.md)).
+
+</details>
 
 <details>
 <summary><b>Novedades de la 1.9.1</b></summary>
@@ -73,9 +105,9 @@ La versión de las **builds**: hasta ahora cogías cartas sueltas; ahora eliges 
 
 ### Arquetipos
 
-Hasta el **nivel 8** solo salen **cartas generales**. En el nivel 8 eliges **arquetipo** (3 de los 10 al azar; Granada los cambia) y acto seguido una carta de bienvenida de tu arquetipo. Desde ahí, cada carta de la oferta sale de tu arquetipo con un **35 %** (+1 % por cada Trébol que cojas) y del pozo general con el resto. Una build: **10 cartas** (generales + de arquetipo) **+ 1 mítica**.
+Hasta el **nivel 8** solo salen **cartas generales**. En el nivel 8 eliges **arquetipo** (3 de los 11 al azar; Granada los cambia) y acto seguido una carta de bienvenida de tu arquetipo. Desde ahí, cada carta de la oferta sale de tu arquetipo con un **35 %** (+1 % por cada Trébol que cojas) y del pozo general con el resto. Una build: **10 cartas** (generales + de arquetipo) **+ 1 mítica**.
 
-Cada arquetipo tiene **6 cartas**: 5 normales y una **firma** (en negrita), siempre épica, que solo aparece cuando tienes sus dos cartas. Si pierdes una de ellas al caer, la firma se apaga hasta que la recuperes.
+Cada arquetipo tiene **6 cartas** (el Mecánico, 7): las normales y una **firma** (en negrita), siempre épica, que solo aparece cuando tienes sus dos cartas. Si pierdes una de ellas al caer, la firma se apaga hasta que la recuperes.
 
 | Arquetipo | Idea | Cartas (6) |
 |---|---|---|
@@ -89,6 +121,7 @@ Cada arquetipo tiene **6 cartas**: 5 normales y una **firma** (en negrita), siem
 | **Velocista** | Correr, esquivar y no parar | Sed de sangre · Escurridizo · Resbaladizo · Zancada · Estela · **Ciclón** |
 | **Domador** | Leapers que luchan por ti | Silbato · Correa larga · Collar de púas · Carne fresca · Manada · **Alfa** |
 | **Suertudo** | Rerolls, dados y cartas mejores | Buscador de botín · Pata de conejo · Dados · Amuleto · Herradura · **Jackpot** |
+| **Mecánico** | Torretas que disparan por ti | Caja de herramientas · Engranajes · Recarga rápida · Calibre .50 · Rebote · Cadena de montaje · **Mortero** |
 
 - **16 cartas que ya existían pasan a su arquetipo** (en la tabla, las primeras de cada fila). Trébol sigue siendo general.
 - **5 cartas de relleno** nuevas en el pozo general, que valen poco a propósito: Cordones nuevos, Cantimplora, Calderilla, Pulsera de la suerte y Medalla. Elegir bien y rerollear importa.
@@ -143,12 +176,19 @@ Cada arquetipo tiene **6 cartas**: 5 normales y una **firma** (en negrita), siem
 | Suertudo | Amuleto | % de que cada subida de nivel te ofrezca 4 cartas en vez de 3 | 20 / 30 / 45 / 60 / 80 % | 100 % |
 | Suertudo | Herradura | % de que al empezar cada ronda aparezca un power-up a tus pies | 20 / 30 / 45 / 60 / 80 % | 100 % |
 | Suertudo | **Jackpot** (firma) | Requiere Dados + Pata de conejo. Una vez por ronda, la primera carta que te ofrecen es LEGENDARIA, y la mitad de los rerolls no se gastan | — | — |
+| Mecánico | Caja de herramientas | Puedes construir 1 torreta (kit en la tecla de acción 1). Carta base: sin ella las demás no hacen nada. Siempre RARA, una sola vez | — | 1 |
+| Mecánico | Engranajes | Tus torretas disparan +% más rápido | 10 / 15 / 22 / 30 / 42 % | 100 % |
+| Mecánico | Recarga rápida | Tus torretas recargan en −% de tiempo | 10 / 15 / 22 / 30 / 40 % | 70 % |
+| Mecánico | Calibre .50 | +% de daño por bala de tus torretas | 15 / 25 / 35 / 50 / 70 % | 200 % |
+| Mecánico | Rebote | % de que la bala salte al zombie más cercano (4 m) con el 60 % del daño | 10 / 15 / 22 / 30 / 40 % | 80 % |
+| Mecánico | Cadena de montaje | +1 torreta, hasta 3 en total | — | 2 |
+| Mecánico | **Mortero** (firma) | Requiere Calibre .50 + Cadena de montaje. Cada 8 s cada torreta lanza un mortero al zombie con más zombies alrededor (250 % del daño de una bala en 1.6 m) | — | — |
 
 </details>
 
 ### Jefes y bebidas
 
-Ver [Jefes: Brutus, la Bruja y Leroy](#jefes-brutus-la-bruja-y-leroy). Resumen: cada 10 minutos sale uno de los tres (el primero al azar y luego repite el 66 %). **Solo Brutus** suelta pieza del Bastón. La **Bruja** aparece a dos metros detrás de ti y se teletransporta cada 20 s; si os toca dos veces se sacia (2 power-ups); si la matáis antes, Munición máxima y **una bebida nueva para cada uno** (o una carta si no te cabe). **Leroy** te roba una carta por golpe y al morir las deja en cuencos de caramelos: 30 s para recogerlas, y vuelven **mejoradas**.
+Ver [Jefes: Brutus, la Bruja y Leroy](#jefes-brutus-la-bruja-y-leroy). Resumen: cada 10 minutos sale uno de los tres (el primero al azar y luego repite el 66 %). **Solo Brutus** suelta pieza del Bastón. La **Bruja** aparece a dos metros detrás de ti y se teletransporta cada 20 s; si os toca dos veces se sacia (2 power-ups); si la matáis antes, Munición máxima y **una bebida nueva para cada uno** (o una carta si no te cabe). **Leroy** te roba una carta por golpe (hasta 3 por jugador; en cooperativo, cuando ya te ha robado 3 se va a por otro) y al morir las deja en cuencos de caramelos: 15 s para recogerlas, y vuelven **mejoradas**.
 
 ### Balance
 
@@ -397,7 +437,7 @@ Cada **10 minutos** (el primero en el minuto 10) el siguiente zombie que sale es
 |---|---|---|---|
 | **Brutus** | 70 | El de siempre: rugido, pisotón, fases, furia y 4 tanques de escolta | 2 power-ups, carta gratis para todos y **pieza del Bastón de fuego** (solo él) |
 | **Bruja** | 40 | Aparece **a dos metros detrás de un jugador** al azar y cada 20 s se desvanece y reaparece detrás de otro. No se la puede frenar. Cada vez que **toca** a alguien (se le pega) ese jugador pierde el 10 % de sus puntos; al **segundo toque** (a cualquiera) queda *saciada* | Saciada: 2 power-ups. **Con menos de dos toques**: Munición máxima para todos y a cada jugador **una bebida al azar** de las que no se pueden comprar (sin contar para el límite de 4 de las máquinas); quien ya tenga las cinco elige una **carta entre 3** |
-| **Leroy** | 50 | Viene borracho: super sprint con arreones (acelera y frena cada segundo). Cada golpe te **roba una carta entera** (un tipo con todos sus stacks, como la penalización al caer), como mucho una cada 3 s | Deja en el suelo un **cuenco de caramelos** por cada carta robada: su dueño tiene **30 s** para recogerlo y la carta vuelve **mejorada** (×1.4 de valor). Si no robó nada, 2 power-ups |
+| **Leroy** | 50 | Viene borracho: super sprint con arreones (acelera y frena cada segundo). Cada golpe te **roba una carta entera** (un tipo con todos sus stacks, como la penalización al caer), como mucho una cada 3 s y **3 por jugador**. En cooperativo, cuando ya te ha robado 3 va directo a por otro; si no puede robar a nadie (o en solo), solo pega | Deja en el suelo un **cuenco de caramelos** por cada carta robada: su dueño tiene **15 s** para recogerlo y la carta vuelve **mejorada** (×1.4 de valor). Si no robó nada, 2 power-ups |
 
 **Bebidas que regala la Bruja** (solo las que no están en las máquinas de Pueblo): **Mule Kick**, **Deadshot Daiquiri**, **PhD Flopper** (explosión al tirarse en plancha y resistencia a explosivos), **Electric Cherry** (descarga al recargar, más fuerte cuanto más vacío el cargador) y **Tombstone**. Con icono en la barra como las demás. Se pierden al caer, como todas. Who's Who no entra (necesita el clon y los filtros de Die Rise). En mapas con máquina de alguna de ellas, la da el propio juego.
 
@@ -484,6 +524,8 @@ Al construir el primer Bastón de fuego empieza un ritual de tres pasos. El prog
 | Bloquear la carta marcada | Táctica (Q) | LB |
 | Lista de cartas (mostrar / ocultar) | La tecla que asignes con `bind h +actionslot 2` | Cruceta abajo o Select |
 | Construir el bastón | USAR (F) en la mesa | X (Cuadrado) en la mesa |
+| Sacar el kit de torreta (Mecánico) | Tecla de acción 1 (la que indica el juego) y disparar para plantarla | Cruceta arriba y RT |
+| Recoger o reparar tu torreta | Mantener USAR (F) junto a ella | Mantener X (Cuadrado) junto a ella |
 
 ---
 
@@ -501,8 +543,8 @@ Se escriben en la consola antes de entrar o antes de `map_restart`.
 | `set jodas_zombies_extra_jugador 0.2` | Zombies extra por cada jugador por encima de 4 (20 % por defecto). |
 | `set jodas_arq_nivel 1` | Elegir arquetipo en la primera subida de nivel (8 por defecto). |
 | `set jodas_bruja_minutos 1` | Hora bruja cada minuto (3 por defecto). |
-| `set jodas_arq_forzar piromano` | Ese arquetipo sale siempre en el menú (`piromano`, `electricista`, `berserker`, `francotirador`, `tanque`, `banquero`, `gatillo`, `velocista`, `domador`, `suertudo`). |
-| `set jodas_carta_forzar fosforo` | Esa carta va la primera en cada oferta si se puede ofrecer (ids: `fosforo`, `napalm`, `rescoldos`, `mecha`, `pirotecnico`, `pararrayos`, `sobrecarga`, `condensador`, `tormenta`, `tesla`, `furia`, `sangre`, `ultimo`, `imparable`, `pulso`, `unabala`, `elites`, `piedra`, `coraza`, `masa`, `coloso`, `interes`, `mercenario`, `cajaeco`, `plutocrata`, `tambor`, `plomo`, `cinta`, `continuo`, `resbaladizo`, `zancada`, `estela`, `ciclon`, `silbato`, `correa`, `collar`, `carne`, `manada`, `alfa`, `conejo`, `dados`, `amuleto`, `herradura`, `jackpot`). |
+| `set jodas_arq_forzar piromano` | Ese arquetipo sale siempre en el menú (`piromano`, `electricista`, `berserker`, `francotirador`, `tanque`, `banquero`, `gatillo`, `velocista`, `domador`, `suertudo`, `mecanico`). |
+| `set jodas_carta_forzar fosforo` | Esa carta va la primera en cada oferta si se puede ofrecer (ids: `fosforo`, `napalm`, `rescoldos`, `mecha`, `pirotecnico`, `pararrayos`, `sobrecarga`, `condensador`, `tormenta`, `tesla`, `furia`, `sangre`, `ultimo`, `imparable`, `pulso`, `unabala`, `elites`, `piedra`, `coraza`, `masa`, `coloso`, `interes`, `mercenario`, `cajaeco`, `plutocrata`, `tambor`, `plomo`, `cinta`, `continuo`, `resbaladizo`, `zancada`, `estela`, `ciclon`, `silbato`, `correa`, `collar`, `carne`, `manada`, `alfa`, `conejo`, `dados`, `amuleto`, `herradura`, `jackpot`, `herramientas`, `engranajes`, `recargatorreta`, `calibre50`, `rebote`, `montaje`, `mortero`). |
 | `set jodas_arq_pct 80` | % de cartas de arquetipo en cada oferta (35 por defecto). |
 | `set jodas_fuego_pct 10` | Daño del fuego por segundo, en % de la vida del zombie (4 por defecto). |
 | `set jodas_rerolls 10` | Rerolls por partida (3 por defecto). |
@@ -513,6 +555,16 @@ Se escriben en la consola antes de entrar o antes de `map_restart`.
 | `set jodas_sprint 1` | Todos los zombies corren (2 = super sprint). |
 | `set jodas_caja_cartas 0` | Caja original (armas). |
 | `set jodas_super_pct 0` | Sin super sprinters. |
+| `set jodas_torreta_bajas 10` | Bajas que aguanta una torreta antes de romperse (100 por defecto). |
+| `set jodas_torreta_reparar 100` | Coste de reparar una torreta (2500 por defecto). |
+| `set jodas_torreta_pct 6` | Daño de cada bala de torreta, en % de la vida de un zombie de la ronda (mínimo 300). |
+| `set jodas_torreta_cargador 30` | Balas por cargador de la torreta (`jodas_torreta_recarga 4`: segundos de recarga). |
+| `set jodas_torreta_xp 0.75` | Cuánto cuenta cada baja de torreta para subir de nivel. |
+| `set jodas_mortero_cada 8` | Segundos entre morteros de cada torreta (`jodas_mortero_mult 2.5`: daño respecto a una bala). |
+| `set jodas_debug_torreta 1` | En partida: cada 2 s, el estado de tus torretas en pantalla. |
+| `set jodas_leroy_robos 3` | Cartas que Leroy puede robar a cada jugador. |
+| `set jodas_leroy_cuenco 15` | Segundos para recoger los cuencos de Leroy. |
+| `set jodas_textos_limite 100` | Cada cuántos textos nuevos se vacía la tabla de textos del juego (arreglo del overflow). |
 | `set jodas_off 1` | Desactiva el mod. |
 
 ---

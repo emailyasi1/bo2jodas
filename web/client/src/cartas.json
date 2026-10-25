@@ -1494,6 +1494,132 @@
   ]
  },
  {
+  "id": "herramientas",
+  "nombre": "Caja de herramientas",
+  "arquetipo": "mecanico",
+  "tipo": "normal",
+  "firma": false,
+  "prefijo": "",
+  "sufijo": "",
+  "decimal": 0,
+  "tope": 1,
+  "valores": [
+   1,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ {
+  "id": "engranajes",
+  "nombre": "Engranajes",
+  "arquetipo": "mecanico",
+  "tipo": "normal",
+  "firma": false,
+  "prefijo": "+",
+  "sufijo": "%",
+  "decimal": 0,
+  "tope": 100,
+  "valores": [
+   10,
+   15,
+   22,
+   30,
+   42
+  ]
+ },
+ {
+  "id": "recargatorreta",
+  "nombre": "Recarga rapida",
+  "arquetipo": "mecanico",
+  "tipo": "normal",
+  "firma": false,
+  "prefijo": "-",
+  "sufijo": "%",
+  "decimal": 0,
+  "tope": 70,
+  "valores": [
+   10,
+   15,
+   22,
+   30,
+   40
+  ]
+ },
+ {
+  "id": "calibre50",
+  "nombre": "Calibre .50",
+  "arquetipo": "mecanico",
+  "tipo": "normal",
+  "firma": false,
+  "prefijo": "+",
+  "sufijo": "%",
+  "decimal": 0,
+  "tope": 200,
+  "valores": [
+   15,
+   25,
+   35,
+   50,
+   70
+  ]
+ },
+ {
+  "id": "rebote",
+  "nombre": "Rebote",
+  "arquetipo": "mecanico",
+  "tipo": "normal",
+  "firma": false,
+  "prefijo": "",
+  "sufijo": "%",
+  "decimal": 0,
+  "tope": 80,
+  "valores": [
+   10,
+   15,
+   22,
+   30,
+   40
+  ]
+ },
+ {
+  "id": "montaje",
+  "nombre": "Cadena de montaje",
+  "arquetipo": "mecanico",
+  "tipo": "normal",
+  "firma": false,
+  "prefijo": "+",
+  "sufijo": "",
+  "decimal": 0,
+  "tope": 2,
+  "valores": [
+   1,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ {
+  "id": "mortero",
+  "nombre": "Mortero",
+  "arquetipo": "mecanico",
+  "tipo": "normal",
+  "firma": true,
+  "prefijo": "",
+  "sufijo": "",
+  "decimal": 0,
+  "tope": 1,
+  "valores": [
+   1,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ {
   "id": "conejo",
   "nombre": "Pata de conejo",
   "arquetipo": "suertudo",
