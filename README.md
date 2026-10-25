@@ -20,6 +20,7 @@ Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el d
 ## Novedades de la 1.10.4: sin tirón al acabar la ronda
 
 - **Arreglado el tirón al acabar cada ronda** (desde la 1.10.3): al guardar la partida, el mod escribía el JSON línea a línea en un solo fotograma, cientos de escrituras que crecían con las rondas (en cuarteto, más de 2000 en la ronda 50), y el juego se quedaba congelado unos milisegundos. Ahora lo monta en memoria repartido en varios fotogramas durante el descanso entre rondas y lo escribe de golpe en unas pocas escrituras. El JSON es el mismo: se sube igual a mano y con el script de subida.
+- **Web: subida automática sin scripts.** En *Subir partida* eliges una vez la carpeta de partidas y, con la web abierta y tu cuenta, se suben solas. El script pasa a ser opcional.
 
 ## Novedades de la 1.10.3: estadísticas para balancear, resets y nuevas clasificaciones
 
@@ -151,7 +152,7 @@ Al acabar cada partida, el mod escribe un **JSON con todo lo que ha pasado** en 
 
 1. Regístrate en la web (solo usuario y contraseña).
 2. Al acabar una partida, quien hizo de anfitrión tiene el JSON en la carpeta de arriba (el juego lo avisa en pantalla).
-3. En **Subir JSON**, arrastra la partida que quieras subir. Las repetidas no se duplican y cada partida queda con el nombre de quien la subió. Las partidas que acaban **antes de la ronda 10** van a la página **Resets** (desde la 1.10.3).
+3. En **Subir partida**, pulsa **Elegir carpeta de partidas** una sola vez y elige la carpeta de arriba: mientras tengas la web abierta con tu cuenta, las partidas se suben solas (Chrome, Edge, Opera o Vivaldi; en Brave hay que activar `brave://flags/#file-system-access-api`). También puedes arrastrar el JSON a mano. Las repetidas no se duplican y cada partida queda con el nombre de quien la subió. Las partidas que acaban **antes de la ronda 10** van a la página **Resets** (desde la 1.10.3).
 
 La web comprueba cada partida antes de guardarla: solo se quedan los campos que escribe el mod (lo demás se descarta), cada número tiene que estar en su rango, las cartas, armas, clases y arquetipos tienen que existir y no pasar de su tope, y los números tienen que cuadrar entre sí (nivel con bajas, bajas con los zombies que salen hasta esa ronda, bajas por arma con el total, duración posible, huecos de carta de la clase). Si algo no cuadra, dice el motivo. Como mucho **1 MB** por archivo, **20 subidas por hora** por cuenta y **3 cuentas nuevas por conexión al día**.
 
@@ -159,7 +160,7 @@ La web comprueba cada partida antes de guardarla: solo se quedan los campos que 
 
 **Al elegir carta**, cada carta dice cuánto tienes ya de ella ("Ya tienes: +22pct x2") y tu lista se ve abajo a tamaño normal.
 
-Si eres anfitrión a menudo, `web/subidor/` las sube solas con el token de tu perfil. El código de la web está en [`web/`](web/) (Node + React; instrucciones de despliegue en [web/README.md](web/README.md)).
+Si quieres que se suban sin tener el navegador abierto, el script opcional de `web/subidor/` las sube con el token de tu perfil. El código de la web está en [`web/`](web/) (Node + React; instrucciones de despliegue en [web/README.md](web/README.md)).
 
 </details>
 
