@@ -182,11 +182,14 @@ export async function revisar() {
           anotar(`${nombre}: subida${terminada ? "" : " (sin terminar)"}`, true);
         }
       } catch (e) {
-        // Rechazada (no cuadra, de prueba...): no se reintenta salvo que cambie.
-        if (/^429|demasiadas/.test(e.message)) {
-          anotar(`${nombre}: ${e.message}; se reintenta luego`, false);
+        // Sin red, servidor dormido (Render tarda ~1 min en despertar y puede
+        // soltar un 502) o limite por hora: se reintenta en la siguiente pasada.
+        const estado = e && e.estado;
+        if (!estado || estado >= 500 || estado === 429) {
+          anotar(`${nombre}: ${estado ? e.message : "no se pudo contactar con la web"}; se reintenta en un minuto`, false);
           break;
         }
+        // Rechazada de verdad (no cuadra, de prueba...): no se reintenta salvo que cambie.
         apuntar(terminada ? nombre : claveMod, `error: ${e.message}`);
         anotar(`${nombre}: ${e.message}`, false);
       }
@@ -224,7 +227,13 @@ export function iniciarAutosubida(conSesion) {
       /* sin IndexedDB (modo privado): se elige la carpeta cada vez */
     }
   })();
-  temporizador = setInterval(revisar, CADA_MS);
+  let tics = 0;
+  temporizador = setInterval(() => {
+    revisar();
+    // Con carpeta vinculada, un toque al servidor cada 10 min para que la web
+    // (en Render se duerme a los 15 min sin visitas) este despierta al subir.
+    if (++tics % 10 === 0 && estado.carpeta && estado.permiso === "ok") fetch("/api/auth/yo", { credentials: "same-origin" }).catch(() => {});
+  }, CADA_MS);
   return () => {
     clearInterval(temporizador);
     temporizador = null;

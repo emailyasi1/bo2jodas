@@ -12,7 +12,11 @@ async function post(ruta, cuerpo, cabeceras = {}) {
     body: JSON.stringify(cuerpo ?? {}),
   });
   const datos = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(datos.error || `${r.status}`);
+  if (!r.ok) {
+    const e = new Error(datos.error || `${r.status}`);
+    e.estado = r.status; // quien llama distingue rechazo (4xx) de servidor caido (5xx)
+    throw e;
+  }
   return datos;
 }
 

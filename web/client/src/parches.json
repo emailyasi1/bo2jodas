@@ -6,7 +6,8 @@
     "cambios": [
       { "tipo": "nuevo", "que": "Latido del mod", "texto": "Mientras dura la partida, el mod escribe cada minuto en_partida.txt con el id de la partida y si sigue en marcha. Con eso la web sabe si una partida sin terminar sigue viva (espera, dure lo que dure la ronda), se reinició con map_restart o fast_restart (se sube al momento) o se cerró el juego (40 minutos sin latido: se sube como Sin terminar)." },
       { "tipo": "web", "que": "Subida automática", "texto": "Usa el latido en vez de los 10 minutos sin cambiar el JSON. Las terminadas se suben siempre al momento, aunque apagues el PC y entres días después." },
-      { "tipo": "cambio", "que": "Script de subida y token", "texto": "Desaparecen: ya no hace falta ejecutar nada en el PC." }
+      { "tipo": "cambio", "que": "Script de subida y token", "texto": "Desaparecen: ya no hace falta ejecutar nada en el PC." },
+      { "tipo": "web", "que": "Web dormida", "texto": "Si el servidor está dormido o falla al subir (Render tarda un minuto en despertar), se reintenta al minuto siguiente en vez de dar la partida por rechazada. Con la carpeta vinculada, la página mantiene el servidor despierto." }
     ]
   },
   {
