@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.1** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.2** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,13 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.2: zombies atascados fuera del mapa
+
+- **Super sprinters atascados en las ventanas** (pasaba desde la 1.6): Pueblo no tiene animación para cruzar una ventana en super sprint, así que el super sprinter que llegaba a una ventana se quedaba fuera del mapa para siempre (parecía que salían lejísimos y la ronda no acababa). Ahora nacen en sprint y **aceleran a super sprint al entrar** en el mapa.
+- **Zombies recolocados**: el zombie que lleva 15 s atascado y reaparece detrás de un jugador ya no vuelve a su ventana, ataca normal y **libera su hueco en la ventana** (antes esa ventana quedaba bloqueada y los siguientes zombies esperaban fuera). Si no hay sitio donde ponerlo, muere en vez de borrarse.
+
+Con 31 zombies vivos es normal que alguno espere un rato fuera a que quede libre un hueco en su ventana; lo que ya no debería pasar es que se quede ahí para siempre.
 
 ## Novedades de la 1.10.1: balance de clases
 
