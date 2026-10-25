@@ -1,0 +1,5 @@
+# Copia este archivo como subir_partidas.cfg y rellena (o descargalo ya relleno desde tu Perfil en la web):
+url=https://203.0.113.7.sslip.io
+# token de 32 caracteres de tu cuenta (web -> Perfil -> Tu token de subida)
+token=cambiame
+nombre=

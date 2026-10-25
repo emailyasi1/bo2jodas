@@ -2,22 +2,24 @@
   {
     "version": "1.10.5",
     "fecha": "2026-10-25",
-    "titulo": "Subida automática sin scripts",
+    "titulo": "Latido del mod",
     "cambios": [
-      { "tipo": "nuevo", "que": "Latido del mod", "texto": "Mientras dura la partida, el mod escribe cada minuto en_partida.txt con el id de la partida y si sigue en marcha. Con eso la web sabe si una partida sin terminar sigue viva (espera, dure lo que dure la ronda), se reinició con map_restart o fast_restart (se sube al momento) o se cerró el juego (40 minutos sin latido: se sube como Sin terminar)." },
-      { "tipo": "web", "que": "Subida automática", "texto": "Usa el latido en vez de los 10 minutos sin cambiar el JSON. Las terminadas se suben siempre al momento, aunque apagues el PC y entres días después." },
-      { "tipo": "cambio", "que": "Script de subida y token", "texto": "Desaparecen: ya no hace falta ejecutar nada en el PC." },
-      { "tipo": "web", "que": "Web dormida", "texto": "Si el servidor está dormido o falla al subir (Render tarda un minuto en despertar), se reintenta al minuto siguiente en vez de dar la partida por rechazada. Con la carpeta vinculada, la página mantiene el servidor despierto." },
-      { "tipo": "web", "que": "Sin subidas repetidas", "texto": "Antes de subir nada, la autosubida pregunta al servidor qué partidas tiene ya (por el id del nombre del archivo) y solo manda las nuevas o las sin terminar que traen más rondas. Da igual que borres los JSON o no, o que cambies de navegador o de PC: no se reenvía nada. El límite sube a 30 subidas por hora." }
-    ]
-  },
-  {
-    "version": "Web",
-    "fecha": "2026-10-25",
-    "titulo": "Subida automática sin scripts",
-    "cambios": [
-      { "tipo": "nuevo", "que": "Subida automática desde la web", "texto": "En Subir partida, eliges una sola vez la carpeta donde el mod guarda las partidas y, mientras tengas la web abierta con tu cuenta, se suben solas (también al entrar, las pendientes). Sin .bat, .ps1 ni token. Funciona en Chrome, Edge, Opera y Vivaldi; en Brave hay que activar brave://flags/#file-system-access-api; en Firefox y Safari no (arrastrar a mano sigue igual)." },
-      { "tipo": "cambio", "que": "Script de subida", "texto": "Pasa a ser opcional, para quien quiera que se suban sin tener el navegador abierto." }
+      {
+        "tipo": "nuevo",
+        "que": "Latido del mod",
+        "texto": "Mientras dura la partida, el mod escribe cada minuto en_partida.txt (junto a los JSON) con el id de la partida y si sigue en marcha, y al acabar lo deja en \"acabada\". Una escritura minúscula, sin tirón."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Script de subida",
+        "texto": "Usa el latido en vez de los 10 minutos sin cambiar el JSON: una partida sin terminar se sube si el latido es de otra partida (map_restart / fast_restart), dice \"acabada\" o lleva 40 minutos parado (juego cerrado). Las rondas largas ya no la suben antes de tiempo. Las terminadas se suben siempre al momento."
+      },
+      {
+        "tipo": "web",
+        "que": "Límite de subidas",
+        "antes": "20 por hora",
+        "ahora": "30 por hora"
+      }
     ]
   },
   {
@@ -25,7 +27,11 @@
     "fecha": "2026-10-25",
     "titulo": "Sin tirón al acabar la ronda",
     "cambios": [
-      { "tipo": "arreglo", "que": "Tirón al acabar cada ronda", "texto": "El guardado de la partida escribía el JSON línea a línea en un solo fotograma (cientos de escrituras, más cuantas más rondas) y congelaba el juego unos milisegundos. Ahora se monta en memoria repartido en varios fotogramas y se escribe de golpe. El JSON es el mismo, a mano y con el script de subida." }
+      {
+        "tipo": "arreglo",
+        "que": "Tirón al acabar cada ronda",
+        "texto": "El guardado de la partida escribía el JSON línea a línea en un solo fotograma (cientos de escrituras, más cuantas más rondas) y congelaba el juego unos milisegundos. Ahora se monta en memoria repartido en varios fotogramas y se escribe de golpe. El JSON es el mismo, a mano y con el script de subida."
+      }
     ]
   },
   {
@@ -33,11 +39,31 @@
     "fecha": "2026-10-25",
     "titulo": "Wiki y notas de parche",
     "cambios": [
-      { "tipo": "nuevo", "que": "Wiki", "texto": "Qué hace cada carta con sus valores por rareza y su tope, cartas por arquetipo, clases, jefes, forja, bastón y el resto de reglas." },
-      { "tipo": "nuevo", "que": "Notas de parche", "texto": "Esta página: cada cambio del mod y de la web, versión a versión." },
-      { "tipo": "arreglo", "que": "Clasificación en grupo", "texto": "En Dúo, Trío, Cuarteto y 5+ cada entrada es una partida con todos sus jugadores, cada uno con su clase, build, nivel y bajas (antes salía cada jugador por separado). Con la misma ronda, puesto compartido (1, 2, 3, 3, 5...)." },
-      { "tipo": "web", "que": "Clasificación", "texto": "Pulsar en una fila abre esa partida (el nombre de cada jugador sigue llevando a su perfil)." },
-      { "tipo": "web", "que": "Clasificación por jugadores", "texto": "Todas las categorías (High Rounds, Flawless y Speedrun R30 / R50 / R100 / R200) tienen su tabla para Solo, Dúo, Trío, Cuarteto y 5+, como en zwr.gg, con los filtros de clase, arquetipo y mítica. El enlace guarda la categoría y los jugadores." }
+      {
+        "tipo": "nuevo",
+        "que": "Wiki",
+        "texto": "Qué hace cada carta con sus valores por rareza y su tope, cartas por arquetipo, clases, jefes, forja, bastón y el resto de reglas."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Notas de parche",
+        "texto": "Esta página: cada cambio del mod y de la web, versión a versión."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Clasificación en grupo",
+        "texto": "En Dúo, Trío, Cuarteto y 5+ cada entrada es una partida con todos sus jugadores, cada uno con su clase, build, nivel y bajas (antes salía cada jugador por separado). Con la misma ronda, puesto compartido (1, 2, 3, 3, 5...)."
+      },
+      {
+        "tipo": "web",
+        "que": "Clasificación",
+        "texto": "Pulsar en una fila abre esa partida (el nombre de cada jugador sigue llevando a su perfil)."
+      },
+      {
+        "tipo": "web",
+        "que": "Clasificación por jugadores",
+        "texto": "Todas las categorías (High Rounds, Flawless y Speedrun R30 / R50 / R100 / R200) tienen su tabla para Solo, Dúo, Trío, Cuarteto y 5+, como en zwr.gg, con los filtros de clase, arquetipo y mítica. El enlace guarda la categoría y los jugadores."
+      }
     ]
   },
   {
@@ -45,19 +71,75 @@
     "fecha": "2026-10-25",
     "titulo": "Estadísticas para balancear, resets y nuevas clasificaciones",
     "cambios": [
-      { "tipo": "nerf", "que": "Pistolas: huecos de carta", "antes": "20", "ahora": "15, como el resto" },
-      { "tipo": "nerf", "que": "Pistolas: carta inicial", "antes": "Trébol legendario", "ahora": "Trébol épico" },
-      { "tipo": "nerf", "que": "Ray Gun Mark II", "antes": "En el sorteo de armas especiales (8 %, la mitad de las veces)", "ahora": "1 % fijo por ronda; el sorteo de especiales de Pistolas solo da la Ray Gun" },
-      { "tipo": "nerf", "que": "Buscador de botín", "antes": "Tope 15 %", "ahora": "Tope 5 %" },
-      { "tipo": "arreglo", "que": "Caja misteriosa", "texto": "Desde la tirada 39 costaba más de 1.000.000 y no se podía usar nunca más (el juego no deja pasar de 1.000.000 de puntos). Ahora el precio deja de subir en 999.999." },
-      { "tipo": "arreglo", "que": "Tercera carta en blanco", "texto": "Con Leroy vivo, la tercera carta del menú podía salir vacía (se llenaba el tope de elementos de pantalla). El nivel, las bajas para la siguiente carta y la ayuda del menú usan menos elementos." },
-      { "tipo": "nuevo", "que": "JSON de análisis", "texto": "Cada partida guarda las caídas (qué te tumbó, quién te levantó, si te desangraste), datos ronda a ronda, de dónde salen y en qué se gastan los puntos, tiempo y precisión por arma, jefes, torretas, datos técnicos y los dvars de prueba." },
-      { "tipo": "nuevo", "que": "Guardado por ronda", "texto": "El JSON se escribe al acabar cada ronda: una partida reiniciada con fast_restart o map_restart queda guardada hasta la última ronda terminada." },
-      { "tipo": "web", "que": "Gráficas por partida", "texto": "Bajas, puntos, daño y nivel de cada jugador ronda a ronda, duración de cada ronda, caídas, daño recibido, economía, jefes y torretas." },
-      { "tipo": "web", "que": "Resets", "texto": "Las partidas que acaban antes de la ronda 10 van a su propia página y no cuentan para la clasificación (sustituye al filtro de nivel 10)." },
-      { "tipo": "web", "que": "Clasificación por categorías", "texto": "High Rounds, Flawless (ronda alcanzada sin que nadie caiga) y Speedrun R30 / R50 / R100 / R200." },
-      { "tipo": "web", "que": "Partidas de prueba", "texto": "Las partidas con dvars jodas_* cambiados salen marcadas como Prueba y no entran en la clasificación." },
-      { "tipo": "cambio", "que": "Script de subida", "texto": "Hay que actualizar subir_partidas.ps1: espera a que la partida acabe (o lleve 10 minutos sin cambiar) antes de subirla." }
+      {
+        "tipo": "nerf",
+        "que": "Pistolas: huecos de carta",
+        "antes": "20",
+        "ahora": "15, como el resto"
+      },
+      {
+        "tipo": "nerf",
+        "que": "Pistolas: carta inicial",
+        "antes": "Trébol legendario",
+        "ahora": "Trébol épico"
+      },
+      {
+        "tipo": "nerf",
+        "que": "Ray Gun Mark II",
+        "antes": "En el sorteo de armas especiales (8 %, la mitad de las veces)",
+        "ahora": "1 % fijo por ronda; el sorteo de especiales de Pistolas solo da la Ray Gun"
+      },
+      {
+        "tipo": "nerf",
+        "que": "Buscador de botín",
+        "antes": "Tope 15 %",
+        "ahora": "Tope 5 %"
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Caja misteriosa",
+        "texto": "Desde la tirada 39 costaba más de 1.000.000 y no se podía usar nunca más (el juego no deja pasar de 1.000.000 de puntos). Ahora el precio deja de subir en 999.999."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Tercera carta en blanco",
+        "texto": "Con Leroy vivo, la tercera carta del menú podía salir vacía (se llenaba el tope de elementos de pantalla). El nivel, las bajas para la siguiente carta y la ayuda del menú usan menos elementos."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "JSON de análisis",
+        "texto": "Cada partida guarda las caídas (qué te tumbó, quién te levantó, si te desangraste), datos ronda a ronda, de dónde salen y en qué se gastan los puntos, tiempo y precisión por arma, jefes, torretas, datos técnicos y los dvars de prueba."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Guardado por ronda",
+        "texto": "El JSON se escribe al acabar cada ronda: una partida reiniciada con fast_restart o map_restart queda guardada hasta la última ronda terminada."
+      },
+      {
+        "tipo": "web",
+        "que": "Gráficas por partida",
+        "texto": "Bajas, puntos, daño y nivel de cada jugador ronda a ronda, duración de cada ronda, caídas, daño recibido, economía, jefes y torretas."
+      },
+      {
+        "tipo": "web",
+        "que": "Resets",
+        "texto": "Las partidas que acaban antes de la ronda 10 van a su propia página y no cuentan para la clasificación (sustituye al filtro de nivel 10)."
+      },
+      {
+        "tipo": "web",
+        "que": "Clasificación por categorías",
+        "texto": "High Rounds, Flawless (ronda alcanzada sin que nadie caiga) y Speedrun R30 / R50 / R100 / R200."
+      },
+      {
+        "tipo": "web",
+        "que": "Partidas de prueba",
+        "texto": "Las partidas con dvars jodas_* cambiados salen marcadas como Prueba y no entran en la clasificación."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Script de subida",
+        "texto": "Hay que actualizar subir_partidas.ps1: espera a que la partida acabe (o lleve 10 minutos sin cambiar) antes de subirla."
+      }
     ]
   },
   {
@@ -65,9 +147,21 @@
     "fecha": "2026-10-25",
     "titulo": "Seguridad de la subida de partidas",
     "cambios": [
-      { "tipo": "web", "que": "Validación", "texto": "Solo se guardan los campos que escribe el mod; números en su rango, cartas, armas y arquetipos que existan y no pasen de su tope, y cifras que cuadren entre sí (nivel con bajas, bajas con los zombies de la ronda, duración...)." },
-      { "tipo": "web", "que": "Límites", "texto": "1 MB por archivo, 20 subidas por hora por cuenta y 3 cuentas nuevas por conexión al día. Una partida falsa no puede ocupar el id de una real." },
-      { "tipo": "web", "que": "Formato antiguo", "texto": "Ya solo se acepta el JSON nuevo." }
+      {
+        "tipo": "web",
+        "que": "Validación",
+        "texto": "Solo se guardan los campos que escribe el mod; números en su rango, cartas, armas y arquetipos que existan y no pasen de su tope, y cifras que cuadren entre sí (nivel con bajas, bajas con los zombies de la ronda, duración...)."
+      },
+      {
+        "tipo": "web",
+        "que": "Límites",
+        "texto": "1 MB por archivo, 20 subidas por hora por cuenta y 3 cuentas nuevas por conexión al día. Una partida falsa no puede ocupar el id de una real."
+      },
+      {
+        "tipo": "web",
+        "que": "Formato antiguo",
+        "texto": "Ya solo se acepta el JSON nuevo."
+      }
     ]
   },
   {
@@ -75,8 +169,16 @@
     "fecha": "2026-10-25",
     "titulo": "Zombies atascados fuera del mapa",
     "cambios": [
-      { "tipo": "arreglo", "que": "Super sprinters en las ventanas", "texto": "Pueblo no tiene animación para cruzar una ventana en super sprint y se quedaban fuera para siempre (pasaba desde la 1.6). Ahora nacen en sprint y aceleran a super sprint al entrar en el mapa." },
-      { "tipo": "arreglo", "que": "Zombies recolocados", "texto": "El zombie atascado que reaparece detrás de un jugador ataca normal y libera su hueco en la ventana. Si no hay sitio donde ponerlo, muere en vez de borrarse." }
+      {
+        "tipo": "arreglo",
+        "que": "Super sprinters en las ventanas",
+        "texto": "Pueblo no tiene animación para cruzar una ventana en super sprint y se quedaban fuera para siempre (pasaba desde la 1.6). Ahora nacen en sprint y aceleran a super sprint al entrar en el mapa."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Zombies recolocados",
+        "texto": "El zombie atascado que reaparece detrás de un jugador ataca normal y libera su hueco en la ventana. Si no hay sitio donde ponerlo, muere en vez de borrarse."
+      }
     ]
   },
   {
@@ -84,20 +186,85 @@
     "fecha": "2026-10-25",
     "titulo": "Balance de clases",
     "cambios": [
-      { "tipo": "nerf", "que": "Automáticas: racha de daño (tope)", "antes": "+20 %", "ahora": "+15 %" },
-      { "tipo": "nerf", "que": "Automáticas: gastar 2 balas", "antes": "15 %", "ahora": "25 %" },
-      { "tipo": "buff", "que": "Escopetas: velocidad", "antes": "−10 %", "ahora": "−5 %" },
-      { "tipo": "buff", "que": "Escopetas: recarga", "antes": "Normal", "ahora": "Speed Cola de clase (la mitad de tiempo)" },
-      { "tipo": "buff", "que": "Escopetas: puntos por baja", "ahora": "+7.5 % de la vida del zombie" },
-      { "tipo": "rework", "que": "Rifles: ventaja de clase", "antes": "+30 % a heridos, −10 % a sanos", "ahora": "Ejecutor: la bala que deja al zombie por debajo del 20 % de su vida lo remata (no al jefe)" },
-      { "tipo": "buff", "que": "Rifles: SMR", "antes": "80 de daño por bala", "ahora": "320 (×4)" },
-      { "tipo": "buff", "que": "Rifles: puntos por baja", "ahora": "+0.13 % de la vida del zombie" },
-      { "tipo": "buff", "que": "Pistolas: M1911 y Mauser C96", "antes": "Sin mejorar (20 de daño)", "ahora": "Siempre mejoradas: Mustang & Sally y Boomhilda" },
-      { "tipo": "buff", "que": "Pistolas: cuchillo balístico", "antes": "En la lista de armas", "ahora": "Fuera" },
-      { "tipo": "buff", "que": "Pistolas: carta inicial", "ahora": "Trébol legendario al elegir la clase" },
-      { "tipo": "buff", "que": "Pistolas: puntos por baja", "ahora": "+5.1 % de la vida del zombie" },
-      { "tipo": "buff", "que": "Primera carta", "antes": "15 bajas", "ahora": "9 bajas (los zombies de la ronda 1)" },
-      { "tipo": "arreglo", "que": "Torreta del Mecánico", "texto": "Ya se puede recoger y reparar, suena y sus balas no hacen daño a ningún jugador." }
+      {
+        "tipo": "nerf",
+        "que": "Automáticas: racha de daño (tope)",
+        "antes": "+20 %",
+        "ahora": "+15 %"
+      },
+      {
+        "tipo": "nerf",
+        "que": "Automáticas: gastar 2 balas",
+        "antes": "15 %",
+        "ahora": "25 %"
+      },
+      {
+        "tipo": "buff",
+        "que": "Escopetas: velocidad",
+        "antes": "−10 %",
+        "ahora": "−5 %"
+      },
+      {
+        "tipo": "buff",
+        "que": "Escopetas: recarga",
+        "antes": "Normal",
+        "ahora": "Speed Cola de clase (la mitad de tiempo)"
+      },
+      {
+        "tipo": "buff",
+        "que": "Escopetas: puntos por baja",
+        "ahora": "+7.5 % de la vida del zombie"
+      },
+      {
+        "tipo": "rework",
+        "que": "Rifles: ventaja de clase",
+        "antes": "+30 % a heridos, −10 % a sanos",
+        "ahora": "Ejecutor: la bala que deja al zombie por debajo del 20 % de su vida lo remata (no al jefe)"
+      },
+      {
+        "tipo": "buff",
+        "que": "Rifles: SMR",
+        "antes": "80 de daño por bala",
+        "ahora": "320 (×4)"
+      },
+      {
+        "tipo": "buff",
+        "que": "Rifles: puntos por baja",
+        "ahora": "+0.13 % de la vida del zombie"
+      },
+      {
+        "tipo": "buff",
+        "que": "Pistolas: M1911 y Mauser C96",
+        "antes": "Sin mejorar (20 de daño)",
+        "ahora": "Siempre mejoradas: Mustang & Sally y Boomhilda"
+      },
+      {
+        "tipo": "buff",
+        "que": "Pistolas: cuchillo balístico",
+        "antes": "En la lista de armas",
+        "ahora": "Fuera"
+      },
+      {
+        "tipo": "buff",
+        "que": "Pistolas: carta inicial",
+        "ahora": "Trébol legendario al elegir la clase"
+      },
+      {
+        "tipo": "buff",
+        "que": "Pistolas: puntos por baja",
+        "ahora": "+5.1 % de la vida del zombie"
+      },
+      {
+        "tipo": "buff",
+        "que": "Primera carta",
+        "antes": "15 bajas",
+        "ahora": "9 bajas (los zombies de la ronda 1)"
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Torreta del Mecánico",
+        "texto": "Ya se puede recoger y reparar, suena y sus balas no hacen daño a ningún jugador."
+      }
     ]
   },
   {
@@ -105,10 +272,26 @@
     "fecha": "2026-10-25",
     "titulo": "El Mecánico",
     "cambios": [
-      { "tipo": "nuevo", "que": "Arquetipo Mecánico", "texto": "Construye torretas que disparan solas (6 % de la vida de un zombie de la ronda por bala). Sus bajas dan puntos y cuentan ×0.75 para subir de nivel. A las 100 bajas se rompe y se repara por 2500. Cartas: Caja de herramientas, Engranajes, Recarga rápida, Calibre .50, Rebote, Cadena de montaje y la firma Mortero." },
-      { "tipo": "nerf", "que": "Leroy", "texto": "Roba como mucho 3 cartas a cada jugador; en cooperativo va después a por otro. Los cuencos de caramelos duran 15 s (antes 30)." },
-      { "tipo": "arreglo", "que": "Jefes que no pegaban", "texto": "El jefe que salía de un zombie que venía por una ventana se quedaba sin atacar (Leroy corría detrás de ti sin pegar)." },
-      { "tipo": "arreglo", "que": "Overflow de textos", "texto": "En partidas largas se llenaba la tabla de textos del juego y la partida se cerraba (al recoger varios cuencos de Leroy a la vez). Ahora el mod la vacía sola." }
+      {
+        "tipo": "nuevo",
+        "que": "Arquetipo Mecánico",
+        "texto": "Construye torretas que disparan solas (6 % de la vida de un zombie de la ronda por bala). Sus bajas dan puntos y cuentan ×0.75 para subir de nivel. A las 100 bajas se rompe y se repara por 2500. Cartas: Caja de herramientas, Engranajes, Recarga rápida, Calibre .50, Rebote, Cadena de montaje y la firma Mortero."
+      },
+      {
+        "tipo": "nerf",
+        "que": "Leroy",
+        "texto": "Roba como mucho 3 cartas a cada jugador; en cooperativo va después a por otro. Los cuencos de caramelos duran 15 s (antes 30)."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Jefes que no pegaban",
+        "texto": "El jefe que salía de un zombie que venía por una ventana se quedaba sin atacar (Leroy corría detrás de ti sin pegar)."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Overflow de textos",
+        "texto": "En partidas largas se llenaba la tabla de textos del juego y la partida se cerraba (al recoger varios cuencos de Leroy a la vez). Ahora el mod la vacía sola."
+      }
     ]
   },
   {
@@ -116,9 +299,21 @@
     "fecha": "2026-10-24",
     "titulo": "Calculadora y rediseño",
     "cambios": [
-      { "tipo": "web", "que": "Calculadora", "texto": "Calculadora de rondas y simulador de build." },
-      { "tipo": "web", "que": "Rediseño", "texto": "Inicio, Clasificación, Partidas, Jugadores y perfil de jugador nuevos." },
-      { "tipo": "web", "que": "Cuentas", "texto": "Registro con usuario y contraseña y token de subida por cuenta." }
+      {
+        "tipo": "web",
+        "que": "Calculadora",
+        "texto": "Calculadora de rondas y simulador de build."
+      },
+      {
+        "tipo": "web",
+        "que": "Rediseño",
+        "texto": "Inicio, Clasificación, Partidas, Jugadores y perfil de jugador nuevos."
+      },
+      {
+        "tipo": "web",
+        "que": "Cuentas",
+        "texto": "Registro con usuario y contraseña y token de subida por cuenta."
+      }
     ]
   },
   {
@@ -126,10 +321,26 @@
     "fecha": "2026-10-24",
     "titulo": "Estadísticas y web",
     "cambios": [
-      { "tipo": "nuevo", "que": "JSON de cada partida", "texto": "Al acabar, el mod guarda en el PC del anfitrión todo lo que ha pasado: build, daño de cada carta, armas, bajas, caídas, jefes..." },
-      { "tipo": "web", "que": "Web de partidas", "texto": "Lista de partidas, detalle de cada una, clasificaciones, récords y totales por jugador en bo2jodas.onrender.com." },
-      { "tipo": "buff", "que": "Rayos y fuego", "texto": "Pararrayos, Sobrecarga, Condensador, Tormenta y el fuego se multiplican por tus cartas de daño (Calibre, Adrenalina, Cuerpo de cristal...). El fuego dura 6 tics del 4 % (antes salían 5)." },
-      { "tipo": "cambio", "que": "Al elegir carta", "texto": "Cada carta dice cuánto tienes ya de ella y tu lista se ve abajo a tamaño normal." }
+      {
+        "tipo": "nuevo",
+        "que": "JSON de cada partida",
+        "texto": "Al acabar, el mod guarda en el PC del anfitrión todo lo que ha pasado: build, daño de cada carta, armas, bajas, caídas, jefes..."
+      },
+      {
+        "tipo": "web",
+        "que": "Web de partidas",
+        "texto": "Lista de partidas, detalle de cada una, clasificaciones, récords y totales por jugador en bo2jodas.onrender.com."
+      },
+      {
+        "tipo": "buff",
+        "que": "Rayos y fuego",
+        "texto": "Pararrayos, Sobrecarga, Condensador, Tormenta y el fuego se multiplican por tus cartas de daño (Calibre, Adrenalina, Cuerpo de cristal...). El fuego dura 6 tics del 4 % (antes salían 5)."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Al elegir carta",
+        "texto": "Cada carta dice cuánto tienes ya de ella y tu lista se ve abajo a tamaño normal."
+      }
     ]
   },
   {
@@ -137,13 +348,42 @@
     "fecha": "2026-10-24",
     "titulo": "Suertudo, Bruja y zombies atascados",
     "cambios": [
-      { "tipo": "buff", "que": "Suertudo", "texto": "Buscador de botín ×2 (0.4 a 3.2 %). Pata de conejo 1 / 2 / 2 / 3 / 4 rerolls y +1 cada 3 niveles. Dados 15 a 60 %. Herradura 20 a 80 %. Jackpot no gasta la mitad de los rerolls. Carta nueva: Amuleto (% de ver 4 cartas)." },
-      { "tipo": "buff", "que": "Bruja", "texto": "Sus bebidas no cuentan para el límite de 4: puedes tenerlas todas." },
-      { "tipo": "nerf", "que": "Bloqueo", "antes": "Varios", "ahora": "1 por partida" },
-      { "tipo": "cambio", "que": "No coger carta", "texto": "Ahora con Cuchillo." },
-      { "tipo": "cambio", "que": "Contador", "texto": "Arriba pone los zombies que quedan de la ronda, no los vivos." },
-      { "tipo": "arreglo", "que": "Goo de la Sliquifier", "texto": "Las bajas de leapers, fuego, rayos, Espinas, Fénix y Reacción en cadena ya no contagian el goo." },
-      { "tipo": "arreglo", "que": "Zombies atascados", "texto": "Un zombie quieto 15 s sin nadie cerca reaparece detrás de un jugador." }
+      {
+        "tipo": "buff",
+        "que": "Suertudo",
+        "texto": "Buscador de botín ×2 (0.4 a 3.2 %). Pata de conejo 1 / 2 / 2 / 3 / 4 rerolls y +1 cada 3 niveles. Dados 15 a 60 %. Herradura 20 a 80 %. Jackpot no gasta la mitad de los rerolls. Carta nueva: Amuleto (% de ver 4 cartas)."
+      },
+      {
+        "tipo": "buff",
+        "que": "Bruja",
+        "texto": "Sus bebidas no cuentan para el límite de 4: puedes tenerlas todas."
+      },
+      {
+        "tipo": "nerf",
+        "que": "Bloqueo",
+        "antes": "Varios",
+        "ahora": "1 por partida"
+      },
+      {
+        "tipo": "cambio",
+        "que": "No coger carta",
+        "texto": "Ahora con Cuchillo."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Contador",
+        "texto": "Arriba pone los zombies que quedan de la ronda, no los vivos."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Goo de la Sliquifier",
+        "texto": "Las bajas de leapers, fuego, rayos, Espinas, Fénix y Reacción en cadena ya no contagian el goo."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Zombies atascados",
+        "texto": "Un zombie quieto 15 s sin nadie cerca reaparece detrás de un jugador."
+      }
     ]
   },
   {
@@ -151,17 +391,63 @@
     "fecha": "2026-10-24",
     "titulo": "Arquetipos, tres jefes y la forja",
     "cambios": [
-      { "tipo": "nuevo", "que": "Arquetipos", "texto": "En el nivel 8 eliges 1 de 3 entre 10 arquetipos, cada uno con 6 cartas propias y una firma. 43 cartas nuevas." },
-      { "tipo": "nuevo", "que": "Tres jefes", "texto": "Brutus, la Bruja (aparece detrás de ti, no la dejes tocarte) y Leroy (te roba cartas y te las devuelve mejoradas). Nacen en el charco de lava del centro." },
-      { "tipo": "nuevo", "que": "Bebidas de la Bruja", "texto": "Mule Kick, Deadshot, PhD Flopper, Electric Cherry y Tombstone." },
-      { "tipo": "nuevo", "que": "Mítica Hora bruja", "texto": "Cada 3 minutos, 10 s de zombies a cámara lenta para todo el equipo. Sustituye al Leaper, que pasa al Domador." },
-      { "tipo": "nuevo", "que": "La forja de Pueblo", "texto": "Ritual de tres pasos para mejorar el Bastón de fuego al de Origins." },
-      { "tipo": "nuevo", "que": "Cartas generales", "texto": "Armadura, Sangre fría, Médico y Madrugador, y 5 de relleno." },
-      { "tipo": "nuevo", "que": "Menús nuevos", "texto": "Marco del color de la rareza, fondo del color del arquetipo, la carta marcada crece y el título se descifra." },
-      { "tipo": "buff", "que": "Huecos de carta", "antes": "10", "ahora": "15 (Pistolas 20). Las cartas de equipo no ocupan hueco" },
-      { "tipo": "buff", "que": "Tanque", "texto": "Vida ×2 con Juggernog y escudo de zombies en la espalda cada ronda." },
-      { "tipo": "nerf", "que": "Vida de los zombies", "antes": "150 al empezar, +115 por ronda, ×1.11 desde la 10", "ahora": "188, +130 por ronda, ×1.13 desde la 10" },
-      { "tipo": "cambio", "que": "Partidas de 5 o más", "texto": "Cada jugador por encima de 4 suma un 20 % de zombies por ronda." }
+      {
+        "tipo": "nuevo",
+        "que": "Arquetipos",
+        "texto": "En el nivel 8 eliges 1 de 3 entre 10 arquetipos, cada uno con 6 cartas propias y una firma. 43 cartas nuevas."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Tres jefes",
+        "texto": "Brutus, la Bruja (aparece detrás de ti, no la dejes tocarte) y Leroy (te roba cartas y te las devuelve mejoradas). Nacen en el charco de lava del centro."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Bebidas de la Bruja",
+        "texto": "Mule Kick, Deadshot, PhD Flopper, Electric Cherry y Tombstone."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Mítica Hora bruja",
+        "texto": "Cada 3 minutos, 10 s de zombies a cámara lenta para todo el equipo. Sustituye al Leaper, que pasa al Domador."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "La forja de Pueblo",
+        "texto": "Ritual de tres pasos para mejorar el Bastón de fuego al de Origins."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Cartas generales",
+        "texto": "Armadura, Sangre fría, Médico y Madrugador, y 5 de relleno."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Menús nuevos",
+        "texto": "Marco del color de la rareza, fondo del color del arquetipo, la carta marcada crece y el título se descifra."
+      },
+      {
+        "tipo": "buff",
+        "que": "Huecos de carta",
+        "antes": "10",
+        "ahora": "15 (Pistolas 20). Las cartas de equipo no ocupan hueco"
+      },
+      {
+        "tipo": "buff",
+        "que": "Tanque",
+        "texto": "Vida ×2 con Juggernog y escudo de zombies en la espalda cada ronda."
+      },
+      {
+        "tipo": "nerf",
+        "que": "Vida de los zombies",
+        "antes": "150 al empezar, +115 por ronda, ×1.11 desde la 10",
+        "ahora": "188, +130 por ronda, ×1.13 desde la 10"
+      },
+      {
+        "tipo": "cambio",
+        "que": "Partidas de 5 o más",
+        "texto": "Cada jugador por encima de 4 suma un 20 % de zombies por ronda."
+      }
     ]
   },
   {
@@ -169,19 +455,75 @@
     "fecha": "2026-10-23",
     "titulo": "Huecos, rerolls y penalización al caer",
     "cambios": [
-      { "tipo": "nuevo", "que": "10 huecos de carta", "texto": "Con los huecos llenos solo salen las que ya tienes y las de efecto inmediato." },
-      { "tipo": "nuevo", "que": "Rerolls y bloqueo", "texto": "3 rerolls por partida (Granada) y bloquear una carta para que no vuelva (Táctica)." },
-      { "tipo": "nuevo", "que": "Penalización al caer", "texto": "Al caer eliges una carta que pierdes entre 3 al azar de las tuyas." },
-      { "tipo": "nuevo", "que": "Lista de cartas con tecla", "texto": "La H (o tu tecla) la muestra y la oculta." },
-      { "tipo": "rework", "que": "Escopetas", "antes": "15 % de matar por bala, −15 % de velocidad", "ahora": "15 % por perdigón y 35 % por bala con francotirador, −10 % de velocidad" },
-      { "tipo": "nerf", "que": "Automáticas", "antes": "+1 % por tiro seguido sin tope, 10 % de gastar 2 balas", "ahora": "+0.5 % con tope +20 %, 15 % de gastar 2 balas" },
-      { "tipo": "buff", "que": "Pistolas", "texto": "+40 % de daño con balas." },
-      { "tipo": "rework", "que": "Mochila", "antes": "1 a 6 balas por baja", "ahora": "3 a 20 balas por minuto" },
-      { "tipo": "nerf", "que": "Manos rápidas", "antes": "2 a 14 %, tope 60 %", "ahora": "0.05 a 4.5 %, tope 4.5 %" },
-      { "tipo": "buff", "que": "Jefe", "texto": "Vida 70 zombies de la ronda (antes 20), corre desde que sale y ningún golpe le quita más del 15 %." },
-      { "tipo": "arreglo", "que": "Bastón y Gatillo infinito", "texto": "El bastón ya no tiene balas infinitas; se ve la postura y el fogonazo." },
-      { "tipo": "arreglo", "que": "Partida rota a las ~488 cartas", "texto": "El mod apenas crea textos nuevos." },
-      { "tipo": "arreglo", "que": "Caja y mítica", "texto": "La caja ya no te cambia la mítica sin preguntar." }
+      {
+        "tipo": "nuevo",
+        "que": "10 huecos de carta",
+        "texto": "Con los huecos llenos solo salen las que ya tienes y las de efecto inmediato."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Rerolls y bloqueo",
+        "texto": "3 rerolls por partida (Granada) y bloquear una carta para que no vuelva (Táctica)."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Penalización al caer",
+        "texto": "Al caer eliges una carta que pierdes entre 3 al azar de las tuyas."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Lista de cartas con tecla",
+        "texto": "La H (o tu tecla) la muestra y la oculta."
+      },
+      {
+        "tipo": "rework",
+        "que": "Escopetas",
+        "antes": "15 % de matar por bala, −15 % de velocidad",
+        "ahora": "15 % por perdigón y 35 % por bala con francotirador, −10 % de velocidad"
+      },
+      {
+        "tipo": "nerf",
+        "que": "Automáticas",
+        "antes": "+1 % por tiro seguido sin tope, 10 % de gastar 2 balas",
+        "ahora": "+0.5 % con tope +20 %, 15 % de gastar 2 balas"
+      },
+      {
+        "tipo": "buff",
+        "que": "Pistolas",
+        "texto": "+40 % de daño con balas."
+      },
+      {
+        "tipo": "rework",
+        "que": "Mochila",
+        "antes": "1 a 6 balas por baja",
+        "ahora": "3 a 20 balas por minuto"
+      },
+      {
+        "tipo": "nerf",
+        "que": "Manos rápidas",
+        "antes": "2 a 14 %, tope 60 %",
+        "ahora": "0.05 a 4.5 %, tope 4.5 %"
+      },
+      {
+        "tipo": "buff",
+        "que": "Jefe",
+        "texto": "Vida 70 zombies de la ronda (antes 20), corre desde que sale y ningún golpe le quita más del 15 %."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Bastón y Gatillo infinito",
+        "texto": "El bastón ya no tiene balas infinitas; se ve la postura y el fogonazo."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Partida rota a las ~488 cartas",
+        "texto": "El mod apenas crea textos nuevos."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Caja y mítica",
+        "texto": "La caja ya no te cambia la mítica sin preguntar."
+      }
     ]
   },
   {
@@ -189,7 +531,11 @@
     "fecha": "2026-10-23",
     "titulo": "Menús sin tiempo",
     "cambios": [
-      { "tipo": "cambio", "que": "Menús", "texto": "Los menús de clase y de cartas ya no tienen tiempo límite." }
+      {
+        "tipo": "cambio",
+        "que": "Menús",
+        "texto": "Los menús de clase y de cartas ya no tienen tiempo límite."
+      }
     ]
   },
   {
@@ -197,9 +543,21 @@
     "fecha": "2026-10-23",
     "titulo": "Caja de cartas y super sprinters",
     "cambios": [
-      { "tipo": "rework", "que": "Caja misteriosa", "texto": "Da cartas en vez de armas, con precio por jugador (2500 y ×1.17 por tirada)." },
-      { "tipo": "nuevo", "que": "Super sprinters", "texto": "Hasta 6 zombies más rápidos que tú." },
-      { "tipo": "nuevo", "que": "Nivel en el marcador", "texto": "La columna Headshots del Tab muestra tu nivel." }
+      {
+        "tipo": "rework",
+        "que": "Caja misteriosa",
+        "texto": "Da cartas en vez de armas, con precio por jugador (2500 y ×1.17 por tirada)."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Super sprinters",
+        "texto": "Hasta 6 zombies más rápidos que tú."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Nivel en el marcador",
+        "texto": "La columna Headshots del Tab muestra tu nivel."
+      }
     ]
   },
   {
@@ -207,49 +565,101 @@
     "fecha": "2026-10-23",
     "titulo": "Bastón de fuego",
     "cambios": [
-      { "tipo": "nuevo", "que": "Bastón de fuego", "texto": "Se construye con las piezas que suelta Brutus." },
-      { "tipo": "buff", "que": "Brutus y Experiencia", "texto": "Brutus un 25 % más rápido. Experiencia más fuerte." }
+      {
+        "tipo": "nuevo",
+        "que": "Bastón de fuego",
+        "texto": "Se construye con las piezas que suelta Brutus."
+      },
+      {
+        "tipo": "buff",
+        "que": "Brutus y Experiencia",
+        "texto": "Brutus un 25 % más rápido. Experiencia más fuerte."
+      }
     ]
   },
   {
     "version": "1.4.0",
     "titulo": "Brutus",
     "cambios": [
-      { "tipo": "nuevo", "que": "Jefe Brutus", "texto": "Cada 10 minutos." },
-      { "tipo": "nuevo", "que": "Mítica Leaper amaestrado", "texto": "Sustituida en la 1.9 por Hora bruja." },
-      { "tipo": "nerf", "que": "Bomberman", "texto": "Recibe ×2 también de explosiones." }
+      {
+        "tipo": "nuevo",
+        "que": "Jefe Brutus",
+        "texto": "Cada 10 minutos."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Mítica Leaper amaestrado",
+        "texto": "Sustituida en la 1.9 por Hora bruja."
+      },
+      {
+        "tipo": "nerf",
+        "que": "Bomberman",
+        "texto": "Recibe ×2 también de explosiones."
+      }
     ]
   },
   {
     "version": "1.3.0",
     "titulo": "Míticas con dueño",
     "cambios": [
-      { "tipo": "cambio", "que": "Míticas", "texto": "Una por jugador, con dueño." },
-      { "tipo": "nerf", "que": "Cartas normales", "texto": "Alrededor de un 20 % menos." },
-      { "tipo": "nuevo", "que": "Pack-a-Punch", "texto": "Solo con cartas: nueva carta épica Pack-a-Punch." },
-      { "tipo": "cambio", "que": "Gatillo loco y Manos rápidas", "texto": "Dejan comprar Double Tap y Speed Cola." }
+      {
+        "tipo": "cambio",
+        "que": "Míticas",
+        "texto": "Una por jugador, con dueño."
+      },
+      {
+        "tipo": "nerf",
+        "que": "Cartas normales",
+        "texto": "Alrededor de un 20 % menos."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Pack-a-Punch",
+        "texto": "Solo con cartas: nueva carta épica Pack-a-Punch."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Gatillo loco y Manos rápidas",
+        "texto": "Dejan comprar Double Tap y Speed Cola."
+      }
     ]
   },
   {
     "version": "1.2.0",
     "titulo": "Ventajas de clase",
     "cambios": [
-      { "tipo": "nuevo", "que": "Clases", "texto": "Ventaja y desventaja por clase." },
-      { "tipo": "nuevo", "que": "Cartas", "texto": "Cartas de equipo y de power-up, Trébol y 8 cartas nuevas." }
+      {
+        "tipo": "nuevo",
+        "que": "Clases",
+        "texto": "Ventaja y desventaja por clase."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Cartas",
+        "texto": "Cartas de equipo y de power-up, Trébol y 8 cartas nuevas."
+      }
     ]
   },
   {
     "version": "1.1.0",
     "titulo": "Mando y lista de cartas",
     "cambios": [
-      { "tipo": "nuevo", "que": "Menús", "texto": "Se pueden usar con mando. Lista de cartas." }
+      {
+        "tipo": "nuevo",
+        "que": "Menús",
+        "texto": "Se pueden usar con mando. Lista de cartas."
+      }
     ]
   },
   {
     "version": "1.0.0",
     "titulo": "Primera versión",
     "cambios": [
-      { "tipo": "nuevo", "que": "bo2jodas", "texto": "Clases, arma de ronda, tanques, caos y cartas con 5 rarezas." }
+      {
+        "tipo": "nuevo",
+        "que": "bo2jodas",
+        "texto": "Clases, arma de ronda, tanques, caos y cartas con 5 rarezas."
+      }
     ]
   }
 ]

@@ -17,12 +17,11 @@ Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el d
 
 ---
 
-## Novedades de la 1.10.5: subida automática sin scripts
+## Novedades de la 1.10.5: latido del mod
 
-Ya no hace falta ningún `.bat` ni `.ps1`: en la web, en **Subir partida**, eliges **una sola vez** la carpeta donde el mod guarda las partidas y, mientras tengas la web abierta con tu cuenta (o cuando entres después de jugar), se suben solas. Funciona en Chrome, Edge, Opera y Vivaldi; en Brave hay que activar `brave://flags/#file-system-access-api`; en Firefox y Safari se arrastra el JSON a mano, como siempre.
-
-- **Latido del mod**: mientras dura la partida, el mod escribe cada minuto `en_partida.txt` (junto a los JSON) con el id de la partida y si sigue en marcha. Así la web sabe si un JSON sin terminar es de una partida viva (espera, dure lo que dure la ronda), de otra partida (`map_restart` / `fast_restart`: se sube al momento) o de un juego cerrado o colgado (40 minutos sin latido: se sube como *Sin terminar*). Las partidas terminadas se suben siempre al momento, aunque apagues el PC y entres en la web días después.
-- El script `web/subidor/` y el token del perfil desaparecen.
+- **Latido**: mientras dura la partida, el mod escribe cada minuto `en_partida.txt` (junto a los JSON) con el id de la partida y si sigue en marcha; al acabar lo deja en "acabada". Es una escritura minúscula, sin tirón.
+- **El script de subida lo usa** en vez de "10 minutos sin cambiar el JSON" (que subía antes de tiempo las partidas con rondas largas): una partida sin terminar se sube si el latido es de otra partida (`map_restart` / `fast_restart`), dice "acabada" o lleva 40 minutos parado (juego cerrado). Si no, espera, dure lo que dure la ronda. Las terminadas se suben siempre al momento.
+- Límite de subidas: **30 por hora** por cuenta.
 
 ## Novedades de la 1.10.4: sin tirón al acabar la ronda
 
@@ -156,7 +155,7 @@ Al acabar cada partida, el mod escribe un **JSON con todo lo que ha pasado** en 
 
 1. Regístrate en la web (solo usuario y contraseña).
 2. Al acabar una partida, quien hizo de anfitrión tiene el JSON en la carpeta de arriba (el juego lo avisa en pantalla).
-3. En **Subir partida**, pulsa **Elegir carpeta de partidas** una sola vez y elige la carpeta de arriba: mientras tengas la web abierta con tu cuenta, las partidas se suben solas (Chrome, Edge, Opera o Vivaldi; en Brave hay que activar `brave://flags/#file-system-access-api`). También puedes arrastrar el JSON a mano. Las repetidas no se duplican y cada partida queda con el nombre de quien la subió. Las partidas que acaban **antes de la ronda 10** van a la página **Resets** (desde la 1.10.3).
+3. En **Subir partida**, arrastra el JSON que quieras subir. Las repetidas no se duplican y cada partida queda con el nombre de quien la subió. Las partidas que acaban **antes de la ronda 10** van a la página **Resets** (desde la 1.10.3).
 
 La web comprueba cada partida antes de guardarla: solo se quedan los campos que escribe el mod (lo demás se descarta), cada número tiene que estar en su rango, las cartas, armas, clases y arquetipos tienen que existir y no pasar de su tope, y los números tienen que cuadrar entre sí (nivel con bajas, bajas con los zombies que salen hasta esa ronda, bajas por arma con el total, duración posible, huecos de carta de la clase). Si algo no cuadra, dice el motivo. Como mucho **1 MB** por archivo, **30 subidas por hora** por cuenta y **3 cuentas nuevas por conexión al día**.
 
@@ -164,7 +163,7 @@ La web comprueba cada partida antes de guardarla: solo se quedan los campos que 
 
 **Al elegir carta**, cada carta dice cuánto tienes ya de ella ("Ya tienes: +22pct x2") y tu lista se ve abajo a tamaño normal.
 
-El código de la web está en [`web/`](web/) (Node + React; instrucciones de despliegue en [web/README.md](web/README.md)).
+Si eres anfitrión a menudo, el script opcional de `web/subidor/` las sube solas con el token de tu perfil. El código de la web está en [`web/`](web/) (Node + React; instrucciones de despliegue en [web/README.md](web/README.md)).
 
 </details>
 

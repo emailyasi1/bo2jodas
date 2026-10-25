@@ -151,25 +151,6 @@ app.post("/api/runs", asinc(async (req, res) => {
   res.status(201).json({ ok: true, id: p.id });
 }));
 
-// Antes de subir, la autosubida pregunta que hay ya de cada id del mod (el id
-// va en el nombre del archivo): asi no manda partidas que el servidor ya tiene.
-// Devuelve solo las que estan: { id_mod: { terminada, ronda } }.
-const ID_MOD = /^[A-Za-z0-9_-]{1,40}$/;
-app.post("/api/runs/comprobar", (req, res) => {
-  if (!autorizarSubida(req).ok) return res.status(401).json({ error: "hace falta entrar" });
-  const ids = Array.isArray(req.body?.ids) ? req.body.ids.slice(0, 500).filter((x) => typeof x === "string" && ID_MOD.test(x)) : [];
-  const pedidos = new Set(ids);
-  const hay = {};
-  for (const p of partidas.values()) {
-    const id = p.id_mod || p.id;
-    if (!pedidos.has(id)) continue;
-    const terminada = p.terminada === undefined ? 1 : p.terminada;
-    // Con varias copias (no deberia), manda la terminada o la mas avanzada.
-    if (!hay[id] || (terminada && !hay[id].terminada) || p.ronda > hay[id].ronda) hay[id] = { terminada, ronda: p.ronda };
-  }
-  res.json(hay);
-});
-
 app.get("/api/runs", (req, res) => {
   const limite = Math.min(Number(req.query.limit) || 100, 1000);
   // ?categoria=reset: solo los resets; si no, todas menos los resets.

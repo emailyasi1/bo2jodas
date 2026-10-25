@@ -27,8 +27,6 @@ export async function borrarPartida(id) {
   return datos;
 }
 
-export const comprobarPartidas = (ids) => post("/runs/comprobar", { ids });
-
 export function subirPartida(json, token) {
   return post("/runs", json, token ? { "x-token": token } : {});
 }
