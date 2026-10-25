@@ -11,6 +11,17 @@ export function validar(p) {
   return null;
 }
 
+// Filtro de "resets": partidas en las que nadie paso del nivel 10 al acabar no
+// se guardan (ni a mano ni con el script). En cooperativo cuenta el jugador de
+// mas nivel, para no tirar una partida buena porque alguien entro tarde.
+export const NIVEL_MINIMO = 10;
+
+export function descartar(p) {
+  const nivel = Math.max(...p.jugadores.map((j) => Number(j.nivel) || 0));
+  if (nivel <= NIVEL_MINIMO) return `no se sube: nadie pasó del nivel ${NIVEL_MINIMO} (nivel máximo ${nivel}). Las partidas cortas se filtran como resets`;
+  return null;
+}
+
 export function resumen(p) {
   return {
     id: p.id,

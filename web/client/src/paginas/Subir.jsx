@@ -49,7 +49,7 @@ export default function Subir() {
         <div>
           <span className="mayus ten">Partidas</span>
           <h1>Subir una partida</h1>
-          <p className="mut">El mod guarda un JSON al acabar cada partida en el PC de quien hizo de anfitrión. Cada uno sube las que quiera; si una ya estaba, no se duplica.</p>
+          <p className="mut">El mod guarda un JSON al acabar cada partida en el PC de quien hizo de anfitrión. Cada uno sube las que quiera; si una ya estaba, no se duplica. Las partidas en las que nadie pasa del nivel 10 no se suben: se filtran como resets.</p>
         </div>
       </div>
 

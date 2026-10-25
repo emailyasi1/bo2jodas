@@ -1,6 +1,7 @@
 // Servidor de partidas de bo2jodas.
 //
-//   POST /api/runs                sube el JSON de una partida (cabecera x-token con el token de tu cuenta)
+//   POST /api/runs                sube el JSON de una partida (cabecera x-token con el token de tu cuenta);
+//                                 422 si nadie paso del nivel 10 (filtro de resets)
 //   GET  /api/runs                lista de partidas (resumen), las mas recientes primero
 //   GET  /api/runs/:id            una partida entera
 //   DELETE /api/runs/:id          borra una partida (solo administradores)
@@ -25,7 +26,7 @@ import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { resumen, leaderboards, totales, validar, jugador } from "./partidas.js";
+import { resumen, leaderboards, totales, validar, descartar, jugador } from "./partidas.js";
 import { cargarTokens, comprobarToken } from "./tokens.js";
 import { Usuarios } from "./usuarios.js";
 import { crearAlmacen } from "./almacen.js";
@@ -81,6 +82,9 @@ app.post("/api/runs", asinc(async (req, res) => {
   const p = req.body;
   const error = validar(p);
   if (error) return res.status(400).json({ error });
+  // 422 = partida valida pero filtrada (reset): el subidor la da por hecha.
+  const motivo = descartar(p);
+  if (motivo) return res.status(422).json({ error: motivo, descartada: true });
   p.id = idDe(p);
   if (partidas.has(p.id)) return res.json({ ok: true, id: p.id, repetida: true });
   p.recibido = new Date().toISOString();

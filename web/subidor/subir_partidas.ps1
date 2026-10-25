@@ -50,6 +50,14 @@ function Subir-Archivo($archivo) {
         Add-Content -Path $registro -Value $archivo.Name
         return $true
     } catch {
+        # 422: la web la filtra (nadie paso del nivel 10). Se apunta para no reintentarla.
+        $codigo = $null
+        if ($_.Exception.Response) { $codigo = [int]$_.Exception.Response.StatusCode }
+        if ($codigo -eq 422) {
+            Write-Host "$($archivo.Name): no se sube (nadie paso del nivel 10, se filtra como reset)" -ForegroundColor Yellow
+            Add-Content -Path $registro -Value $archivo.Name
+            return $true
+        }
         Write-Host "$($archivo.Name): error al subir: $($_.Exception.Message)" -ForegroundColor Red
         return $false
     }
