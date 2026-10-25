@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.3** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.4** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,10 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.4: sin tirón al acabar la ronda
+
+- **Arreglado el tirón al acabar cada ronda** (desde la 1.10.3): al guardar la partida, el mod escribía el JSON línea a línea en un solo fotograma, cientos de escrituras que crecían con las rondas (en cuarteto, más de 2000 en la ronda 50), y el juego se quedaba congelado unos milisegundos. Ahora lo monta en memoria repartido en varios fotogramas durante el descanso entre rondas y lo escribe de golpe en unas pocas escrituras. El JSON es el mismo: se sube igual a mano y con el script de subida.
 
 ## Novedades de la 1.10.3: estadísticas para balancear, resets y nuevas clasificaciones
 

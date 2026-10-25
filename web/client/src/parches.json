@@ -1,5 +1,13 @@
 [
   {
+    "version": "1.10.4",
+    "fecha": "2026-10-25",
+    "titulo": "Sin tirón al acabar la ronda",
+    "cambios": [
+      { "tipo": "arreglo", "que": "Tirón al acabar cada ronda", "texto": "El guardado de la partida escribía el JSON línea a línea en un solo fotograma (cientos de escrituras, más cuantas más rondas) y congelaba el juego unos milisegundos. Ahora se monta en memoria repartido en varios fotogramas y se escribe de golpe. El JSON es el mismo, a mano y con el script de subida." }
+    ]
+  },
+  {
     "version": "Web",
     "fecha": "2026-10-25",
     "titulo": "Wiki y notas de parche",
