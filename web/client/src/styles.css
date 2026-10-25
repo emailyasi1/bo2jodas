@@ -246,6 +246,7 @@ p { margin: 0; }
 .tabla tbody.equipo { border-bottom: 1px solid var(--line); transition: background-color 0.12s; }
 .tabla tbody.equipo:last-child { border-bottom: 0; }
 .tabla tbody.equipo:hover { background: var(--s2); }
+.tabla .fila-clic { cursor: pointer; }
 .tabla tbody.equipo tr:hover { background: none; }
 .tabla tbody.equipo td { border-bottom: 0; padding-top: 6px; padding-bottom: 6px; }
 .tabla tbody.equipo tr:first-child td { padding-top: 12px; }

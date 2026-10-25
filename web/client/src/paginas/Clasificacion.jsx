@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Build, Cargando, Fallo, Seccion, Top, TagArquetipo, TagClase, colorRonda, grupo, hace, useDatos } from "../ui.jsx";
 import { ARQUETIPOS, CLASES, MITICAS, duracion, fmt } from "../nombres.js";
 import { Desplegable, Segmentos } from "../controles.jsx";
@@ -50,7 +50,15 @@ function puestos(lista, valor) {
   });
 }
 
+// Pulsar en cualquier sitio de la fila abre la partida; los enlaces de dentro
+// (a cada jugador) siguen yendo a su sitio y seleccionar texto no navega.
+const abrir = (ir, id) => (e) => {
+  if (e.target.closest("a") || window.getSelection()?.toString()) return;
+  ir(`/partida/${id}`);
+};
+
 export default function Clasificacion() {
+  const ir = useNavigate();
   const runs = useDatos("/runs?limit=1000");
   const lb = useDatos("/leaderboards");
   const [tam, setTam] = useState("");
@@ -103,7 +111,7 @@ export default function Clasificacion() {
               </tr>
             </thead>
             {filas.map((p, i) => (
-              <tbody key={p.id} className="equipo">
+              <tbody key={p.id} className="equipo fila-clic" onClick={abrir(ir, p.id)} title="Ver la partida">
                 {p.jugadores.map((j, k) => (
                   <tr key={j.nombre} className={k === 0 && pos[i].puesto <= 3 ? `p${pos[i].puesto}` : ""}>
                     {k === 0 && <td className="pos" rowSpan={p.jugadores.length}>{pos[i].ver && pos[i].puesto}</td>}
@@ -171,6 +179,7 @@ export default function Clasificacion() {
 // Flawless (ronda alcanzada sin que nadie cayera) y speedrun (tiempo hasta
 // empezar la ronda 30, 50, 100 o 200): una fila por partida.
 function TablaPartidas({ lb, cat }) {
+  const ir = useNavigate();
   if (lb.error) return <Fallo error={lb.error} />;
   if (!lb.datos) return <Cargando filas={4} />;
   const flawless = cat === "flawless";
@@ -197,7 +206,7 @@ function TablaPartidas({ lb, cat }) {
             </thead>
             <tbody>
               {filas.map((f, i) => (
-                <tr key={f.partida} className={pos[i].puesto <= 3 ? `p${pos[i].puesto}` : ""}>
+                <tr key={f.partida} className={`fila-clic${pos[i].puesto <= 3 ? ` p${pos[i].puesto}` : ""}`} onClick={abrir(ir, f.partida)} title="Ver la partida">
                   <td className="pos">{pos[i].ver && pos[i].puesto}</td>
                   <td>
                     {f.jugadores.map((n, k) => (

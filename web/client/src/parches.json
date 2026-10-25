@@ -6,7 +6,8 @@
     "cambios": [
       { "tipo": "nuevo", "que": "Wiki", "texto": "Qué hace cada carta con sus valores por rareza y su tope, cartas por arquetipo, clases, jefes, forja, bastón y el resto de reglas." },
       { "tipo": "nuevo", "que": "Notas de parche", "texto": "Esta página: cada cambio del mod y de la web, versión a versión." },
-      { "tipo": "arreglo", "que": "Clasificación en grupo", "texto": "En Dúo, Trío, Cuarteto y 5+ cada entrada es una partida con todos sus jugadores, cada uno con su clase, build, nivel y bajas (antes salía cada jugador por separado). Con la misma ronda, puesto compartido (1, 2, 3, 3, 5...)." }
+      { "tipo": "arreglo", "que": "Clasificación en grupo", "texto": "En Dúo, Trío, Cuarteto y 5+ cada entrada es una partida con todos sus jugadores, cada uno con su clase, build, nivel y bajas (antes salía cada jugador por separado). Con la misma ronda, puesto compartido (1, 2, 3, 3, 5...)." },
+      { "tipo": "web", "que": "Clasificación", "texto": "Pulsar en una fila abre esa partida (el nombre de cada jugador sigue llevando a su perfil)." }
     ]
   },
   {
