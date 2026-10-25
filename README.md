@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.0** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.1** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -17,7 +17,57 @@ Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el d
 
 ---
 
-## Novedades de la 1.10.0: el Mecánico
+## Novedades de la 1.10.1: balance de clases
+
+Automáticas era de largo la mejor clase. Esta versión es para **probar las cuatro clases**: cada una tiene ahora una identidad clara, ninguna puede recibir un arma que no sirva y todas sacan **los mismos puntos por zombie**.
+
+### Por qué Automáticas ganaba
+
+- **Era la única sin lotería**: sus 20 armas sirven todas. Rifles tenía 2 armas que casi no matan (M14 y SMR) y Pistolas 3 (M1911 y C96 hacen 20 de daño, y el cuchillo balístico), así que 1 de cada 4 rondas te tocaba un arma inútil.
+- **Su ventaja era gratis y su desventaja no existía**: la racha sube sola disparando, y gastar 2 balas da igual cuando el arma se renueva cada ronda.
+- **Los puntos van por impacto**: el juego da 10 puntos por cada impacto que no mata. Automáticas necesita muchos más impactos por zombie, así que cobraba bastante más por cada baja que Escopetas o Pistolas, y con más puntos tenía más caja, más cartas y más bebidas.
+- **Rifles no tenía identidad**: su +30 % / −10 % salía a un +10 % de media.
+
+### Bonus de puntos por baja
+
+Escopetas, Pistolas y Rifles cobran un **extra por cada baja**, un % de la vida máxima del zombie. Se ha calculado con el daño real de cada arma (perdigones, cadencia, rearme de cerrojo, cargador, munición y recarga), la vida de los zombies del mod y la ventaja de cada clase. Puntos por zombie (mediana de las armas de cada clase, sin cartas):
+
+| Clase | Ronda 5 | Ronda 10 | Ronda 20 | Ronda 30 | Bonus |
+|---|---|---|---|---|---|
+| Automáticas | 110 | 160 | 420 | 1290 | — |
+| Escopetas | 75 → **128** | 78 → **182** | 79 → **431** | 79 → **1276** | 7.5 % de la vida |
+| Pistolas | 75 → **111** | 90 → **161** | 175 → **416** | 470 → **1288** | 5.1 % de la vida |
+| Rifles | 110 → **111** | 160 → **162** | 410 → **416** | 1270 → **1290** | 0.13 % de la vida |
+
+Rifles casi no lo necesita: sus balas pegan poco y ya cobraban como Automáticas. Su problema era matar, y eso lo arregla el Ejecutor. El extra se divide entre tus cartas de **Calibre y Gatillo loco** (con ellas Automáticas también necesita menos impactos) y no cuenta con el jefe.
+
+### Notas del parche
+
+| Clase | Cambio | Antes | Ahora | |
+|---|---|---|---|---|
+| **Automáticas** | Racha de daño por tiro seguido (tope) | +20 % | **+15 %** | 🔻 NERF |
+| **Automáticas** | Probabilidad de gastar 2 balas | 15 % | **25 %** | 🔻 NERF |
+| **Escopetas** | Velocidad de movimiento | −10 % | **−5 %** | 🔺 BUFF |
+| **Escopetas** | Recarga | Normal | **Speed Cola de clase** (la mitad de tiempo) | 🔺 BUFF |
+| **Escopetas** | Bonus de puntos por baja | — | **7.5 %** de la vida del zombie | 🔺 BUFF |
+| **Rifles** | Ventaja de clase | +30 % a heridos, −10 % a sanos | **Ejecutor**: la bala que deja al zombie por debajo del 20 % de su vida lo remata (no al jefe) | 🔄 REWORK |
+| **Rifles** | SMR | 80 de daño por bala | **320** (×4) | 🔺 BUFF |
+| **Rifles** | Bonus de puntos por baja | — | **0.13 %** de la vida del zombie | 🔺 BUFF |
+| **Pistolas** | M1911 y Mauser C96 | Sin mejorar (20 de daño) | **Siempre mejoradas**: Mustang & Sally y Boomhilda | 🔺 BUFF |
+| **Pistolas** | Cuchillo balístico | En la lista de armas | **Fuera** | 🔺 BUFF |
+| **Pistolas** | Carta inicial | — | **Trébol LEGENDARIO** al elegir la clase | 🔺 BUFF |
+| **Pistolas** | Bonus de puntos por baja | — | **5.1 %** de la vida del zombie | 🔺 BUFF |
+| **Todas** | Primera carta | 15 bajas | **9 bajas** (los zombies de la ronda 1); cada nivel sigue costando 5 más: 9, 23, 42, 66, 95… | 🔺 BUFF |
+
+### Arreglos
+
+- **Torreta del Mecánico**: no se podía recoger ni reparar (no salía el texto y USAR no hacía nada). Ahora sí: mantén USAR junto a tu torreta.
+- **Torreta del Mecánico**: suenan el arranque, el zumbido, la ráfaga y el apagado (el banco de sonido de Pueblo no los traía) y sus balas no hacen daño a ningún jugador.
+
+Todo se puede ajustar por consola para probar: ver [Consola](#consola-para-probar).
+
+<details>
+<summary><b>Novedades de la 1.10.0: el Mecánico</b></summary>
 
 **Arquetipo nuevo: Mecánico.** Construye **torretas** que disparan solas, y sus cartas mejoran las torretas, no a ti.
 
@@ -41,10 +91,12 @@ Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el d
 
 **Leroy**: roba como mucho **3 cartas a cada jugador**. En cooperativo, cuando ya le ha robado 3 a uno, va directo a por otro; si no puede robar a nadie (o en solo), solo pega. Los cuencos de caramelos duran **15 s** (antes 30).
 
-**Arreglos**
+#### Arreglos de la 1.10.0
 
 - **Jefes que no pegaban**: si el zombie que se convertía en jefe venía por una ventana, el juego lo seguía mandando a la ventana y nunca le dejaba atacar (Leroy corría detrás de ti sin pegar, y le pasaba a todos los jefes mientras estuvierais en una zona con ventanas). Ahora el jefe sale del suelo o la ventana, aparece en la lava y ataca siempre.
 - **Overflow de textos**: el juego guarda cada texto distinto que sale en pantalla y no lo libera; en partidas largas se llenaba y la partida se cerraba (pasó al recoger varios cuencos de Leroy a la vez). Ahora el mod vacía esa tabla sola cada 100 textos nuevos (`jodas_textos_limite`) y vuelve a escribir lo que hay en pantalla, así que no debería volver a pasar dure lo que dure la partida.
+
+</details>
 
 <details>
 <summary><b>Novedades de la 1.9.2: estadísticas y web</b></summary>
@@ -318,11 +370,12 @@ Al empezar eliges clase (los zombies no salen hasta que todos eligen). Al **empe
 
 | Clase | Armas | Especial | Ventaja | Desventaja |
 |---|---|---|---|---|
-| **Escopetas** | Remington 870, Olympia, S12, M1216, KSG, DSR 50, Barrett M82A1, SVU-AS, Ballista | Blundergat | 15 % de que un perdigón mate de golpe; 35 % por bala con francotirador | −10 % de velocidad |
-| **Automáticas** | Galil, AK74u (y cargador ampliado), MP5K, PDW-57, MTAR, AN-94, SCAR-H, M27, AK-47, STG-44, Thompson, MP40 (y Stalker), Uzi, Skorpion EVO, HAMR, RPD, LSAT, MG08/15 | Sliquifier | +0.5 % de daño por tiro seguido acertado, hasta +20 % (se pierde al fallar) | 15 % de que un tiro gaste 2 balas |
-| **Rifles** | M14, FAL, SMR, M16, Type 25, M8A1, Chicom CQB | Paralizador | **Ejecutor**: +30 % a zombies con menos de media vida | −10 % a zombies con la vida entera |
-| **Pistolas** | M1911, Five-seven (y dual), B23R (y cargador ampliado), KAP-45, Python, Executioner, Remington New Model Army, Mauser C96, Cuchillo balístico | Ray Gun o Ray Gun Mark II | +40 % de daño, ×1.3 de velocidad, −50 % de daño explosivo recibido, **20 huecos de carta** en vez de 15 | Ninguna |
+| **Escopetas** | Remington 870, Olympia, S12, M1216, KSG, DSR 50, Barrett M82A1, SVU-AS, Ballista | Blundergat | 15 % de que un perdigón mate de golpe; 35 % por bala con francotirador. **Speed Cola de clase** (recargas en la mitad de tiempo) | −5 % de velocidad |
+| **Automáticas** | Galil, AK74u (y cargador ampliado), MP5K, PDW-57, MTAR, AN-94, SCAR-H, M27, AK-47, STG-44, Thompson, MP40 (y Stalker), Uzi, Skorpion EVO, HAMR, RPD, LSAT, MG08/15 | Sliquifier | +0.5 % de daño por tiro seguido acertado, hasta +15 % (se pierde al fallar) | 25 % de que un tiro gaste 2 balas |
+| **Rifles** | M14, FAL, SMR (×4 de daño por bala), M16, Type 25, M8A1, Chicom CQB | Paralizador | **Ejecutor**: la bala que deja a un zombie por debajo del 20 % de su vida lo remata (al jefe no) | Ninguna |
+| **Pistolas** | M1911 (siempre Mustang & Sally), Five-seven (y dual), B23R (y cargador ampliado), KAP-45, Python, Executioner, Remington New Model Army, Mauser C96 (siempre Boomhilda) | Ray Gun o Ray Gun Mark II | +40 % de daño, ×1.3 de velocidad, −50 % de daño explosivo recibido, **20 huecos de carta** en vez de 15 y **empiezan con un Trébol LEGENDARIO** | Ninguna |
 
+- **Bonus de puntos por baja**: el juego da 10 puntos por cada impacto, y Automáticas necesita muchos más impactos por zombie que el resto. Para igualarlo, Escopetas cobra un extra del **7.5 %** de la vida del zombie por cada baja, Pistolas el **5.1 %** y Rifles el **0.13 %** (sus balas ya necesitan casi tantos impactos como Automáticas). El extra se divide entre tus cartas de Calibre y Gatillo loco, porque con ellas Automáticas también necesita menos impactos. Al jefe no. Así las cuatro clases sacan casi los mismos puntos por zombie en cualquier ronda.
 - Las paredes funcionan normal. **La caja da cartas, no armas**. **El Pack-a-Punch no se puede usar pagando**: las armas solo se mejoran con cartas.
 - El Bastón de fuego nunca se cambia por el arma de ronda.
 
@@ -330,7 +383,7 @@ Al empezar eliges clase (los zombies no salen hasta que todos eligen). Al **empe
 
 ## Cartas
 
-Subes de nivel matando: el primer nivel a las **15 bajas** y cada nivel cuesta 5 más (15, 35, 60, 90, 125...). Al subir eliges **1 de 3 cartas**. Hasta el nivel 8 solo salen cartas generales; en el nivel 8 eliges arquetipo (ver arriba). Desde que subes de nivel hasta que eliges, los zombies te ignoran; con el menú abierto eres invulnerable, sin límite de tiempo.
+Subes de nivel matando: el primer nivel a las **9 bajas** (los zombies de la ronda 1) y cada nivel cuesta 5 más (9, 23, 42, 66, 95...). Al subir eliges **1 de 3 cartas**. Hasta el nivel 8 solo salen cartas generales; en el nivel 8 eliges arquetipo (ver arriba). Desde que subes de nivel hasta que eliges, los zombies te ignoran; con el menú abierto eres invulnerable, sin límite de tiempo.
 
 | Común | Poco común | Rara | Épica | Legendaria |
 |---|---|---|---|---|
@@ -565,6 +618,9 @@ Se escriben en la consola antes de entrar o antes de `map_restart`.
 | `set jodas_leroy_robos 3` | Cartas que Leroy puede robar a cada jugador. |
 | `set jodas_leroy_cuenco 15` | Segundos para recoger los cuencos de Leroy. |
 | `set jodas_textos_limite 100` | Cada cuántos textos nuevos se vacía la tabla de textos del juego (arreglo del overflow). |
+| `set jodas_bonus_escopetas 7.5` | Bonus de puntos por baja de Escopetas en % de la vida del zombie (`jodas_bonus_pistolas 5.1`, `jodas_bonus_rifles 0.13`). |
+| `set jodas_rifles_ejecutor 20` | % de vida por debajo del cual los Rifles rematan al zombie (`jodas_smr_mult 4`: daño del SMR). |
+| `set jodas_auto_racha_max 15` | Tope de la racha de Automáticas (`jodas_auto_doble 25`: % de gastar 2 balas). |
 | `set jodas_off 1` | Desactiva el mod. |
 
 ---

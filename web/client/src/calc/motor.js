@@ -107,6 +107,8 @@ export function danioSaliente(danio, golpe, build, azar = {}) {
   // (salvo junto a la maquina de Double Tap sin haberla comprado: sit.junto_dt).
   let cadencia = val("cadencia");
   if (cadencia > 0 && (!sit.junto_dt || sit.dt_comprado)) cadencia = cadencia * 2;
+  // SMR (Rifles): x4 de dano por bala.
+  if (bala && String(golpe.arma || "").includes("saritch")) danio = trunc(danio * CFG.smr_mult);
   let mult = 1 + sumar("danio", val("danio")) + sumar("cadencia", cadencia);
 
   if (bala && build.clase === "escopetas") {
@@ -121,10 +123,6 @@ export function danioSaliente(danio, golpe, build, azar = {}) {
     if (racha > CFG.auto_racha_max) racha = CFG.auto_racha_max;
     mult = mult + sumar("clase", racha);
   } else if (bala && build.clase === "pistolas") mult = mult + sumar("clase", CFG.pistolas_danio);
-  else if (bala && build.clase === "rifles") {
-    if (z.vida < z.vidaMax / 2) mult = mult + sumar("clase", CFG.rifles_herido * 100);
-    else if (z.vida >= z.vidaMax) mult = mult + sumar("clase", -CFG.rifles_sano * 100);
-  }
 
   if (EXPLOSIVO.has(golpe.mod)) {
     mult = mult + sumar("explosivo", val("explosivo"));
@@ -184,6 +182,9 @@ export function danioSaliente(danio, golpe, build, azar = {}) {
     mult = mult * f;
   }
   const final = mult === 1 ? danio : trunc(danio * mult);
+  // Rifles (Ejecutor): la bala que deja al zombie por debajo del 20 % lo remata (al jefe no).
+  if (bala && build.clase === "rifles" && !z.jefe && z.vida - final <= (z.vidaMax * CFG.rifles_ejecutor) / 100)
+    return { danio: z.vida + 666, letal: "clase", sumandos, factores };
   return { danio: final, mult, sumandos, factores };
 }
 
@@ -249,7 +250,7 @@ export function simularArma(arma, enemigo, build, op) {
     // Plomo: +1 por bala disparada (jodas_arq_disparo, "weapon_fired").
     sit.plomo = (build.sit.plomo || 0) + tiro;
     for (let p = 0; p < perdigones && z.vida > 0; p++) {
-      const r = danioSaliente(base, { mod, cabeza, zombie: z }, { ...build, sit }, azar);
+      const r = danioSaliente(base, { mod, cabeza, zombie: z, arma: arma.id }, { ...build, sit }, azar);
       const d = danioRecibido(r.danio, z);
       if (!primero) primero = { ...r, recibido: d, base };
       if (r.letal) letalPor = r.letal;

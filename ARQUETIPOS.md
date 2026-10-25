@@ -32,7 +32,7 @@ xychart-beta
 ```mermaid
 stateDiagram-v2
     [*] --> Clase: al empezar (Escopetas, Automaticas, Rifles, Pistolas)
-    Clase --> Niveles1a7: cartas generales (primera a las 15 bajas, +5 por nivel)
+    Clase --> Niveles1a7: cartas generales (primera a las 9 bajas, +5 por nivel)
     Niveles1a7 --> Arquetipo: nivel 8 (3 de los 10 al azar)
     Arquetipo --> Bienvenida: 3 cartas de tu arquetipo, eliges 1
     Bienvenida --> Mezcla: cada hueco de la oferta 35% de arquetipo (+1% por Trebol) y el resto general
@@ -51,7 +51,7 @@ Tal cual lo hace `jodas_danio_saliente` + `jodas_arq_mult_saliente`. Todos los p
 ```mermaid
 flowchart TD
     A["Dano base del arma<br/>(ya multiplicado por la zona: locHead del arma)"] --> B["mult = 1 + (Calibre + Gatillo loco [x2 con Double Tap comprado]) / 100"]
-    B --> C["Clase: Escopetas 15% (35% con francotirador) de MATAR de un tiro (al jefe x3) · Automaticas +0.5% por acierto seguido hasta +20% · Pistolas +40% · Rifles +30% a zombies con menos de media vida, -10% a los enteros"]
+    B --> C["Clase: Escopetas 15% (35% con francotirador) de MATAR de un tiro (al jefe x3) · Automaticas +0.5% por acierto seguido hasta +15% · Pistolas +40% · Rifles (Ejecutor): la bala que deja al zombie por debajo del 20% lo MATA (no al jefe); SMR x4"]
     C --> D["+ Polvora si es explosion (y x1.5 con Bomberman)<br/>+ Nudillos si es cuchillo, si no + Ojo de halcon si es cabeza"]
     D --> E["+ Adrenalina (menos de media vida) + Punteria (apuntando) + Ultimas balas (cargador < 30%) + Cazatanques (tanque) + Combo x bajas seguidas (max 10)"]
     E --> F["+ Furia x golpes (max 3) + Ultimo aliento (+100%) + Pulso firme + Tambor + Plomo + Sangre fria + Madrugador + Interes + Plutocrata (6% por bebida) + Mecha corta (granada)"]
@@ -212,8 +212,8 @@ flowchart LR
     rescoldos["Rescoldos"]
     mecha["Mecha corta"]
     pirotecnico{{"Pirotecnico (firma)"}}
-    BALAS(["Impactos de bala (MOD_RIFLE_BULLET / MOD_PISTOL_BULLET)"])
     EXPLO(["Explosiones: granadas, Mecha corta, Bomberman, Reaccion en cadena, PhD"])
+    BALAS(["Impactos de bala (MOD_RIFLE_BULLET / MOD_PISTOL_BULLET)"])
     FUEGO(["Zombie ardiendo: pierde 4% de su vida maxima por segundo durante 6 s (cada impacto reinicia). El jefe, un cuarto. Al apagarse queda quemado: el Napalm ya no lo contagia"])
     BALAS -->|"6-26% por impacto (tope 80%)"| fosforo
     fosforo -->|"prende (impacto directo: tambien a quemados)"| FUEGO
@@ -247,10 +247,10 @@ flowchart LR
     condensador["Condensador"]
     tormenta["Tormenta"]
     tesla{{"Tesla (firma)"}}
-    BAJA(["Baja tuya (cualquier arma)"])
-    RECARGA(["Empezar a recargar"])
-    RAYO(["Rayo: dano fijo en % de la vida maxima del zombie (100% o mas = mata; al jefe 15%) y luego se multiplica por tus cartas de dano. Alcance 350 u"])
     DISPARO(["Siguiente impacto de bala"])
+    BAJA(["Baja tuya (cualquier arma)"])
+    RAYO(["Rayo: dano fijo en % de la vida maxima del zombie (100% o mas = mata; al jefe 15%) y luego se multiplica por tus cartas de dano. Alcance 350 u"])
+    RECARGA(["Empezar a recargar"])
     BAJA -->|"8-34% (tope 80%)"| pararrayos
     pararrayos -->|"1 rayo del 15% a otro zombie"| RAYO
     BAJA -->|"3-16% (tope 60%): explosion de 0.6x vida de ronda + 100 a 160 u"| cadena
@@ -284,8 +284,8 @@ flowchart LR
     sangre["Sangre caliente"]
     ultimo["Ultimo aliento"]
     imparable{{"Imparable (firma)"}}
-    GOLPE(["Golpe de zombie recibido"])
     BAJA(["Baja tuya (cualquier arma)"])
+    GOLPE(["Golpe de zombie recibido"])
     VIDA(["Tu vida (100, 250 con Juggernog, 500 si eres Tanque con Juggernog)"])
     VIDA -->|"con menos de la mitad: +6-32% dano (tope 200%)"| adrenalina
     VIDA -->|"con menos de la mitad: +2-9 vida/s (tope 40)"| sangre
@@ -316,11 +316,11 @@ flowchart LR
     pulso["Pulso firme"]
     unabala["Una bala basta"]
     elites{{"Cazador de elites (firma)"}}
-    ELITE(["Tanque (x4 vida) o jefe"])
+    CABEZA(["Tiro a la cabeza (head / helmet; el arma ya multiplica por su locHead)"])
     MATA(["Muerte instantanea"])
     MIRA(["Apuntando con la mira"])
     QUIETO2S(["2 s sin disparar"])
-    CABEZA(["Tiro a la cabeza (head / helmet; el arma ya multiplica por su locHead)"])
+    ELITE(["Tanque (x4 vida) o jefe"])
     CABEZA -->|"+8-48% (tope 400%)"| cabeza
     MIRA -->|"apuntando: +4-20% (tope 100%)"| punteria
     ELITE -->|"solo tanques: +12-72% (tope 400%)"| cazatanques
@@ -351,9 +351,9 @@ flowchart LR
     coraza["Coraza"]
     masa["Masa"]
     coloso{{"Coloso (firma)"}}
+    CUCHILLO(["Cuchillo"])
     GOLPE(["Golpe de zombie recibido (60; tanque x2; jefe x2.5)"])
     PASIVA(["Pasiva del arquetipo: vida x2 con Juggernog (500) y escudo de zombies (2250 de dano) en la espalda, nuevo o reparado cada ronda"])
-    CUCHILLO(["Cuchillo"])
     QUIETO(["Quieto (velocidad &lt; 10)"])
     GOLPE -->|"el zombie pierde 12-72% de su vida (tope 500%)"| espinas
     CUCHILLO -->|"+40-240% (tope 3000%)"| melee
@@ -385,10 +385,10 @@ flowchart LR
     cajaeco["Caja economica"]
     plutocrata{{"Plutocrata (firma)"}}
     BAJA(["Baja tuya"])
+    CABEZA(["Baja a la cabeza"])
+    CAJA(["Caja de cartas (2500 x1.17 por tirada)"])
     PUNTOS(["Tus puntos (sin gastar)"])
     PERKS(["Bebidas que llevas"])
-    CAJA(["Caja de cartas (2500 x1.17 por tirada)"])
-    CABEZA(["Baja a la cabeza"])
     BAJA -->|"+4-32 puntos (tope 300)"| puntos
     CABEZA -->|"+8-48 puntos (tope 400)"| oro
     PUNTOS -->|"+1% dano por cada 1000 puntos, tope 10-35% (maximo 50%)"| interes
@@ -419,10 +419,10 @@ flowchart LR
     plomo["Plomo"]
     cinta["Cinta de balas"]
     continuo{{"Fuego continuo (firma)"}}
-    RAFAGA(["Disparando seguido (menos de 0.4 s entre tiros)"])
+    CARGADOR(["Cargador del arma de la mano"])
     BAJA(["Baja tuya (cualquier arma)"])
     DT(["Double Tap comprado"])
-    CARGADOR(["Cargador del arma de la mano"])
+    RAFAGA(["Disparando seguido (menos de 0.4 s entre tiros)"])
     COMBO10(["Combo 10: 10 bajas seguidas con menos de 2 s entre ellas"])
     cadencia -->|"da Double Tap gratis y +2-14% dano (tope 150%); con Double Tap comprado el % se dobla"| DT
     CARGADOR -->|"por debajo del 30%: +8-36% (tope 200%)"| ultimas
@@ -453,10 +453,10 @@ flowchart LR
     zancada["Zancada"]
     estela["Estela"]
     ciclon{{"Ciclon (firma)"}}
+    ESPRINT(["Esprintando"])
     BAJA(["Baja tuya"])
     GOLPE(["Golpe de zombie recibido"])
     FRENO(["Zombie frenado (velocidad de animacion reducida; no al jefe ni a uno ya frenado por el Paralizador)"])
-    ESPRINT(["Esprintando"])
     CERCA3(["3 o mas zombies a menos de 150 u"])
     BAJA -->|"+4-18% velocidad 3 s (tope 60%)"| sed
     GOLPE -->|"te ignoran 0.4 s-1.8 s (tope 6.0 s)"| escurridizo
@@ -556,8 +556,8 @@ flowchart LR
     jackpot{{"Jackpot (firma)"}}
     BAJA(["Baja tuya"])
     RONDA(["Empieza una ronda"])
-    REROLL(["Rerolls (3 por partida, Granada)"])
     NIVEL(["Subida de nivel (menu de 3 cartas)"])
+    REROLL(["Rerolls (3 por partida, Granada)"])
     BAJA -->|"0.4%-3.2% de soltar power-up (tope 15.0%)"| botin
     conejo -->|"+1-4 rerolls al cogerla (tope 20) y +1 cada 3 niveles"| REROLL
     NIVEL -->|"15-60% de que la carta cogida valga el doble (tope 80%; no a firmas ni Silbato)"| dados
@@ -615,277 +615,277 @@ Míticas (una por jugador, 5 % por oferta): **Bomberman** (Explosivos mejorados 
 
 ## Daño de cada carta de daño, porcentaje a porcentaje
 
-Daño base de 4 armas de Pueblo (archivo de arma, a corta distancia, al cuerpo): Galil 150 (cabeza ×4), M14 105 (cabeza ×3), M1911 20 (cabeza ×3.5), DSR 50 800 (cabeza ×10). 
+Daño base de 4 armas de Pueblo (archivo de arma, a corta distancia, al cuerpo): Galil 150 (cabeza ×4), M14 105 (cabeza ×3), Five-seven 160 (cabeza ×3.5), DSR 50 800 (cabeza ×10). 
 Columna «Galil r10/r20/r30»: balas de Galil al cuerpo para matar un zombie normal de esa ronda (r10 = 1387, r20 = 4699, r30 = 15943) con sólo esa carta activa, sin clase ni otras cartas.
 
 Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). Recuerda que los % de todas las cartas se suman antes de multiplicar.
 
 ### Calibre (siempre): valores +5% / +7% / +10% / +14% / +22%, tope +300%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 450 | 315 | 60 | 2400 | 4 | 11 | 36 |
-| +300% | ×4.00 | 600 | 420 | 80 | 3200 | 3 | 8 | 27 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
+| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
+| +300% | ×4.00 | 600 | 420 | 640 | 3200 | 3 | 8 | 27 |
 
 ### Gatillo loco (siempre; x2 con Double Tap comprado): valores +2% / +4% / +6% / +10% / +14%, tope +150%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
 
 ### Ojo de halcon (tiro a la cabeza): valores +8% / +12% / +20% / +32% / +48%, tope +400%
 
-| % | mult | Galil (cabeza) | M14 (cabeza) | M1911 (cabeza) | DSR 50 (cabeza) | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil (cabeza) | M14 (cabeza) | Five-seven (cabeza) | DSR 50 (cabeza) | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 630 | 330 | 73 | 8400 | 9 | 30 | 102 |
-| +10% | ×1.10 | 660 | 346 | 77 | 8800 | 9 | 29 | 97 |
-| +20% | ×1.20 | 720 | 378 | 84 | 9600 | 8 | 27 | 89 |
-| +30% | ×1.30 | 780 | 409 | 91 | 10400 | 8 | 25 | 82 |
-| +40% | ×1.40 | 840 | 441 | 98 | 11200 | 7 | 23 | 76 |
-| +60% | ×1.60 | 960 | 504 | 112 | 12800 | 6 | 20 | 67 |
-| +80% | ×1.80 | 1080 | 567 | 126 | 14400 | 6 | 18 | 60 |
-| +100% | ×2.00 | 1200 | 630 | 140 | 16000 | 5 | 16 | 54 |
-| +150% | ×2.50 | 1500 | 787 | 175 | 20000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 1800 | 945 | 210 | 24000 | 4 | 11 | 36 |
-| +300% | ×4.00 | 2400 | 1260 | 280 | 32000 | 3 | 8 | 27 |
-| +400% | ×5.00 | 3000 | 1575 | 350 | 40000 | 2 | 7 | 22 |
+| +5% | ×1.05 | 630 | 330 | 588 | 8400 | 9 | 30 | 102 |
+| +10% | ×1.10 | 660 | 346 | 616 | 8800 | 9 | 29 | 97 |
+| +20% | ×1.20 | 720 | 378 | 672 | 9600 | 8 | 27 | 89 |
+| +30% | ×1.30 | 780 | 409 | 728 | 10400 | 8 | 25 | 82 |
+| +40% | ×1.40 | 840 | 441 | 784 | 11200 | 7 | 23 | 76 |
+| +60% | ×1.60 | 960 | 504 | 896 | 12800 | 6 | 20 | 67 |
+| +80% | ×1.80 | 1080 | 567 | 1008 | 14400 | 6 | 18 | 60 |
+| +100% | ×2.00 | 1200 | 630 | 1120 | 16000 | 5 | 16 | 54 |
+| +150% | ×2.50 | 1500 | 787 | 1400 | 20000 | 4 | 13 | 43 |
+| +200% | ×3.00 | 1800 | 945 | 1680 | 24000 | 4 | 11 | 36 |
+| +300% | ×4.00 | 2400 | 1260 | 2240 | 32000 | 3 | 8 | 27 |
+| +400% | ×5.00 | 3000 | 1575 | 2800 | 40000 | 2 | 7 | 22 |
 
 ### Nudillos de hierro (cuchillo): valores +40% / +65% / +95% / +145% / +240%, tope +3000%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 450 | 315 | 60 | 2400 | 4 | 11 | 36 |
-| +300% | ×4.00 | 600 | 420 | 80 | 3200 | 3 | 8 | 27 |
-| +400% | ×5.00 | 750 | 525 | 100 | 4000 | 2 | 7 | 22 |
-| +3000% | ×31.00 | 4650 | 3255 | 620 | 24800 | 1 | 2 | 4 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
+| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
+| +300% | ×4.00 | 600 | 420 | 640 | 3200 | 3 | 8 | 27 |
+| +400% | ×5.00 | 750 | 525 | 800 | 4000 | 2 | 7 | 22 |
+| +3000% | ×31.00 | 4650 | 3255 | 4960 | 24800 | 1 | 2 | 4 |
 
 ### Polvora (explosiones): valores +8% / +12% / +20% / +32% / +48%, tope +400%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 450 | 315 | 60 | 2400 | 4 | 11 | 36 |
-| +300% | ×4.00 | 600 | 420 | 80 | 3200 | 3 | 8 | 27 |
-| +400% | ×5.00 | 750 | 525 | 100 | 4000 | 2 | 7 | 22 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
+| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
+| +300% | ×4.00 | 600 | 420 | 640 | 3200 | 3 | 8 | 27 |
+| +400% | ×5.00 | 750 | 525 | 800 | 4000 | 2 | 7 | 22 |
 
 ### Adrenalina (menos de media vida): valores +6% / +10% / +14% / +20% / +32%, tope +200%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 450 | 315 | 60 | 2400 | 4 | 11 | 36 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
+| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
 
 ### Punteria (apuntando): valores +4% / +6% / +10% / +14% / +20%, tope +100%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
 
 ### Ultimas balas (cargador por debajo del 30%): valores +8% / +12% / +18% / +24% / +36%, tope +200%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 450 | 315 | 60 | 2400 | 4 | 11 | 36 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
+| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
 
 ### Cazatanques (contra tanques): valores +12% / +20% / +32% / +48% / +72%, tope +400%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 450 | 315 | 60 | 2400 | 4 | 11 | 36 |
-| +300% | ×4.00 | 600 | 420 | 80 | 3200 | 3 | 8 | 27 |
-| +400% | ×5.00 | 750 | 525 | 100 | 4000 | 2 | 7 | 22 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
+| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
+| +300% | ×4.00 | 600 | 420 | 640 | 3200 | 3 | 8 | 27 |
+| +400% | ×5.00 | 750 | 525 | 800 | 4000 | 2 | 7 | 22 |
 
 ### Combo (por baja seguida (hasta x10: el % de la tabla es carta x bajas)): valores +1% / +2% / +2% / +3% / +5%, tope +20% por stack
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 450 | 315 | 60 | 2400 | 4 | 11 | 36 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
+| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
 
 ### Furia (por golpe recibido 5 s (hasta x3)): valores +5% / +8% / +11% / +15% / +22%, tope +60% por stack
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
-| +180% | ×2.80 | 420 | 294 | 56 | 2240 | 4 | 12 | 38 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
+| +180% | ×2.80 | 420 | 294 | 448 | 2240 | 4 | 12 | 38 |
 
 ### Pulso firme (2 s sin disparar): valores +15% / +22% / +32% / +45% / +65%, tope +200%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 450 | 315 | 60 | 2400 | 4 | 11 | 36 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
+| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
 
 ### Tambor caliente (tras 1 s disparando seguido): valores +8% / +12% / +18% / +25% / +36%, tope +150%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
 
 ### Plomo (balas seguidas sin recargar (1% por bala hasta el tope)): valores 10% / 15% / 20% / 30% / 40%, tope 100%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
 
 ### Sangre fria (sin zombies a 4 m): valores +6% / +10% / +14% / +20% / +30%, tope +100%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
 
 ### Madrugador (primeros 30 s de ronda): valores +8% / +12% / +18% / +25% / +36%, tope +100%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
 
 ### Interes compuesto (1% por cada 1000 puntos hasta el tope): valores 10% / 15% / 20% / 25% / 35%, tope 50%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +50% | ×1.50 | 225 | 157 | 30 | 1200 | 7 | 21 | 71 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +50% | ×1.50 | 225 | 157 | 240 | 1200 | 7 | 21 | 71 |
 
 ### Mecha corta (granadas): valores +20% / +30% / +45% / +65% / +90%, tope +300%
 
-| % | mult | Galil | M14 | M1911 | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 21 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 22 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 24 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 26 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 28 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 32 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 36 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 40 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 50 | 2000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 450 | 315 | 60 | 2400 | 4 | 11 | 36 |
-| +300% | ×4.00 | 600 | 420 | 80 | 3200 | 3 | 8 | 27 |
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
+| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
+| +300% | ×4.00 | 600 | 420 | 640 | 3200 | 3 | 8 | 27 |
 
 ### Factores (se aplican después de la suma)
 
@@ -944,10 +944,10 @@ Daño por bala calculado con la fórmula de arriba. «Balas» = balas para matar
 |---|---|---|---|---|---|---|---|---|
 | Francotirador quieto apuntando a la cabeza | DSR 50 cabeza | Calibre 22% + Ojo de halcon 48% + Punteria 20% + Pulso firme 65% | ×2.55 | 20400 | 1 | 1 | 1 | 10 |
 | Francotirador, cabeza a un tanque con Cazador de élites | DSR 50 cabeza | Calibre 22% + Ojo de halcon 48% + Punteria 20% + Pulso firme 65% + Cazatanques 72% · ×3 | ×9.81 | 78480 | 1 | 1 | 1 | 3 |
-| Gatillo (Automáticas con racha) en ráfaga larga | Galil | Calibre 22% + Gatillo loco (Double Tap comprado) 28% + Tambor 36% + Plomo 40% + Ultimas balas 36% | ×2.82 | 423 | 4 | 12 | 38 | 435 |
-| Berserker con 3 golpes y menos de media vida | M14 | Calibre 22% + Adrenalina 32% + Furia x3 66% | ×2.50 | 262 | 6 | 18 | 61 | 702 |
-| Berserker en Último aliento | M14 | Calibre 22% + Adrenalina 32% + Furia x3 66% + Ultimo aliento 100% | ×3.50 | 367 | 4 | 13 | 44 | 501 |
-| Pistolas con Calibre y Sangre fría | M1911 | Calibre 22% + Sangre fria 30% + Madrugador 36% | ×2.28 | 45 | 31 | 105 | 355 | 4082 |
+| Gatillo (Automáticas con racha) en ráfaga larga | Galil | Calibre 22% + Gatillo loco (Double Tap comprado) 28% + Tambor 36% + Plomo 40% + Ultimas balas 36% | ×2.77 | 415 | 4 | 12 | 39 | 443 |
+| Berserker con 3 golpes y menos de media vida | M14 | Calibre 22% + Adrenalina 32% + Furia x3 66% | ×2.20 | 231 | 7 | 21 | 70 | 796 |
+| Berserker en Último aliento | M14 | Calibre 22% + Adrenalina 32% + Furia x3 66% + Ultimo aliento 100% | ×3.20 | 336 | 5 | 14 | 48 | 547 |
+| Pistolas con Calibre y Sangre fría | Five-seven | Calibre 22% + Sangre fria 30% + Madrugador 36% | ×2.28 | 364 | 4 | 13 | 44 | 505 |
 | Banquero con 35 000 puntos y 5 bebidas | Galil | Calibre 22% + Interes 35% + Plutocrata (5 bebidas) 30% | ×1.87 | 280 | 5 | 17 | 57 | 656 |
 | Cuerpo de cristal + Calibre al tope | Galil | Calibre 300% · ×3 | ×12.00 | 1800 | 1 | 3 | 9 | 103 |
 
