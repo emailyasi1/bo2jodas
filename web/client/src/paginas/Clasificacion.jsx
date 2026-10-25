@@ -40,6 +40,16 @@ function ranking(partidas, filtro) {
   return [...mejor.values()].sort((a, b) => b.ronda - a.ronda || (a.fecha < b.fecha ? -1 : 1));
 }
 
+// Puesto compartido, como en zwr.gg: mismo valor = mismo puesto y el siguiente
+// se salta (1, 2, 4, 4, 6). El numero solo sale en la primera fila del empate.
+function puestos(lista, valor) {
+  return lista.map((x, i) => {
+    let p = i;
+    while (p > 0 && valor(lista[p - 1]) === valor(x)) p--;
+    return { puesto: p + 1, ver: p === i };
+  });
+}
+
 export default function Clasificacion() {
   const runs = useDatos("/runs?limit=1000");
   const lb = useDatos("/leaderboards");
@@ -49,6 +59,7 @@ export default function Clasificacion() {
   const [mitica, setMitica] = useState("");
   const [cat, setCat] = useState("high");
   const filas = useMemo(() => (runs.datos ? ranking(runs.datos, { tam, clase, arq, mitica }) : []), [runs.datos, tam, clase, arq, mitica]);
+  const pos = puestos(filas, (p) => p.ronda);
 
   return (
     <>
@@ -94,8 +105,8 @@ export default function Clasificacion() {
             {filas.map((p, i) => (
               <tbody key={p.id} className="equipo">
                 {p.jugadores.map((j, k) => (
-                  <tr key={j.nombre} className={k === 0 && i < 3 ? `p${i + 1}` : ""}>
-                    {k === 0 && <td className="pos" rowSpan={p.jugadores.length}>{i + 1}</td>}
+                  <tr key={j.nombre} className={k === 0 && pos[i].puesto <= 3 ? `p${pos[i].puesto}` : ""}>
+                    {k === 0 && <td className="pos" rowSpan={p.jugadores.length}>{pos[i].ver && pos[i].puesto}</td>}
                     <td>
                       <div className="celda-jugador">
                         <Link to={`/jugador/${encodeURIComponent(j.nombre)}`} className="nombre">{j.nombre}</Link>
@@ -164,6 +175,7 @@ function TablaPartidas({ lb, cat }) {
   if (!lb.datos) return <Cargando filas={4} />;
   const flawless = cat === "flawless";
   const filas = flawless ? lb.datos.flawless || [] : (lb.datos.speedrun || {})[cat] || [];
+  const pos = puestos(filas, (f) => f.valor);
   return (
     <>
       <p className="mut" style={{ marginBottom: 14 }}>
@@ -185,8 +197,8 @@ function TablaPartidas({ lb, cat }) {
             </thead>
             <tbody>
               {filas.map((f, i) => (
-                <tr key={f.partida} className={i < 3 ? `p${i + 1}` : ""}>
-                  <td className="pos">{i + 1}</td>
+                <tr key={f.partida} className={pos[i].puesto <= 3 ? `p${pos[i].puesto}` : ""}>
+                  <td className="pos">{pos[i].ver && pos[i].puesto}</td>
                   <td>
                     {f.jugadores.map((n, k) => (
                       <span key={n}>{k > 0 && ", "}<Link to={`/jugador/${encodeURIComponent(n)}`} className="nombre">{n}</Link></span>
