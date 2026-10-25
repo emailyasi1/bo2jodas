@@ -44,6 +44,9 @@ export function resumen(p) {
     prueba: !!p.prueba,
     terminada: p.terminada === undefined ? 1 : p.terminada,
     sin_caer: rondaSinCaer(p),
+    // Flawless y speedrun solo con partidas que pasaron la validacion nueva (la
+    // que comprueba los tiempos de ronda), no las aceptadas con la antigua.
+    validada: p.validacion !== "antigua",
     hitos: p.hitos || {},
     jugadores: p.jugadores.map((j) => ({
       nombre: j.nombre,
@@ -175,38 +178,10 @@ function top(lista, clave, n = 10) {
   return [...lista].sort((a, b) => b[clave] - a[clave]).slice(0, n);
 }
 
-// Una fila por partida para las clasificaciones de High Rounds, Flawless y speedrun.
-function filaPartida(p, valor) {
-  return { partida: p.id, fecha: p.fecha, ronda: p.ronda, jugadores: p.jugadores.map((j) => j.nombre), jugadores_n: p.jugadores.length, valor };
-}
-
 export function leaderboards(todas) {
   const partidas = todas.filter(cuenta);
   const lista = entradas(partidas);
-  // Flawless y speedrun solo con partidas que pasaron la validacion nueva (la
-  // que comprueba los tiempos de ronda), no las aceptadas con la antigua.
-  const validadas = partidas.filter((p) => p.validacion !== "antigua");
-  const flawless = validadas
-    .filter((p) => rondaSinCaer(p) !== null)
-    .map((p) => filaPartida(p, rondaSinCaer(p)))
-    .sort((a, b) => b.valor - a.valor || (a.fecha < b.fecha ? -1 : 1))
-    .slice(0, 20);
-  const speedrun = {};
-  for (const r of ["30", "50", "100", "200"]) {
-    speedrun[r] = validadas
-      .filter((p) => p.hitos && p.hitos[r] !== undefined)
-      .map((p) => filaPartida(p, p.hitos[r]))
-      .sort((a, b) => a.valor - b.valor || (a.fecha < b.fecha ? -1 : 1))
-      .slice(0, 20);
-  }
-  const highRounds = partidas
-    .map((p) => filaPartida(p, p.ronda))
-    .sort((a, b) => b.valor - a.valor || (a.fecha < b.fecha ? -1 : 1))
-    .slice(0, 20);
   return {
-    highRounds,
-    flawless,
-    speedrun,
     mejorRonda: mejor(lista, (e) => e.nombre),
     porClase: mejor(lista, (e) => (e.clase ? `${e.clase}|${e.nombre}` : null)),
     porArquetipo: mejor(lista, (e) => (e.arquetipo ? `${e.arquetipo}|${e.nombre}` : null)),

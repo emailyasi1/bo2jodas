@@ -1,18 +1,40 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Build, Cargando, Fallo, Seccion, Top, TagArquetipo, TagClase, colorRonda, grupo, hace, useDatos } from "../ui.jsx";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Build, Cargando, Fallo, Seccion, Top, TagArquetipo, TagClase, colorRonda, hace, useDatos } from "../ui.jsx";
 import { ARQUETIPOS, CLASES, MITICAS, duracion, fmt } from "../nombres.js";
 import { Desplegable, Segmentos } from "../controles.jsx";
 
-const TAMANO = [["", "Todos"], ["1", "Solo"], ["2", "Dúo"], ["3", "Trío"], ["4", "Cuarteto"], ["5", "5+"]];
-// Categorias: High Rounds (la tabla de siempre), Flawless y speedruns.
-const CATEGORIAS = [["high", "High Rounds"], ["flawless", "Flawless"], ["30", "Speedrun R30"], ["50", "R50"], ["100", "R100"], ["200", "R200"]];
+// Como zwr.gg: cada categoria tiene su tabla por numero de jugadores, y cada
+// fila es una partida con todos sus jugadores.
+const JUGADORES = [["1", "Solo"], ["2", "Dúo"], ["3", "Trío"], ["4", "Cuarteto"], ["5", "5+"]];
 const reloj = (s) => {
   const h = Math.floor(s / 3600);
   const m = Math.floor((s % 3600) / 60);
   const x = Math.floor(s % 60);
   return `${h ? `${h}:` : ""}${String(m).padStart(h ? 2 : 1, "0")}:${String(x).padStart(2, "0")}`;
 };
+// valor: lo que se ordena (null = la partida no entra); mayor: si gana el mas alto.
+const speedrun = (r) => ({
+  t: r === "30" ? "Speedrun R30" : `R${r}`,
+  columna: "Tiempo",
+  explica: `Tiempo desde que empieza la partida hasta que empieza la ronda ${r}. Solo partidas desde la versión 1.10.3.`,
+  valor: (p) => (p.validada !== false && p.hitos && p.hitos[r] !== undefined ? p.hitos[r] : null),
+  mayor: false,
+  texto: (v) => reloj(v),
+});
+const CATEGORIAS = {
+  high: { t: "High Rounds", columna: "Ronda", explica: "La ronda más alta de cada jugador o grupo.", valor: (p) => p.ronda, mayor: true, texto: (v) => v, color: true },
+  flawless: {
+    t: "Flawless", columna: "Sin caer", explica: "Hasta qué ronda llegó el grupo sin que nadie cayera. Solo partidas desde la versión 1.10.3.",
+    valor: (p) => (p.validada !== false && p.sin_caer !== null && p.sin_caer !== undefined ? p.sin_caer : null), mayor: true, texto: (v) => v, color: true,
+  },
+  30: speedrun("30"),
+  50: speedrun("50"),
+  100: speedrun("100"),
+  200: speedrun("200"),
+};
+// Orden de las pestanas (un objeto pondria antes las claves numericas).
+const ORDEN = ["high", "flawless", "30", "50", "100", "200"];
 const RECORDS = [
   ["danio", "Daño en una partida", (f) => fmt(f.danio_total), (f) => f.danio_total],
   ["bajas", "Bajas en una partida", (f) => fmt(f.bajas), (f) => f.bajas],
@@ -22,30 +44,33 @@ const RECORDS = [
   ["reanimaciones", "Reanimaciones", (f) => f.reanimaciones, (f) => f.reanimaciones],
 ];
 
-// Una entrada por grupo de jugadores (en solo, por jugador) con su mejor
-// partida: en duo la fila es la partida con los dos. Los filtros de clase,
-// arquetipo y mitica valen si algun jugador del grupo los cumple.
-function ranking(partidas, filtro) {
+// La mejor partida de cada grupo de jugadores (en solo, de cada jugador) en la
+// categoria. Los filtros de clase, arquetipo y mitica valen si algun jugador
+// del grupo los cumple. A igual valor va primero quien llego antes.
+function ranking(partidas, c, filtro) {
+  const gana = (a, b) => (c.mayor ? a.valor > b.valor : a.valor < b.valor) || (a.valor === b.valor && a.p.fecha < b.p.fecha);
   const mejor = new Map();
   for (const p of partidas) {
     if (p.prueba) continue;
     const n = p.jugadores.length;
-    if (filtro.tam && (filtro.tam === "5" ? n < 5 : n !== Number(filtro.tam))) continue;
+    if (filtro.tam === "5" ? n < 5 : n !== Number(filtro.tam)) continue;
     const cumple = p.jugadores.some((j) => (!filtro.clase || j.clase === filtro.clase) && (!filtro.arq || j.arquetipo === filtro.arq) && (!filtro.mitica || j.mitica === filtro.mitica));
-    if (!cumple) continue;
+    const valor = c.valor(p);
+    if (!cumple || valor === null) continue;
+    const e = { p, valor };
     const clave = p.jugadores.map((j) => j.nombre).sort().join("\n");
     const a = mejor.get(clave);
-    if (!a || p.ronda > a.ronda || (p.ronda === a.ronda && p.fecha < a.fecha)) mejor.set(clave, p);
+    if (!a || gana(e, a)) mejor.set(clave, e);
   }
-  return [...mejor.values()].sort((a, b) => b.ronda - a.ronda || (a.fecha < b.fecha ? -1 : 1));
+  return [...mejor.values()].sort((a, b) => (gana(a, b) ? -1 : gana(b, a) ? 1 : 0));
 }
 
 // Puesto compartido, como en zwr.gg: mismo valor = mismo puesto y el siguiente
 // se salta (1, 2, 4, 4, 6). El numero solo sale en la primera fila del empate.
-function puestos(lista, valor) {
+function puestos(lista) {
   return lista.map((x, i) => {
     let p = i;
-    while (p > 0 && valor(lista[p - 1]) === valor(x)) p--;
+    while (p > 0 && lista[p - 1].valor === x.valor) p--;
     return { puesto: p + 1, ver: p === i };
   });
 }
@@ -61,37 +86,43 @@ export default function Clasificacion() {
   const ir = useNavigate();
   const runs = useDatos("/runs?limit=1000");
   const lb = useDatos("/leaderboards");
-  const [tam, setTam] = useState("");
+  // Categoria y jugadores en la URL (?c=flawless&j=2) para poder pasar el enlace.
+  const [params, setParams] = useSearchParams();
+  const cat = CATEGORIAS[params.get("c")] ? params.get("c") : "high";
+  const tam = JUGADORES.some(([v]) => v === params.get("j")) ? params.get("j") : "1";
+  const cambiar = (clave, v) => {
+    const n = new URLSearchParams(params);
+    n.set(clave, v);
+    setParams(n, { replace: true });
+  };
   const [clase, setClase] = useState("");
   const [arq, setArq] = useState("");
   const [mitica, setMitica] = useState("");
-  const [cat, setCat] = useState("high");
-  const filas = useMemo(() => (runs.datos ? ranking(runs.datos, { tam, clase, arq, mitica }) : []), [runs.datos, tam, clase, arq, mitica]);
-  const pos = puestos(filas, (p) => p.ronda);
+  const c = CATEGORIAS[cat];
+  const filas = useMemo(() => (runs.datos ? ranking(runs.datos, c, { tam, clase, arq, mitica }) : []), [runs.datos, c, tam, clase, arq, mitica]);
+  const pos = puestos(filas);
+  const alta = cat === "high";
 
   return (
     <>
       <div className="pagina-cab">
         <div>
-          <span className="mayus ten">Town · mejor ronda de cada jugador o grupo</span>
+          <span className="mayus ten">Town · mejores partidas por número de jugadores</span>
           <h1>Clasificación</h1>
-          <p className="mut">Una entrada por jugador (o por grupo, en Dúo, Trío...) con su mejor partida para el filtro elegido. A igual ronda, va primero quien llegó antes.</p>
+          <p className="mut">Una entrada por jugador o grupo con su mejor partida en cada categoría. Con el mismo resultado comparten puesto y va primero quien lo consiguió antes.</p>
         </div>
       </div>
 
       <div className="filtros">
-        <Segmentos valor={cat} onCambio={setCat} opciones={CATEGORIAS} ariaLabel="Categoría" />
+        <Segmentos valor={cat} onCambio={(v) => cambiar("c", v)} opciones={ORDEN.map((id) => [id, CATEGORIAS[id].t])} ariaLabel="Categoría" />
       </div>
-
-      {cat !== "high" && <TablaPartidas lb={lb} cat={cat} />}
-
-      {cat === "high" && <>
       <div className="filtros">
-        <Segmentos valor={tam} onCambio={setTam} opciones={TAMANO} ariaLabel="Tamaño del grupo" />
-        <Desplegable valor={clase} onCambio={setClase} ariaLabel="Clase" opciones={[{ v: "", t: "Todas las clases" }, ...Object.entries(CLASES).map(([id, c]) => ({ v: id, t: c.nombre }))]} />
+        <Segmentos valor={tam} onCambio={(v) => cambiar("j", v)} opciones={JUGADORES} ariaLabel="Jugadores en la partida" />
+        <Desplegable valor={clase} onCambio={setClase} ariaLabel="Clase" opciones={[{ v: "", t: "Todas las clases" }, ...Object.entries(CLASES).map(([id, x]) => ({ v: id, t: x.nombre }))]} />
         <Desplegable valor={arq} onCambio={setArq} ariaLabel="Arquetipo" opciones={[{ v: "", t: "Todos los arquetipos" }, ...Object.entries(ARQUETIPOS).map(([id, a]) => ({ v: id, t: a.nombre }))]} />
         <Desplegable valor={mitica} onCambio={setMitica} ariaLabel="Mítica" opciones={[{ v: "", t: "Cualquier mítica" }, ...Object.entries(MITICAS).filter(([id]) => id !== "leaper").map(([id, n]) => ({ v: id, t: n }))]} />
       </div>
+      <p className="mut peq" style={{ margin: "-4px 0 14px" }}>{c.explica}</p>
 
       {runs.cargando && <Cargando filas={5} />}
       {runs.error && <Fallo error={runs.error} />}
@@ -101,16 +132,16 @@ export default function Clasificacion() {
             <thead>
               <tr>
                 <th className="pos">#</th>
-                <th>Jugadores</th>
-                <th className="der">Ronda</th>
+                <th>{tam === "1" ? "Jugador" : "Jugadores"}</th>
+                <th className="der">{c.columna}</th>
                 <th>Build</th>
                 <th className="der m-oculta">Nivel</th>
                 <th className="der m-oculta">Bajas</th>
-                <th className="der m-oculta">Duración</th>
+                <th className="der m-oculta">{alta ? "Duración" : "Ronda final"}</th>
                 <th className="der m-oculta">Cuándo</th>
               </tr>
             </thead>
-            {filas.map((p, i) => (
+            {filas.map(({ p, valor }, i) => (
               <tbody key={p.id} className="equipo fila-clic" onClick={abrir(ir, p.id)} title="Ver la partida">
                 {p.jugadores.map((j, k) => (
                   <tr key={j.nombre} className={k === 0 && pos[i].puesto <= 3 ? `p${pos[i].puesto}` : ""}>
@@ -124,12 +155,16 @@ export default function Clasificacion() {
                         </span>
                       </div>
                     </td>
-                    {k === 0 && <td className="der" rowSpan={p.jugadores.length}><Link to={`/partida/${p.id}`} className="grande" style={{ color: colorRonda(p.ronda) }}>{p.ronda}</Link></td>}
+                    {k === 0 && (
+                      <td className="der" rowSpan={p.jugadores.length}>
+                        <Link to={`/partida/${p.id}`} className="grande num" style={c.color ? { color: colorRonda(valor) } : undefined}>{c.texto(valor)}</Link>
+                      </td>
+                    )}
                     <td className="c-build"><Build cartas={j.cartas} mitica={j.mitica} max={12} /></td>
                     <td className="der num m-oculta">{j.nivel}</td>
                     <td className="der num m-oculta">{fmt(j.bajas)}</td>
-                    {k === 0 && <td className="der num ten m-oculta" rowSpan={p.jugadores.length}>{duracion(p.duracion_s)}</td>}
-                    {k === 0 && <td className="der ten m-oculta" rowSpan={p.jugadores.length}>{[grupo(p.jugadores.length), hace(p.fecha)].filter(Boolean).join(" · ")}</td>}
+                    {k === 0 && <td className="der num ten m-oculta" rowSpan={p.jugadores.length}>{alta ? duracion(p.duracion_s) : p.ronda}</td>}
+                    {k === 0 && <td className="der ten m-oculta" rowSpan={p.jugadores.length}>{hace(p.fecha)}</td>}
                   </tr>
                 ))}
               </tbody>
@@ -137,9 +172,8 @@ export default function Clasificacion() {
           </table>
         </div>
       ) : (
-        <p className="vacio">Nadie ha jugado todavía con esa combinación.</p>
+        <p className="vacio">Todavía no hay partidas en esta categoría con ese filtro.</p>
       ))}
-      </>}
 
       <div className="rejilla" style={{ marginTop: 36 }}>
         <Seccion titulo="Récords por partida">
@@ -172,58 +206,6 @@ export default function Clasificacion() {
           ) : <p className="vacio">Sin récords todavía.</p>)}
         </Seccion>
       </div>
-    </>
-  );
-}
-
-// Flawless (ronda alcanzada sin que nadie cayera) y speedrun (tiempo hasta
-// empezar la ronda 30, 50, 100 o 200): una fila por partida.
-function TablaPartidas({ lb, cat }) {
-  const ir = useNavigate();
-  if (lb.error) return <Fallo error={lb.error} />;
-  if (!lb.datos) return <Cargando filas={4} />;
-  const flawless = cat === "flawless";
-  const filas = flawless ? lb.datos.flawless || [] : (lb.datos.speedrun || {})[cat] || [];
-  const pos = puestos(filas, (f) => f.valor);
-  return (
-    <>
-      <p className="mut" style={{ marginBottom: 14 }}>
-        {flawless
-          ? "Hasta qué ronda llegó el grupo sin que nadie cayera. Solo partidas desde la versión 1.10.3."
-          : `Tiempo desde el inicio hasta que empieza la ronda ${cat}. Solo partidas desde la versión 1.10.3.`}
-      </p>
-      {filas.length ? (
-        <div className="tabla-env">
-          <table className="tabla">
-            <thead>
-              <tr>
-                <th className="pos">#</th>
-                <th>Jugadores</th>
-                <th className="der">{flawless ? "Ronda sin caer" : "Tiempo"}</th>
-                <th className="der m-oculta">Ronda final</th>
-                <th className="der m-oculta">Cuándo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filas.map((f, i) => (
-                <tr key={f.partida} className={`fila-clic${pos[i].puesto <= 3 ? ` p${pos[i].puesto}` : ""}`} onClick={abrir(ir, f.partida)} title="Ver la partida">
-                  <td className="pos">{pos[i].ver && pos[i].puesto}</td>
-                  <td>
-                    {f.jugadores.map((n, k) => (
-                      <span key={n}>{k > 0 && ", "}<Link to={`/jugador/${encodeURIComponent(n)}`} className="nombre">{n}</Link></span>
-                    ))}
-                  </td>
-                  <td className="der">
-                    <Link to={`/partida/${f.partida}`} className="grande" style={flawless ? { color: colorRonda(f.valor) } : undefined}>{flawless ? f.valor : reloj(f.valor)}</Link>
-                  </td>
-                  <td className="der num m-oculta">{f.ronda}</td>
-                  <td className="der ten m-oculta">{[grupo(f.jugadores_n), hace(f.fecha)].filter(Boolean).join(" · ")}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : <p className="vacio">Todavía no hay partidas en esta categoría.</p>}
     </>
   );
 }
