@@ -1,5 +1,14 @@
 [
   {
+    "version": "Web",
+    "fecha": "2026-10-25",
+    "titulo": "Subida automática sin scripts",
+    "cambios": [
+      { "tipo": "nuevo", "que": "Subida automática desde la web", "texto": "En Subir partida, eliges una sola vez la carpeta donde el mod guarda las partidas y, mientras tengas la web abierta con tu cuenta, se suben solas (también al entrar, las pendientes). Sin .bat, .ps1 ni token. Funciona en Chrome, Edge, Opera y Vivaldi; en Brave hay que activar brave://flags/#file-system-access-api; en Firefox y Safari no (arrastrar a mano sigue igual)." },
+      { "tipo": "cambio", "que": "Script de subida", "texto": "Pasa a ser opcional, para quien quiera que se suban sin tener el navegador abierto." }
+    ]
+  },
+  {
     "version": "1.10.4",
     "fecha": "2026-10-25",
     "titulo": "Sin tirón al acabar la ronda",

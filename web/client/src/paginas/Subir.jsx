@@ -4,6 +4,7 @@ import { Copy, FileUp, Check, X } from "lucide-react";
 import { subirPartida } from "../api.js";
 import { vaciarCache } from "../ui.jsx";
 import { useSesion } from "../sesion.jsx";
+import Autosubida from "./Autosubida.jsx";
 
 const CARPETA = "%localappdata%\\Plutonium\\storage\\t6\\mods\\zm_bo2jodas\\scriptdata\\bo2jodas_partidas";
 
@@ -57,6 +58,8 @@ export default function Subir() {
         <div>
           {yo === undefined ? null : yo ? (
             <>
+              <Autosubida usuario={yo.usuario} />
+              <p className="mayus ten" style={{ margin: "22px 0 8px" }}>O a mano</p>
               <label
                 className={sobre ? "zona-soltar sobre" : "zona-soltar"}
                 onDragOver={(e) => { e.preventDefault(); setSobre(true); }}
@@ -103,7 +106,7 @@ export default function Subir() {
             </li>
             <li>Arrastra el archivo que empieza por <code>zm_transit_</code> al recuadro.</li>
           </ol>
-          <p className="ten peq">¿Eres anfitrión a menudo? En tu <Link to="/perfil" style={{ color: "var(--lava)" }}>perfil</Link> tienes un script que las sube solas.</p>
+          <p className="ten peq">Con la subida automática de arriba no hace falta nada más. Si prefieres que se suban sin tener el navegador abierto, en tu <Link to="/perfil" style={{ color: "var(--lava)" }}>perfil</Link> hay un script opcional.</p>
         </aside>
       </div>
     </>

@@ -15,6 +15,7 @@ import Calculadora from "./paginas/Calculadora.jsx";
 import Wiki from "./paginas/Wiki.jsx";
 import Parches from "./paginas/Parches.jsx";
 import { ProveedorSesion, useSesion } from "./sesion.jsx";
+import { iniciarAutosubida } from "./autosubida.js";
 
 const NAV = [
   { a: "/", t: "Inicio", i: Home, end: true },
@@ -57,6 +58,13 @@ function Barra() {
   );
 }
 
+// Con sesion, la autosubida vigila la carpeta elegida desde cualquier pagina.
+function Autosubir() {
+  const { yo } = useSesion();
+  useEffect(() => iniciarAutosubida(!!yo), [yo]);
+  return null;
+}
+
 function ArribaAlCambiar() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -70,6 +78,7 @@ export default function App() {
     <ProveedorSesion>
       <div className="app">
         <ArribaAlCambiar />
+        <Autosubir />
         <Barra />
         <main>
           <div className="contenedor">

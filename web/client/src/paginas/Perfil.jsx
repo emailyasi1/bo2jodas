@@ -82,7 +82,7 @@ export default function Perfil() {
           <summary>Subida automática con script (opcional)</summary>
           <div>
             <p className="mut">
-              Si eres anfitrión a menudo, el script <code>subir_partidas.bat</code> de la carpeta{" "}
+              Lo normal es usar la <b>subida automática</b> de la página <a href="/subir" style={{ color: "var(--lava)" }}>Subir partida</a> (elegir la carpeta una vez, sin scripts). Si quieres que se suban aunque no tengas el navegador abierto, el script <code>subir_partidas.bat</code> de la carpeta{" "}
               <a href="https://github.com/emailyasi0-a11y/bo2jodas/tree/main/web/subidor" target="_blank" rel="noreferrer" style={{ color: "var(--lava)" }}>web/subidor</a>{" "}
               vigila la carpeta de partidas y sube cada una al acabar. Usa este token de tu cuenta:
             </p>

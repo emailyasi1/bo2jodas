@@ -684,3 +684,12 @@ details.plegable > summary::after { transition: transform 0.25s var(--suave); }
   .parche-lista li { grid-template-columns: 1fr; gap: 3px; }
   .parche-tipo { justify-self: start; }
 }
+
+/* ------------------------------------------------------------ autosubida */
+.autosubida { display: grid; gap: 12px; margin-bottom: 4px; }
+.autosubida h3 { display: flex; align-items: center; gap: 8px; margin: 0; }
+.autosubida h3 svg { color: var(--lava); }
+.autosubida-registro { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.autosubida-registro li { display: flex; gap: 6px; align-items: center; }
+.girando { animation: girar 1s linear infinite; }
+@keyframes girar { to { transform: rotate(360deg); } }
