@@ -242,6 +242,15 @@ p { margin: 0; }
 .tabla .nombre { font-weight: 600; }
 .tabla a.fila-enlace { display: contents; }
 .celda-jugador { display: flex; flex-direction: column; gap: 4px; }
+/* clasificacion: una partida por tbody, un jugador por fila */
+.tabla tbody.equipo { border-bottom: 1px solid var(--line); transition: background-color 0.12s; }
+.tabla tbody.equipo:last-child { border-bottom: 0; }
+.tabla tbody.equipo:hover { background: var(--s2); }
+.tabla tbody.equipo tr:hover { background: none; }
+.tabla tbody.equipo td { border-bottom: 0; padding-top: 6px; padding-bottom: 6px; }
+.tabla tbody.equipo tr:first-child td { padding-top: 12px; }
+.tabla tbody.equipo tr:last-child td { padding-bottom: 12px; }
+.tabla tbody.equipo td[rowspan] { padding-top: 12px; padding-bottom: 12px; }
 
 /* ------------------------------------------------------------ filtros */
 .filtros { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 16px; }

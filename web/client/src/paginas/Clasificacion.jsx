@@ -22,21 +22,20 @@ const RECORDS = [
   ["reanimaciones", "Reanimaciones", (f) => f.reanimaciones, (f) => f.reanimaciones],
 ];
 
-// Una entrada por jugador y partida, y nos quedamos con la mejor de cada jugador.
+// Una entrada por grupo de jugadores (en solo, por jugador) con su mejor
+// partida: en duo la fila es la partida con los dos. Los filtros de clase,
+// arquetipo y mitica valen si algun jugador del grupo los cumple.
 function ranking(partidas, filtro) {
   const mejor = new Map();
   for (const p of partidas) {
     if (p.prueba) continue;
     const n = p.jugadores.length;
     if (filtro.tam && (filtro.tam === "5" ? n < 5 : n !== Number(filtro.tam))) continue;
-    for (const j of p.jugadores) {
-      if (filtro.clase && j.clase !== filtro.clase) continue;
-      if (filtro.arq && j.arquetipo !== filtro.arq) continue;
-      if (filtro.mitica && j.mitica !== filtro.mitica) continue;
-      const e = { ...j, partida: p.id, ronda: p.ronda, fecha: p.fecha, duracion_s: p.duracion_s, n, companeros: p.jugadores.filter((x) => x !== j).map((x) => x.nombre) };
-      const a = mejor.get(j.nombre);
-      if (!a || e.ronda > a.ronda || (e.ronda === a.ronda && e.fecha < a.fecha)) mejor.set(j.nombre, e);
-    }
+    const cumple = p.jugadores.some((j) => (!filtro.clase || j.clase === filtro.clase) && (!filtro.arq || j.arquetipo === filtro.arq) && (!filtro.mitica || j.mitica === filtro.mitica));
+    if (!cumple) continue;
+    const clave = p.jugadores.map((j) => j.nombre).sort().join("\n");
+    const a = mejor.get(clave);
+    if (!a || p.ronda > a.ronda || (p.ronda === a.ronda && p.fecha < a.fecha)) mejor.set(clave, p);
   }
   return [...mejor.values()].sort((a, b) => b.ronda - a.ronda || (a.fecha < b.fecha ? -1 : 1));
 }
@@ -55,9 +54,9 @@ export default function Clasificacion() {
     <>
       <div className="pagina-cab">
         <div>
-          <span className="mayus ten">Town · mejor ronda de cada jugador</span>
+          <span className="mayus ten">Town · mejor ronda de cada jugador o grupo</span>
           <h1>Clasificación</h1>
-          <p className="mut">Una línea por jugador con su mejor partida para el filtro elegido. A igual ronda, va primero quien llegó antes.</p>
+          <p className="mut">Una entrada por jugador (o por grupo, en Dúo, Trío...) con su mejor partida para el filtro elegido. A igual ronda, va primero quien llegó antes.</p>
         </div>
       </div>
 
@@ -83,7 +82,7 @@ export default function Clasificacion() {
             <thead>
               <tr>
                 <th className="pos">#</th>
-                <th>Jugador</th>
+                <th>Jugadores</th>
                 <th className="der">Ronda</th>
                 <th>Build</th>
                 <th className="der m-oculta">Nivel</th>
@@ -92,28 +91,30 @@ export default function Clasificacion() {
                 <th className="der m-oculta">Cuándo</th>
               </tr>
             </thead>
-            <tbody>
-              {filas.map((f, i) => (
-                <tr key={f.nombre} className={i < 3 ? `p${i + 1}` : ""}>
-                  <td className="pos">{i + 1}</td>
-                  <td>
-                    <div className="celda-jugador">
-                      <Link to={`/jugador/${encodeURIComponent(f.nombre)}`} className="nombre">{f.nombre}</Link>
-                      <span style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
-                        <TagClase id={f.clase} />
-                        <TagArquetipo id={f.arquetipo} />
-                      </span>
-                    </div>
-                  </td>
-                  <td className="der"><Link to={`/partida/${f.partida}`} className="grande" style={{ color: colorRonda(f.ronda) }}>{f.ronda}</Link></td>
-                  <td className="c-build"><Build cartas={f.cartas} mitica={f.mitica} max={12} /></td>
-                  <td className="der num m-oculta">{f.nivel}</td>
-                  <td className="der num m-oculta">{fmt(f.bajas)}</td>
-                  <td className="der num ten m-oculta">{duracion(f.duracion_s)}</td>
-                  <td className="der ten m-oculta" title={f.companeros.length ? `Con ${f.companeros.join(", ")}` : "Solo"}>{[grupo(f.n), hace(f.fecha)].filter(Boolean).join(" · ")}</td>
-                </tr>
-              ))}
-            </tbody>
+            {filas.map((p, i) => (
+              <tbody key={p.id} className="equipo">
+                {p.jugadores.map((j, k) => (
+                  <tr key={j.nombre} className={k === 0 && i < 3 ? `p${i + 1}` : ""}>
+                    {k === 0 && <td className="pos" rowSpan={p.jugadores.length}>{i + 1}</td>}
+                    <td>
+                      <div className="celda-jugador">
+                        <Link to={`/jugador/${encodeURIComponent(j.nombre)}`} className="nombre">{j.nombre}</Link>
+                        <span style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
+                          <TagClase id={j.clase} />
+                          <TagArquetipo id={j.arquetipo} />
+                        </span>
+                      </div>
+                    </td>
+                    {k === 0 && <td className="der" rowSpan={p.jugadores.length}><Link to={`/partida/${p.id}`} className="grande" style={{ color: colorRonda(p.ronda) }}>{p.ronda}</Link></td>}
+                    <td className="c-build"><Build cartas={j.cartas} mitica={j.mitica} max={12} /></td>
+                    <td className="der num m-oculta">{j.nivel}</td>
+                    <td className="der num m-oculta">{fmt(j.bajas)}</td>
+                    {k === 0 && <td className="der num ten m-oculta" rowSpan={p.jugadores.length}>{duracion(p.duracion_s)}</td>}
+                    {k === 0 && <td className="der ten m-oculta" rowSpan={p.jugadores.length}>{[grupo(p.jugadores.length), hace(p.fecha)].filter(Boolean).join(" · ")}</td>}
+                  </tr>
+                ))}
+              </tbody>
+            ))}
           </table>
         </div>
       ) : (
