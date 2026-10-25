@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.4** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.5** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -17,10 +17,16 @@ Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el d
 
 ---
 
+## Novedades de la 1.10.5: subida automática sin scripts
+
+Ya no hace falta ningún `.bat` ni `.ps1`: en la web, en **Subir partida**, eliges **una sola vez** la carpeta donde el mod guarda las partidas y, mientras tengas la web abierta con tu cuenta (o cuando entres después de jugar), se suben solas. Funciona en Chrome, Edge, Opera y Vivaldi; en Brave hay que activar `brave://flags/#file-system-access-api`; en Firefox y Safari se arrastra el JSON a mano, como siempre.
+
+- **Latido del mod**: mientras dura la partida, el mod escribe cada minuto `en_partida.txt` (junto a los JSON) con el id de la partida y si sigue en marcha. Así la web sabe si un JSON sin terminar es de una partida viva (espera, dure lo que dure la ronda), de otra partida (`map_restart` / `fast_restart`: se sube al momento) o de un juego cerrado o colgado (40 minutos sin latido: se sube como *Sin terminar*). Las partidas terminadas se suben siempre al momento, aunque apagues el PC y entres en la web días después.
+- El script `web/subidor/` y el token del perfil desaparecen.
+
 ## Novedades de la 1.10.4: sin tirón al acabar la ronda
 
-- **Arreglado el tirón al acabar cada ronda** (desde la 1.10.3): al guardar la partida, el mod escribía el JSON línea a línea en un solo fotograma, cientos de escrituras que crecían con las rondas (en cuarteto, más de 2000 en la ronda 50), y el juego se quedaba congelado unos milisegundos. Ahora lo monta en memoria repartido en varios fotogramas durante el descanso entre rondas y lo escribe de golpe en unas pocas escrituras. El JSON es el mismo: se sube igual a mano y con el script de subida.
-- **Web: subida automática sin scripts.** En *Subir partida* eliges una vez la carpeta de partidas y, con la web abierta y tu cuenta, se suben solas. El script pasa a ser opcional.
+- **Arreglado el tirón al acabar cada ronda** (desde la 1.10.3): al guardar la partida, el mod escribía el JSON línea a línea en un solo fotograma, cientos de escrituras que crecían con las rondas (en cuarteto, más de 2000 en la ronda 50), y el juego se quedaba congelado unos milisegundos. Ahora lo monta en memoria repartido en varios fotogramas durante el descanso entre rondas y lo escribe de golpe en unas pocas escrituras. El JSON es el mismo.
 
 ## Novedades de la 1.10.3: estadísticas para balancear, resets y nuevas clasificaciones
 
@@ -40,8 +46,6 @@ En la web, cada partida enseña **gráficas por ronda** (bajas, puntos, daño y 
 **Resets**: las partidas que acaban **antes de la ronda 10** ya no se tiran, van a la página nueva **Resets** y no cuentan para la clasificación ni los totales (sustituye al filtro de nivel 10). El mod guarda el JSON **al acabar cada ronda**, así que una partida reiniciada con `fast_restart` o `map_restart` también queda guardada hasta la última ronda terminada (sale como *Sin terminar*).
 
 **Clasificación con categorías**: **High Rounds** (la de siempre), **Flawless** (hasta qué ronda llegó el grupo sin que nadie cayera) y **Speedrun R30 / R50 / R100 / R200** (tiempo hasta que empieza esa ronda). Flawless y speedrun solo cuentan partidas desde esta versión.
-
-**Actualiza el script de subida** (`web/subidor/subir_partidas.ps1`) si lo usas: el nuevo espera a que la partida acabe (o lleve 10 minutos sin cambiar) antes de subirla. El viejo subiría el JSON en cada ronda y se comería el límite de 20 subidas por hora.
 
 **Cambios de juego**:
 
@@ -160,7 +164,7 @@ La web comprueba cada partida antes de guardarla: solo se quedan los campos que 
 
 **Al elegir carta**, cada carta dice cuánto tienes ya de ella ("Ya tienes: +22pct x2") y tu lista se ve abajo a tamaño normal.
 
-Si quieres que se suban sin tener el navegador abierto, el script opcional de `web/subidor/` las sube con el token de tu perfil. El código de la web está en [`web/`](web/) (Node + React; instrucciones de despliegue en [web/README.md](web/README.md)).
+El código de la web está en [`web/`](web/) (Node + React; instrucciones de despliegue en [web/README.md](web/README.md)).
 
 </details>
 

@@ -12,7 +12,6 @@ Esta web lo recibe, lo guarda y lo enseña: lista de partidas, detalle de cada u
 
 - `server/`: Node + Express. API en `/api`. Guarda partidas y cuentas en Postgres si hay `DATABASE_URL`, o en archivos dentro de `data/` si no.
 - `client/`: React + Vite.
-- `subidor/`: opcional, script para el PC del anfitrión que sube los JSON solos (usa el token de la cuenta).
 - `Dockerfile`, `docker-compose.yml`, `Caddyfile`: despliegue con HTTPS automático.
 
 ## Desplegar gratis en Render + Neon (recomendado)
@@ -53,13 +52,9 @@ En un Ubuntu recién creado (por ejemplo una VM Always Free de Oracle) lo hace t
 
 Sin Docker: `cd client && npm install && npm run build`, luego `cd ../server && npm install && node src/index.js` (puerto 3000) y pon Caddy delante con el `Caddyfile`.
 
-## Opcional: subida automática (PC del anfitrión)
+## Subida automática (sin scripts)
 
-Quien haga de anfitrión a menudo puede dejar un script que suba cada partida sola al acabar:
-
-1. Copia la carpeta `subidor/` a cualquier sitio del PC del anfitrión.
-2. En la web, Perfil, descarga `subir_partidas.cfg` ya relleno (url + token de tu cuenta + nombre) y déjalo al lado del `.bat`.
-3. Doble clic en `subir_partidas.bat`: se queda abierto vigilando la carpeta y sube cada partida nueva (y las que hubiera pendientes). Déjalo abierto mientras juegas o ejecútalo después.
+En *Subir partida* el usuario elige una vez la carpeta de partidas (File System Access API: Chrome, Edge, Opera, Vivaldi; Brave tras `brave://flags/#file-system-access-api`). `client/src/autosubida.js` guarda el handle en IndexedDB, revisa la carpeta al entrar y cada minuto con la sesión del usuario, y sube lo que falte: las terminadas al momento; las sin terminar según `en_partida.txt`, el latido que el mod escribe cada minuto (id y estado): si es de otra partida o dice "acabada" se sube, si lleva 40 min parado también, y si no se espera. Sin latido, 40 min sin cambiar el JSON.
 
 ## Probar en local
 
