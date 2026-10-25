@@ -116,6 +116,8 @@ Al acabar cada partida, el mod escribe un **JSON con todo lo que ha pasado** en 
 2. Al acabar una partida, quien hizo de anfitrión tiene el JSON en la carpeta de arriba (el juego lo avisa en pantalla).
 3. En **Subir JSON**, arrastra la partida que quieras subir. Las repetidas no se duplican y cada partida queda con el nombre de quien la subió. Las partidas en las que **nadie pasa del nivel 10** no se suben (ni a mano ni con el script): se filtran como resets.
 
+La web comprueba cada partida antes de guardarla: solo se quedan los campos que escribe el mod (lo demás se descarta), cada número tiene que estar en su rango, las cartas, armas, clases y arquetipos tienen que existir y no pasar de su tope, y los números tienen que cuadrar entre sí (nivel con bajas, bajas con los zombies que salen hasta esa ronda, bajas por arma con el total, duración posible, huecos de carta de la clase). Si algo no cuadra, dice el motivo. Como mucho **1 MB** por archivo, **20 subidas por hora** por cuenta y **3 cuentas nuevas por conexión al día**.
+
 **Efectos con tus cartas de daño**: rayos (Pararrayos, Sobrecarga, Condensador, Tormenta) y fuego ahora también se multiplican por Calibre, Gatillo loco, Adrenalina, Cuerpo de cristal y demás, como ya hacían Espinas, Ciclón, los leapers y la Reacción en cadena. El fuego dura **6 tics** del 4 % (antes salían 5). Las estadísticas ya no cuentan dos veces el daño de Espinas, Ciclón, leapers, Reacción en cadena, Zeus, Fénix y Electric Cherry.
 
 **Al elegir carta**, cada carta dice cuánto tienes ya de ella ("Ya tienes: +22pct x2") y tu lista se ve abajo a tamaño normal.

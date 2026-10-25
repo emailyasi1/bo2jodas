@@ -26,7 +26,8 @@ import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { resumen, leaderboards, totales, validar, descartar, jugador } from "./partidas.js";
+import { resumen, leaderboards, totales, descartar, jugador } from "./partidas.js";
+import { limpiar } from "./validar.js";
 import { cargarTokens, comprobarToken } from "./tokens.js";
 import { Usuarios } from "./usuarios.js";
 import { crearAlmacen } from "./almacen.js";
@@ -45,10 +46,47 @@ const partidas = new Map();
 for (const [, p] of await almacen.todos("run")) if (p && p.id) partidas.set(p.id, p);
 console.log(`${partidas.size} partidas y ${usuarios.total} cuentas cargadas (${almacen.nombre})`);
 
-function idDe(p) {
-  // El mod manda un id aleatorio; por si acaso, se deriva uno estable del contenido.
-  const base = p.id ? String(p.id) : createHash("sha1").update(JSON.stringify(p)).digest("hex").slice(0, 12);
-  return base.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 40) || createHash("sha1").update(JSON.stringify(p)).digest("hex").slice(0, 12);
+// Huella de los datos clave de una partida (no cuenta lo que anaden el subidor
+// o la web, como la fecha o quien la subio).
+function huella(p) {
+  const clave = {
+    version: p.version,
+    mapa: p.mapa,
+    ronda: p.ronda,
+    duracion_s: p.duracion_s,
+    jugadores: [...p.jugadores]
+      .map((j) => [j.nombre, j.nivel, j.bajas, j.puntos_total, j.danio_total])
+      .sort((a, b) => (a[0] < b[0] ? -1 : 1)),
+  };
+  return createHash("sha1").update(JSON.stringify(clave)).digest("hex").slice(0, 10);
+}
+
+// El id que se guarda es el del mod + la huella: una partida falsa con el id de
+// otra real ya no la "ocupa" (cae en otro id), y la misma partida subida dos
+// veces sigue siendo la misma. Las guardadas antes (solo con el id del mod)
+// cuentan como repetidas si tienen la misma huella.
+function buscarRepetida(p) {
+  const id = `${p.id}-${huella(p)}`;
+  if (partidas.has(id)) return { id, repetida: true };
+  const vieja = partidas.get(p.id);
+  if (vieja && huella(vieja) === huella(p)) return { id: p.id, repetida: true };
+  return { id, repetida: false };
+}
+
+// Como mucho SUBIDAS_HORA subidas por cuenta (o IP) cada hora.
+const SUBIDAS_HORA = 20;
+const subidas = new Map(); // quien -> [instantes]
+function frenarSubida(quien) {
+  const ahora = Date.now();
+  const lista = (subidas.get(quien) || []).filter((t) => ahora - t < 3600_000);
+  if (lista.length >= SUBIDAS_HORA) {
+    subidas.set(quien, lista);
+    return true;
+  }
+  lista.push(ahora);
+  subidas.set(quien, lista);
+  if (subidas.size > 5000) subidas.clear();
+  return false;
 }
 
 async function guardar(p) {
@@ -74,24 +112,26 @@ function autorizarSubida(req) {
 const app = express();
 app.disable("x-powered-by");
 app.set("trust proxy", 1); // detras de Caddy: req.ip y req.secure reales
-app.use(express.json({ limit: "4mb" }));
+app.use(express.json({ limit: "1mb" }));
 
 app.post("/api/runs", asinc(async (req, res) => {
   const auth = autorizarSubida(req);
   if (!auth.ok) return res.status(401).json({ error: "token incorrecto: registrate en la web y copia el token de tu perfil" });
-  const p = req.body;
-  const error = validar(p);
+  if (frenarSubida(auth.nombre ? `cuenta:${auth.nombre.toLowerCase()}` : `ip:${req.ip}`))
+    return res.status(429).json({ error: `demasiadas subidas: como mucho ${SUBIDAS_HORA} por hora` });
+  // Solo los campos que escribe el mod, con su tipo y rango, y que cuadren.
+  const { partida: p, error } = limpiar(req.body);
   if (error) return res.status(400).json({ error });
   // 422 = partida valida pero filtrada (reset): el subidor la da por hecha.
   const motivo = descartar(p);
   if (motivo) return res.status(422).json({ error: motivo, descartada: true });
-  p.id = idDe(p);
-  if (partidas.has(p.id)) return res.json({ ok: true, id: p.id, repetida: true });
+  const r = buscarRepetida(p);
+  if (r.repetida) return res.json({ ok: true, id: r.id, repetida: true });
+  p.id = r.id;
   p.recibido = new Date().toISOString();
   if (!p.fecha) p.fecha = p.recibido;
-  // Quien la subio: la cuenta del token manda sobre lo que diga el subidor.
-  p.subido_por = auth.nombre || (typeof p.subido_por === "string" ? p.subido_por.trim() : "");
-  if (!p.subido_por) delete p.subido_por;
+  // Quien la subio: la cuenta del token o de la sesion (lo que diga el JSON no cuenta).
+  if (auth.nombre) p.subido_por = auth.nombre;
   await guardar(p);
   console.log(`partida ${p.id}: ronda ${p.ronda}, ${p.jugadores.length} jugadores, ${p.mapa}, subida por ${p.subido_por || "?"}`);
   res.status(201).json({ ok: true, id: p.id });
@@ -152,14 +192,27 @@ function perfil(clave) {
   return u;
 }
 
+// Como mucho CUENTAS_DIA cuentas nuevas por IP cada 24 horas.
+const CUENTAS_DIA = 3;
+const registros = new Map(); // ip -> [instantes]
+function registrosRecientes(ip) {
+  const lista = (registros.get(ip) || []).filter((t) => Date.now() - t < 86400_000);
+  registros.set(ip, lista);
+  if (registros.size > 5000) registros.clear();
+  return lista;
+}
+
 app.post("/api/auth/registro", asinc(async (req, res) => {
   if (usuarios.frenado(req.ip)) return res.status(429).json({ error: "demasiados intentos, espera 10 minutos" });
+  if (registrosRecientes(req.ip).length >= CUENTAS_DIA)
+    return res.status(429).json({ error: `como mucho ${CUENTAS_DIA} cuentas nuevas por conexión al día` });
   const { usuario, contrasena } = req.body || {};
   const r = await usuarios.registrar(usuario, contrasena);
   if (r.error) {
     usuarios.fallo(req.ip);
     return res.status(400).json({ error: r.error });
   }
+  registros.get(req.ip).push(Date.now());
   const clave = usuario.toLowerCase();
   usuarios.ponerCookie(req, res, clave);
   console.log(`cuenta nueva: ${usuario}`);

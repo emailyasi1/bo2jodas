@@ -45,7 +45,7 @@ function Subir-Archivo($archivo) {
     $cabeceras = @{ "content-type" = "application/json" }
     if ($token) { $cabeceras["x-token"] = $token }
     try {
-        $r = Invoke-RestMethod -Method Post -Uri "$url/api/runs" -Headers $cabeceras -Body ([System.Text.Encoding]::UTF8.GetBytes($cuerpo)) -TimeoutSec 30
+        $r = Invoke-RestMethod -Method Post -Uri "$url/api/runs" -Headers $cabeceras -Body ([System.Text.Encoding]::UTF8.GetBytes($cuerpo)) -TimeoutSec 90
         if ($r.repetida) { Write-Host "$($archivo.Name): ya estaba en la web" } else { Write-Host "$($archivo.Name): subida ($url/partida/$($r.id))" -ForegroundColor Green }
         Add-Content -Path $registro -Value $archivo.Name
         return $true

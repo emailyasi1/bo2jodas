@@ -1,15 +1,7 @@
 // Calculo de resumenes, leaderboards y totales a partir de las partidas.
 // Formato del JSON: ver mod/scripts/zm/bo2jodas_stats.gsc.
 
-export function validar(p) {
-  if (!p || typeof p !== "object") return "cuerpo vacio";
-  if (!Array.isArray(p.jugadores) || p.jugadores.length === 0) return "sin jugadores";
-  if (typeof p.ronda !== "number") return "sin ronda";
-  for (const j of p.jugadores) {
-    if (!j || typeof j.nombre !== "string" || !j.nombre.trim()) return "jugador sin nombre";
-  }
-  return null;
-}
+// La validacion de las partidas subidas esta en validar.js.
 
 // Filtro de "resets": partidas en las que nadie paso del nivel 10 al acabar no
 // se guardan (ni a mano ni con el script). En cooperativo cuenta el jugador de
