@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  Flame, Zap, Axe, Crosshair, Shield, Coins, Gauge, Wind, PawPrint, Clover, Gem, ChevronRight,
+  Flame, Zap, Axe, Crosshair, Shield, Coins, Gauge, Wind, PawPrint, Clover, Wrench, Gem, ChevronRight,
 } from "lucide-react";
 import { api } from "./api.js";
 import { ARQUETIPOS, CLASES, carta, colorArquetipo, nombreArquetipo, nombreClase, nombreMitica, fmt } from "./nombres.js";
@@ -49,7 +49,7 @@ export function Fallo({ error }) {
 // ------------------------------------------------------------ iconos y colores
 export const ICONO_ARQ = {
   piromano: Flame, electricista: Zap, berserker: Axe, francotirador: Crosshair, tanque: Shield,
-  banquero: Coins, gatillo: Gauge, velocista: Wind, domador: PawPrint, suertudo: Clover,
+  banquero: Coins, gatillo: Gauge, velocista: Wind, domador: PawPrint, suertudo: Clover, mecanico: Wrench,
 };
 
 export function colorRonda(r) {

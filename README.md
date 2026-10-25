@@ -433,7 +433,7 @@ Subes de nivel matando: el primer nivel a las **9 bajas** (los zombies de la ron
 
 - Cada carta del menú tira su rareza por separado. Las cartas se **acumulan** hasta su tope.
 - Cada vez que coges una carta, su probabilidad de volver a salir sube un 8 %. **Trébol** sube la rareza de las que te salen.
-- **15 huecos** (20 con Pistolas): cartas distintas que puedes tener (Calibre ×3 ocupa uno). Las de equipo, los power-ups, Pack-a-Punch y Medalla no ocupan hueco. Con los huecos llenos solo salen las que ya tienes y las que no ocupan hueco.
+- **15 huecos** (para todas las clases): cartas distintas que puedes tener (Calibre ×3 ocupa uno). Las de equipo, los power-ups, Pack-a-Punch y Medalla no ocupan hueco. Con los huecos llenos solo salen las que ya tienes y las que no ocupan hueco.
 - **3 rerolls** por partida (**Granada** en el menú), **1 bloqueo** por partida (**Táctica**: la carta no vuelve a salirte, pero gastas esa subida) y **no coger nada** (**Cuchillo**: gastas la subida). Mientras eliges, tu lista de cartas se ve abajo.
 
 ### Cartas generales

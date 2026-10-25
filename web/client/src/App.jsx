@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
-import { Home, Trophy, ScrollText, Users, Calculator, Upload, User, LogIn, RotateCcw } from "lucide-react";
+import { Home, Trophy, ScrollText, Users, Calculator, Upload, User, LogIn, RotateCcw, BookOpen, Newspaper } from "lucide-react";
 import Inicio from "./paginas/Inicio.jsx";
 import Partidas from "./paginas/Partidas.jsx";
 import Partida from "./paginas/Partida.jsx";
@@ -12,6 +12,8 @@ import Subir from "./paginas/Subir.jsx";
 import Entrar from "./paginas/Entrar.jsx";
 import Perfil from "./paginas/Perfil.jsx";
 import Calculadora from "./paginas/Calculadora.jsx";
+import Wiki from "./paginas/Wiki.jsx";
+import Parches from "./paginas/Parches.jsx";
 import { ProveedorSesion, useSesion } from "./sesion.jsx";
 
 const NAV = [
@@ -21,6 +23,8 @@ const NAV = [
   { a: "/resets", t: "Resets", i: RotateCcw },
   { a: "/jugadores", t: "Jugadores", i: Users },
   { a: "/calculadora", t: "Calculadora", i: Calculator },
+  { a: "/wiki", t: "Wiki", i: BookOpen },
+  { a: "/parches", t: "Parches", i: Newspaper },
   { a: "/subir", t: "Subir partida", i: Upload },
 ];
 
@@ -76,6 +80,8 @@ export default function App() {
               <Route path="/partidas" element={<Partidas />} />
               <Route path="/partida/:id" element={<Partida />} />
               <Route path="/resets" element={<Resets />} />
+              <Route path="/wiki" element={<Wiki />} />
+              <Route path="/parches" element={<Parches />} />
               <Route path="/jugadores" element={<Jugadores />} />
               <Route path="/jugador/:nombre" element={<Jugador />} />
               <Route path="/calculadora" element={<Calculadora />} />
