@@ -126,11 +126,11 @@ flowchart LR
         continuo["Fuego continuo (firma)<br/>FIRMA (una vez)"]
     end
     subgraph velocista["Velocista: Correr, esquivar y no parar"]
-        escurridizo["Escurridizo*<br/>0.4 s / 0.6 s / 1.0 s / 1.3 s / 1.8 s"]
+        escurridizo["Escurridizo*<br/>5% / 8% / 12% / 16% / 22%"]
         sed["Sed de sangre*<br/>+4% / +6% / +10% / +13% / +18%"]
-        resbaladizo["Resbaladizo<br/>+5% / +8% / +12% / +16% / +24%"]
-        zancada["Zancada<br/>+4% / +6% / +9% / +12% / +18%"]
-        estela["Estela<br/>30% / 40% / 50% / 60% / 75%"]
+        resbaladizo["Esquiva<br/>6% / 9% / 13% / 18% / 25%"]
+        zancada["Zancada<br/>+10% / +15% / +22% / +30% / +42%"]
+        estela["Estela<br/>3% / 4% / 6% / 8% / 12%"]
         ciclon["Ciclon (firma)<br/>FIRMA (una vez)"]
     end
     subgraph domador["Domador: Leapers que luchan por ti"]
@@ -213,8 +213,8 @@ flowchart LR
     mecha["Mecha corta"]
     pirotecnico{{"Pirotecnico (firma)"}}
     BALAS(["Impactos de bala (MOD_RIFLE_BULLET / MOD_PISTOL_BULLET)"])
-    EXPLO(["Explosiones: granadas, Mecha corta, Bomberman, Reaccion en cadena, PhD"])
     FUEGO(["Zombie ardiendo: pierde 4% de su vida maxima por segundo durante 6 s (cada impacto reinicia). El jefe, un cuarto. Al apagarse queda quemado: el Napalm ya no lo contagia"])
+    EXPLO(["Explosiones: granadas, Mecha corta, Bomberman, Reaccion en cadena, PhD"])
     BALAS -->|"6-26% por impacto (tope 80%)"| fosforo
     fosforo -->|"prende (impacto directo: tambien a quemados)"| FUEGO
     FUEGO -->|"cada segundo, por zombie a menos de 80 u"| napalm
@@ -247,10 +247,10 @@ flowchart LR
     condensador["Condensador"]
     tormenta["Tormenta"]
     tesla{{"Tesla (firma)"}}
-    BAJA(["Baja tuya (cualquier arma)"])
-    DISPARO(["Siguiente impacto de bala"])
-    RECARGA(["Empezar a recargar"])
     RAYO(["Rayo: dano fijo en % de la vida maxima del zombie (100% o mas = mata; al jefe 15%) y luego se multiplica por tus cartas de dano. Alcance 350 u"])
+    RECARGA(["Empezar a recargar"])
+    DISPARO(["Siguiente impacto de bala"])
+    BAJA(["Baja tuya (cualquier arma)"])
     BAJA -->|"8-34% (tope 80%)"| pararrayos
     pararrayos -->|"1 rayo del 15% a otro zombie"| RAYO
     BAJA -->|"3-16% (tope 60%): explosion de 0.6x vida de ronda + 100 a 160 u"| cadena
@@ -316,11 +316,11 @@ flowchart LR
     pulso["Pulso firme"]
     unabala["Una bala basta"]
     elites{{"Cazador de elites (firma)"}}
+    MATA(["Muerte instantanea"])
+    ELITE(["Tanque (x4 vida) o jefe"])
+    CABEZA(["Tiro a la cabeza (head / helmet; el arma ya multiplica por su locHead)"])
     QUIETO2S(["2 s sin disparar"])
     MIRA(["Apuntando con la mira"])
-    CABEZA(["Tiro a la cabeza (head / helmet; el arma ya multiplica por su locHead)"])
-    ELITE(["Tanque (x4 vida) o jefe"])
-    MATA(["Muerte instantanea"])
     CABEZA -->|"+8-48% (tope 400%)"| cabeza
     MIRA -->|"apuntando: +4-20% (tope 100%)"| punteria
     ELITE -->|"solo tanques: +12-72% (tope 400%)"| cazatanques
@@ -351,10 +351,10 @@ flowchart LR
     coraza["Coraza"]
     masa["Masa"]
     coloso{{"Coloso (firma)"}}
-    GOLPE(["Golpe de zombie recibido (60; tanque x2; jefe x2.5)"])
-    PASIVA(["Pasiva del arquetipo: vida x2 con Juggernog (500) y escudo de zombies (2250 de dano) en la espalda, nuevo o reparado cada ronda"])
     CUCHILLO(["Cuchillo"])
+    PASIVA(["Pasiva del arquetipo: vida x2 con Juggernog (500) y escudo de zombies (2250 de dano) en la espalda, nuevo o reparado cada ronda"])
     QUIETO(["Quieto (velocidad &lt; 10)"])
+    GOLPE(["Golpe de zombie recibido (60; tanque x2; jefe x2.5)"])
     GOLPE -->|"el zombie pierde 12-72% de su vida (tope 500%)"| espinas
     CUCHILLO -->|"+40-240% (tope 3000%)"| melee
     QUIETO -->|"golpes -10-40% (tope 60%)"| piedra
@@ -384,10 +384,10 @@ flowchart LR
     mercenario["Mercenario"]
     cajaeco["Caja economica"]
     plutocrata{{"Plutocrata (firma)"}}
-    BAJA(["Baja tuya"])
     CAJA(["Caja de cartas (2500 x1.17 por tirada)"])
-    CABEZA(["Baja a la cabeza"])
     PUNTOS(["Tus puntos (sin gastar)"])
+    CABEZA(["Baja a la cabeza"])
+    BAJA(["Baja tuya"])
     PERKS(["Bebidas que llevas"])
     BAJA -->|"+4-32 puntos (tope 300)"| puntos
     CABEZA -->|"+8-48 puntos (tope 400)"| oro
@@ -419,11 +419,11 @@ flowchart LR
     plomo["Plomo"]
     cinta["Cinta de balas"]
     continuo{{"Fuego continuo (firma)"}}
-    BAJA(["Baja tuya (cualquier arma)"])
-    COMBO10(["Combo 10: 10 bajas seguidas con menos de 2 s entre ellas"])
-    CARGADOR(["Cargador del arma de la mano"])
-    RAFAGA(["Disparando seguido (menos de 0.4 s entre tiros)"])
     DT(["Double Tap comprado"])
+    BAJA(["Baja tuya (cualquier arma)"])
+    CARGADOR(["Cargador del arma de la mano"])
+    COMBO10(["Combo 10: 10 bajas seguidas con menos de 2 s entre ellas"])
+    RAFAGA(["Disparando seguido (menos de 0.4 s entre tiros)"])
     cadencia -->|"da Double Tap gratis y +2-14% dano (tope 150%); con Double Tap comprado el % se dobla"| DT
     CARGADOR -->|"por debajo del 30%: +8-36% (tope 200%)"| ultimas
     RAFAGA -->|"tras 1 s seguido: +8-36% (tope 150%); se pierde al parar 0.5 s"| tambor
@@ -438,32 +438,32 @@ flowchart LR
 
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
-| Escurridizo | Te ignoran tras recibir un golpe | 0.4 s / 0.6 s / 1.0 s / 1.3 s / 1.8 s | 6.0 s | variable |
+| Escurridizo | % de que te ignoren 2 s tras un golpe | 5% / 8% / 12% / 16% / 22% | 35% | variable |
 | Sed de sangre | +% velocidad 3 s tras cada baja | +4% / +6% / +10% / +13% / +18% | +60% | variable |
-| Resbaladizo | +% velocidad con 3+ zombies encima | +5% / +8% / +12% / +16% / +24% | +40% | variable |
-| Zancada | Stamin-Up gratis y +% vel. esprintando | +4% / +6% / +9% / +12% / +18% | +30% | variable |
-| Estela | Esprintando dejas un rastro que frena % | 30% / 40% / 50% / 60% / 75% | 75% | variable |
-| **Ciclon** | FIRMA: esprintando danas lo que tocas | FIRMA (una vez) | — | Epica |
+| Esquiva | % de esquivar golpes en movimiento | 6% / 9% / 13% / 18% / 25% | 35% | variable |
+| Zancada | Stamin-Up gratis y +% dano 2 s tras correr | +10% / +15% / +22% / +30% / +42% | +100% | variable |
+| Estela | Rastro de fuego: % vida por segundo | 3% / 4% / 6% / 8% / 12% | 30% | variable |
+| **Ciclon** | FIRMA: esprintando danas a tu alrededor | FIRMA (una vez) | — | Epica |
 
 ```mermaid
 flowchart LR
     escurridizo["Escurridizo"]
     sed["Sed de sangre"]
-    resbaladizo["Resbaladizo"]
+    resbaladizo["Esquiva"]
     zancada["Zancada"]
     estela["Estela"]
     ciclon{{"Ciclon (firma)"}}
+    CERCA3(["3 o mas zombies a menos de 150 u"])
+    FRENO(["Zombie frenado (velocidad de animacion reducida; no al jefe ni a uno ya frenado por el Paralizador)"])
     BAJA(["Baja tuya"])
     GOLPE(["Golpe de zombie recibido"])
-    FRENO(["Zombie frenado (velocidad de animacion reducida; no al jefe ni a uno ya frenado por el Paralizador)"])
-    CERCA3(["3 o mas zombies a menos de 150 u"])
     ESPRINT(["Esprintando"])
     BAJA -->|"+4-18% velocidad 3 s (tope 60%)"| sed
-    GOLPE -->|"te ignoran 0.4 s-1.8 s (tope 6.0 s)"| escurridizo
-    CERCA3 -->|"+5-24% velocidad (tope 40%)"| resbaladizo
-    ESPRINT -->|"Stamin-Up gratis y +4-18% velocidad esprintando (tope 30%)"| zancada
+    GOLPE -->|"te ignoran 5%-22% (tope 35%)"| escurridizo
+    CERCA3 -->|"+6-25% velocidad (tope 35%)"| resbaladizo
+    ESPRINT -->|"Stamin-Up gratis y +10-42% velocidad esprintando (tope 100%)"| zancada
     ESPRINT -->|"rastro de 2 s"| estela
-    estela -->|"zombie a menos de 60 u del rastro: 30-75% mas lento 2 s (tope 75%)"| FRENO
+    estela -->|"zombie a menos de 60 u del rastro: 3-12% mas lento 2 s (tope 30%)"| FRENO
     sed -->|"requiere"| ciclon
     estela -->|"requiere"| ciclon
     ESPRINT -->|"zombie a menos de 56 u: pierde 25% de su vida cada 0.5 s"| ciclon
@@ -554,10 +554,10 @@ flowchart LR
     amuleto["Amuleto"]
     herradura["Herradura"]
     jackpot{{"Jackpot (firma)"}}
+    RONDA(["Empieza una ronda"])
     BAJA(["Baja tuya"])
     REROLL(["Rerolls (3 por partida, Granada)"])
     NIVEL(["Subida de nivel (menu de 3 cartas)"])
-    RONDA(["Empieza una ronda"])
     BAJA -->|"0.4%-3.2% de soltar power-up (tope 5.0%)"| botin
     conejo -->|"+1-4 rerolls al cogerla (tope 20) y +1 cada 3 niveles"| REROLL
     NIVEL -->|"15-60% de que la carta cogida valga el doble (tope 80%; no a firmas ni Silbato)"| dados

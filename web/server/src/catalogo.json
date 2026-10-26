@@ -103,7 +103,7 @@
   },
   "escurridizo": {
    "tipo": "normal",
-   "tope": 60,
+   "tope": 35,
    "arquetipo": "velocista"
   },
   "pap": {
@@ -368,17 +368,17 @@
   },
   "resbaladizo": {
    "tipo": "normal",
-   "tope": 40,
+   "tope": 35,
    "arquetipo": "velocista"
   },
   "zancada": {
    "tipo": "normal",
-   "tope": 30,
+   "tope": 100,
    "arquetipo": "velocista"
   },
   "estela": {
    "tipo": "normal",
-   "tope": 75,
+   "tope": 30,
    "arquetipo": "velocista"
   },
   "ciclon": {

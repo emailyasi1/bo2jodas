@@ -1,5 +1,62 @@
 [
   {
+    "version": "1.10.8",
+    "fecha": "2026-10-26",
+    "titulo": "Velocista rehecho, Sliquifier y torreta",
+    "cambios": [
+      {
+        "tipo": "rework",
+        "que": "Velocista: Estela",
+        "antes": "Rastro invisible de 2 s que frenaba",
+        "ahora": "Rastro visible (peste del Vulture Aid) de 3 s: 3–12 % de vida por segundo y 30 % más lentos, tope 30 %"
+      },
+      {
+        "tipo": "rework",
+        "que": "Velocista: Zancada",
+        "antes": "Stamin-Up y +% de velocidad esprintando",
+        "ahora": "Stamin-Up e Inercia: +10–42 % de daño con el arma 2 s después de esprintar, tope 100 %"
+      },
+      {
+        "tipo": "rework",
+        "que": "Velocista: Esquiva (antes Resbaladizo)",
+        "antes": "+% de velocidad con 3 zombies encima",
+        "ahora": "Moviéndote, 6–25 % de esquivar un golpe de zombie o jefe, tope 35 %"
+      },
+      {
+        "tipo": "rework",
+        "que": "Velocista: Escurridizo",
+        "antes": "Te ignoraban 0,4–1,8 s tras un golpe",
+        "ahora": "5–22 % de que te ignoren 2 s tras un golpe, tope 35 %"
+      },
+      {
+        "tipo": "buff",
+        "que": "Velocista: Sed de sangre",
+        "texto": "Las bajas del rastro y de Ciclón también cuentan: se encadena sola."
+      },
+      {
+        "tipo": "rework",
+        "que": "Velocista: Ciclón",
+        "antes": "Esprintando, 25 % de vida a lo que tocabas",
+        "ahora": "Esprintando, 20 % de vida cada medio segundo a todo lo que tengas a menos de 2,5 m, y la Estela hace el doble"
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Sliquifier",
+        "texto": "Con ella en la mano, los efectos de carta, las torretas y el PhD aplicaban el goo y lo pasaban a los zombies de al lado. Ahora el goo solo sale de sus propios disparos."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Paralizador y Bastón",
+        "texto": "Con ellos en la mano, los golpes de carta contaban como disparos suyos (daño doble y puntos con el Paralizador, fuego con el Bastón)."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Torreta del Mecánico",
+        "texto": "Recoger y reparar funcionan pulsando USAR junto a ella, y las chispas se apagan al repararla."
+      }
+    ]
+  },
+  {
     "version": "1.10.7",
     "fecha": "2026-10-26",
     "titulo": "Sin cierres por mensajes del HUD",

@@ -38,6 +38,7 @@
   "caja_cartas": 1.0,
   "caja_base": 2500.0,
   "caja_mult": 1.17,
+  "caja_max": 999999.0,
   "super_pct": 20.0,
   "tab_nivel": 1.0,
   "caida_penal": 1.0,
@@ -692,22 +693,22 @@
   {
    "id": "escurridizo",
    "nombre": "Escurridizo",
-   "desc": "Te ignoran tras recibir un golpe",
+   "desc": "% de que te ignoren 2 s tras un golpe",
    "arquetipo": "velocista",
    "tipo": "normal",
    "firma": false,
    "requiere": [],
    "valores": [
-    4,
-    6,
-    10,
-    13,
-    18
+    5,
+    8,
+    12,
+    16,
+    22
    ],
-   "tope": 60,
-   "decimal": 1,
+   "tope": 35,
+   "decimal": 0,
    "prefijo": "",
-   "sufijo": " s"
+   "sufijo": "%"
   },
   {
    "id": "pap",
@@ -1772,40 +1773,40 @@
   },
   {
    "id": "resbaladizo",
-   "nombre": "Resbaladizo",
-   "desc": "+% velocidad con 3+ zombies encima",
+   "nombre": "Esquiva",
+   "desc": "% de esquivar golpes en movimiento",
    "arquetipo": "velocista",
    "tipo": "normal",
    "firma": false,
    "requiere": [],
    "valores": [
-    5,
-    8,
-    12,
-    16,
-    24
+    6,
+    9,
+    13,
+    18,
+    25
    ],
-   "tope": 40,
+   "tope": 35,
    "decimal": 0,
-   "prefijo": "+",
+   "prefijo": "",
    "sufijo": "%"
   },
   {
    "id": "zancada",
    "nombre": "Zancada",
-   "desc": "Stamin-Up gratis y +% vel. esprintando",
+   "desc": "Stamin-Up gratis y +% dano 2 s tras correr",
    "arquetipo": "velocista",
    "tipo": "normal",
    "firma": false,
    "requiere": [],
    "valores": [
-    4,
-    6,
-    9,
-    12,
-    18
+    10,
+    15,
+    22,
+    30,
+    42
    ],
-   "tope": 30,
+   "tope": 100,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -1813,19 +1814,19 @@
   {
    "id": "estela",
    "nombre": "Estela",
-   "desc": "Esprintando dejas un rastro que frena %",
+   "desc": "Rastro de fuego: % vida por segundo",
    "arquetipo": "velocista",
    "tipo": "normal",
    "firma": false,
    "requiere": [],
    "valores": [
-    30,
-    40,
-    50,
-    60,
-    75
+    3,
+    4,
+    6,
+    8,
+    12
    ],
-   "tope": 75,
+   "tope": 30,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1833,7 +1834,7 @@
   {
    "id": "ciclon",
    "nombre": "Ciclon",
-   "desc": "FIRMA: esprintando danas lo que tocas",
+   "desc": "FIRMA: esprintando danas a tu alrededor",
    "arquetipo": "velocista",
    "tipo": "normal",
    "firma": true,

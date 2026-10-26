@@ -21,13 +21,21 @@ const RAREZAS = new Set(CAT.rarezas);
 const MOTIVOS = new Set(CAT.motivos_perdida);
 const CFG = CAT.cfg;
 
-// Hasta la 1.10.2 Pistolas tenia 5 huecos mas y el Buscador de botin llegaba
-// al 15 %: las partidas de esas versiones se validan con sus limites.
+// Limites de versiones anteriores, para validar sus partidas con lo que
+// permitian entonces. Hasta la 1.10.2: Pistolas con 5 huecos mas y Buscador de
+// botin al 15 %. Hasta la 1.10.7: Escurridizo en segundos (tope 6.0 s = 60),
+// Resbaladizo de velocidad (40) y Estela de frenado (75).
 const ANTES_1103 = { pistolas_huecos: 5, topes: { botin: 150 } };
-const antesDe1103 = (v) => {
+const ANTES_1108 = { topes: { escurridizo: 60, resbaladizo: 40, estela: 75 } };
+const numVersion = (v) => {
   const [a, b, c = 0] = String(v).split(".").map(Number);
-  return a * 1e6 + b * 1e3 + c < 1010003;
+  return a * 1e6 + b * 1e3 + c;
 };
+const antesDe1103 = (v) => numVersion(v) < 1010003;
+const topeViejo = (v, id) => Math.max(
+  antesDe1103(v) ? ANTES_1103.topes[id] || 0 : 0,
+  numVersion(v) < 1010008 ? ANTES_1108.topes[id] || 0 : 0,
+);
 
 // Campos de analisis (1.10.3): valores permitidos.
 const CAUSAS = new Set(["zombie", "tanque", "brutus", "bruja", "leroy", "caida", "fuego", "propio", "explosion", "otro"]);
@@ -185,7 +193,7 @@ function jugador(j, i, p) {
     if (vistas.has(id)) fallo(`${nombre}: carta repetida: ${id}`);
     vistas.add(id);
     const valor = entero(c.valor, `${nombre}: valor de ${id}`, 1);
-    const tope = antesDe1103(p.version) ? Math.max(def.tope, ANTES_1103.topes[id] || 0) : def.tope;
+    const tope = Math.max(def.tope, topeViejo(p.version, id));
     if (valor > tope) fallo(`${nombre}: ${id} vale ${valor} y su tope es ${tope}`);
     return {
       id,

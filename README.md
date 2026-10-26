@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.7** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.8** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,36 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.8: Velocista rehecho, Sliquifier y torreta
+
+### Velocista: rediseño
+
+El Velocista solo daba velocidad, y en BO2 no se puede disparar mientras esprintas. Ahora **mata corriendo** (el rastro y Ciclón hacen el daño) y la esquiva lo mantiene vivo.
+
+| Carta | Antes | Ahora | Valores (común → legendaria) | Tope | |
+|---|---|---|---|---|---|
+| **Estela** | Rastro invisible de 2 s que frenaba a los zombies | Esprintando dejas un rastro **visible** (la peste del Vulture Aid) de 3 s: los zombies que lo pisan **pierden un % de su vida por segundo** y van un 30 % más lentos | 3 / 4 / 6 / 8 / 12 % por segundo | 30 % | 🔄 REWORK |
+| **Zancada** | Stamin-Up gratis y +% de velocidad esprintando | Stamin-Up gratis e **Inercia**: durante 2 s después de esprintar, +% de daño con el arma | +10 / 15 / 22 / 30 / 42 % | 100 % | 🔄 REWORK |
+| **Esquiva** (antes Resbaladizo) | +% de velocidad con 3 o más zombies encima | Moviéndote, % de **esquivar del todo** un golpe de zombie o de jefe | 6 / 9 / 13 / 18 / 25 % | 35 % | 🔄 REWORK |
+| **Escurridizo** | Te ignoraban 0,4–1,8 s tras un golpe | **% de que te ignoren 2 s** tras recibir un golpe | 5 / 8 / 12 / 16 / 22 % | 35 % | 🔄 REWORK |
+| **Sed de sangre** | +% de velocidad 3 s tras cada baja | Igual; las bajas del rastro y de Ciclón también cuentan, así que se encadena sola | +4 / 6 / 10 / 13 / 18 % | 60 % | 🔺 BUFF |
+| **Ciclón** (firma) | Esprintando, cada zombie que **tocabas** perdía un 25 % de su vida | Esprintando, cada medio segundo los zombies a menos de **2,5 m** pierden un 20 % de su vida, sin tocarlos, y la Estela hace **el doble** de daño | — | — | 🔄 REWORK |
+
+El daño de Estela y de Ciclón lleva tus cartas de daño, como el fuego y los rayos (al jefe, con su tope del 15 % por golpe). Del Vulture Aid solo se trae el efecto visual: los zombies no te ignoran por estar dentro de la peste.
+
+### Arreglos
+
+| | Antes | Ahora |
+|---|---|---|
+| **Sliquifier en la mano** | Cualquier efecto de carta (fuego, rayos, Espinas, Ciclón, leapers, Reacción en cadena, Zeus, Fénix, Electric Cherry), las torretas y el PhD aplicaban el goo y lo pasaban a los zombies de al lado: te volvía prácticamente inmortal | El goo solo sale de los **disparos de la propia Sliquifier** (tampoco del cuchillo con ella en la mano) |
+| **Paralizador en la mano** | Cada golpe de carta se repetía como disparo suyo (daño doble) y daba puntos | Los golpes de carta no cuentan como disparos suyos (sigue el extra de daño a los ralentizados) |
+| **Bastón de fuego en la mano** | Los golpes de carta aplicaban su fuego | Solo lo aplica el propio bastón |
+| **Torreta: recoger** | Salía el texto, pero mantener USAR no hacía nada | **Pulsa USAR** junto a ella: vuelve el kit con su desgaste. Con varias juntas, actúa la más cercana |
+| **Torreta: reparar** | Salía el texto con el coste, pero no se reparaba | **Pulsa USAR** junto a la torreta rota: se repara por 2500 |
+| **Torreta: chispas** | Seguían saliendo después de repararla | Se apagan al reparar o recoger la torreta: se ve de un vistazo si hace falta repararla |
+
+Por qué fallaban: las cartas hacen daño sin decir con qué arma y el juego rellena ese hueco con la que llevas en la mano, así que la Sliquifier, el Paralizador y el Bastón tomaban cada golpe de carta por un disparo suyo. Y con el texto de la torreta en pantalla el juego solo da USAR por pulsado 1–3 fotogramas aunque lo mantengas, así que no se podía "mantener".
 
 ## Novedades de la 1.10.7: cierre "A reliable command was cycled out"
 
@@ -129,8 +159,8 @@ Todo se puede ajustar por consola para probar: ver [Consola](#consola-para-proba
 - **Colocar**: con la carta **Caja de herramientas** recibes el kit de la torreta en la **tecla de acción 1** (la que indica el juego al recibirlo; en mando, cruceta arriba). Al sacarlo sale el fantasma de colocación de TranZit (verde / rojo) y al disparar se planta en el suelo. No necesita electricidad ni turbina.
 - **Disparo**: cada bala hace el **6 % de la vida de un zombie de la ronda** (nunca menos de 300), cargador de 30 y 4 s de recarga. Apunta sola al zombie más cercano que ve.
 - **Bajas**: son tuyas. **Dan puntos** y cuentan **×0.75** para subir de nivel (los efectos de baja de tus cartas, como Vampiro o Cinta de balas, no saltan con ellas).
-- **Desgaste**: a las **100 bajas** la torreta se rompe (deja de disparar y echa chispas). Mantén **USAR** junto a ella para **repararla por 2500**.
-- **Recoger**: mantén **USAR** junto a tu torreta para recogerla y ponerla en otro sitio. Conserva su desgaste.
+- **Desgaste**: a las **100 bajas** la torreta se rompe (deja de disparar y echa chispas). Pulsa **USAR** junto a ella para **repararla por 2500**.
+- **Recoger**: pulsa **USAR** junto a tu torreta para recogerla y ponerla en otro sitio. Conserva su desgaste.
 - **Seguras**: sus balas **no hacen daño a ningún jugador** y **los zombies no van a por ellas**.
 - Si pierdes la Caja de herramientas (al caer o porque te la roba Leroy), tus torretas desaparecen.
 
@@ -227,7 +257,7 @@ Cada arquetipo tiene **6 cartas** (el Mecánico, 7): las normales y una **firma*
 | **Tanque** | Aguanta golpes y los devuelve. **Pasiva**: con Juggernog el doble de vida y el escudo de zombies en la espalda (se puede romper; cada ronda uno nuevo o reparado) | Espinas · Nudillos de hierro · Piel de piedra · Coraza · Masa · **Coloso** |
 | **Banquero** | Los puntos son poder | Codicia · Cabezas de oro · Interés compuesto · Mercenario · Caja económica · **Plutócrata** |
 | **Gatillo** | Disparar sin parar y sin recargar | Gatillo loco · Últimas balas · Tambor caliente · Plomo · Cinta de balas · **Fuego continuo** |
-| **Velocista** | Correr, esquivar y no parar | Sed de sangre · Escurridizo · Resbaladizo · Zancada · Estela · **Ciclón** |
+| **Velocista** | Matar corriendo: rastro que quema y esquivas | Sed de sangre · Escurridizo · Esquiva · Zancada · Estela · **Ciclón** |
 | **Domador** | Leapers que luchan por ti | Silbato · Correa larga · Collar de púas · Carne fresca · Manada · **Alfa** |
 | **Suertudo** | Rerolls, dados y cartas mejores | Buscador de botín · Pata de conejo · Dados · Amuleto · Herradura · **Jackpot** |
 | **Mecánico** | Torretas que disparan por ti | Caja de herramientas · Engranajes · Recarga rápida · Calibre .50 · Rebote · Cadena de montaje · **Mortero** |
@@ -270,10 +300,10 @@ Cada arquetipo tiene **6 cartas** (el Mecánico, 7): las normales y una **firma*
 | Gatillo | Plomo | +1 % de daño por cada bala seguida sin recargar ni cambiar de arma, hasta este tope | 10 / 15 / 20 / 30 / 40 % | 100 % |
 | Gatillo | Cinta de balas | +balas al cargador por cada baja | 2 / 3 / 4 / 6 / 8 | 20 |
 | Gatillo | **Fuego continuo** (firma) | Requiere Tambor caliente + Plomo. Con combo 10 (bajas seguidas) el cargador se rellena solo | — | — |
-| Velocista | Resbaladizo | +% de velocidad con 3 o más zombies encima (menos de 4 m) | 5 / 8 / 12 / 16 / 24 % | 40 % |
-| Velocista | Zancada | Stamin-Up gratis (se puede comprar igual) y +% de velocidad esprintando | 4 / 6 / 9 / 12 / 18 % | 30 % |
-| Velocista | Estela | Esprintando dejas un rastro de 2 s: los zombies que lo pisan van un % más lentos | 30 / 40 / 50 / 60 / 75 % | 75 % |
-| Velocista | **Ciclón** (firma) | Requiere Sed de sangre + Estela. Esprintando, cada zombie que tocas pierde un 25 % de su vida (cada medio segundo) | — | — |
+| Velocista | Esquiva | Moviéndote, % de esquivar del todo un golpe de zombie o de jefe | 6 / 9 / 13 / 18 / 25 % | 35 % |
+| Velocista | Zancada | Stamin-Up gratis (se puede comprar igual) e Inercia: durante 2 s después de esprintar, +% de daño con el arma | 10 / 15 / 22 / 30 / 42 % | 100 % |
+| Velocista | Estela | Esprintando dejas un rastro de peste de 3 s: los zombies que lo pisan pierden este % de su vida por segundo y van un 30 % más lentos | 3 / 4 / 6 / 8 / 12 % | 30 % |
+| Velocista | **Ciclón** (firma) | Requiere Sed de sangre + Estela. Esprintando, cada medio segundo los zombies a menos de 2,5 m pierden un 20 % de su vida, y la Estela hace el doble de daño | — | — |
 | Domador | Silbato | Un leaper te sigue y muerde a los zombies que se acercan (1000 de daño o un tercio de su vida). Carta base: sin ella las demás no hacen nada. Siempre RARA, una sola vez | — | 1 |
 | Domador | Correa larga | Tus leapers se mueven +% más rápido | 10 / 15 / 20 / 30 / 40 % | 100 % |
 | Domador | Collar de púas | Los mordiscos de tus leapers hacen +% | 15 / 25 / 35 / 50 / 70 % | 200 % |
@@ -477,7 +507,7 @@ Valores por rareza: común / poco común / rara / épica / legendaria. Las marca
 | Imán | Atrae power-ups en este radio | 250 / 360 / 520 / 720 / 1040 | 5000 |
 | Buscador de botín (A: Suertudo) | % de power-up por baja | 0.4 / 0.8 / 1.2 / 2.0 / 3.2 % | 5 % |
 | Segundo aliento | % de evitar un golpe mortal (quedas a media vida) | 8 / 12 / 18 / 24 / 36 % | 90 % |
-| Escurridizo (A: Velocista) | Segundos que te ignoran tras un golpe | 0.4 / 0.6 / 1.0 / 1.3 / 1.8 s | 6 s |
+| Escurridizo (A: Velocista) | % de que te ignoren 2 s tras recibir un golpe | 5 / 8 / 12 / 16 / 22 % | 35 % |
 | Suerte del Pack | % de que el arma de ronda venga mejorada | 4 / 6 / 10 / 14 / 20 % | 100 % |
 | Granadero | % de recuperar granada al matar | 2 / 4 / 6 / 10 / 14 % | 60 % |
 | Espinas (A: Tanque) | El zombie que te pega pierde este % de su vida | 12 / 20 / 32 / 48 / 72 % | 500 % |
