@@ -1,5 +1,43 @@
 [
   {
+    "version": "1.10.9",
+    "fecha": "2026-10-26",
+    "titulo": "Tombstone nueva y bebidas arregladas",
+    "cambios": [
+      {
+        "tipo": "rework",
+        "que": "Tombstone",
+        "antes": "2000: dejaba una lápida con tus cosas al desangrarte (en solo no hacía nada)",
+        "ahora": "15000: al caer no pierdes ninguna carta ni bebida, y se gasta. En solo y en cooperativo"
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Mule Kick",
+        "texto": "Al caer y ser reanimado te quedabas con una sola arma. Ahora conservas tus 2 (pierdes solo la tercera)."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Electric Cherry",
+        "texto": "Los zombies que sobreviven a la descarga quedan aturdidos 2 s, como en Mob of the Dead (antes solo iban un poco más lentos)."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "PhD Flopper",
+        "texto": "Con la carta Muelles, tirarse en plancha no hacía explotar el PhD."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Daño de Paralizador fantasma",
+        "texto": "Los zombies frenados por Tormenta, Estela, Hora bruja, Cherry o Leroy recibían daño extra apuntado como Paralizador aunque nadie lo llevara. Ahora solo los que frena el propio Paralizador."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Velocista: Estela",
+        "texto": "El rastro se dibuja cada 80 cm de camino recorrido en vez de cada cuarto de segundo: ya no sale a trozos."
+      }
+    ]
+  },
+  {
     "version": "1.10.8",
     "fecha": "2026-10-26",
     "titulo": "Velocista rehecho, Sliquifier y torreta",

@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.8** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.9** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,29 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.9: Tombstone nueva y bebidas arregladas
+
+### Tombstone: nuevo efecto
+
+| | Antes | Ahora |
+|---|---|---|
+| **Precio** | 2000 | **15000** |
+| **Efecto** | Al desangrarte en cooperativo dejabas una lápida con tus cosas; en solo no hacía nada | Al caer **no pierdes ninguna carta** (te salta la penalización) **ni ninguna bebida**. La Tombstone **se gasta**: hay que volver a comprarla |
+
+- Funciona en **solo** (te levanta el Quick Revive) y en **cooperativo** (te levanta un compañero): las bebidas vuelven al reanimarte, también el arma de la Mule Kick. Si te desangras no vuelve nada.
+- En solo, el Quick Revive no vuelve: se gasta al levantarte, como siempre.
+- La máquina, la bebida y el icono son los de Pueblo (el texto de la máquina es el del juego). Funciona aunque se hayan apagado las máquinas con una Granada EMP.
+
+### Arreglos
+
+| | Antes | Ahora |
+|---|---|---|
+| **Mule Kick** | Al caer y ser reanimado te quedabas con **una sola arma** | Al reanimarte tienes tus 2 armas (pierdes solo la tercera, como en el juego original) |
+| **Electric Cherry** | Los zombies que sobrevivían a la descarga solo iban un 30 % más lentos: no parecía un aturdimiento | Los que sobreviven quedan **casi parados 2 s** (al jefe no, como en Mob of the Dead) |
+| **PhD Flopper con Muelles** | Con la carta Muelles, tirarse en plancha no hacía explotar el PhD | La plancha con PhD explota siempre |
+| **Daño de Paralizador fantasma** | Cualquier golpe a un zombie frenado por Tormenta, Estela, Hora bruja, Electric Cherry, o a Leroy en sus arreones lentos, sumaba un 30–70 % de daño extra apuntado como Paralizador aunque nadie lo llevara (salía en la web en clases que no pueden tenerlo, y era un buff de daño oculto) | El extra solo se aplica a los zombies que ha frenado **el propio Paralizador** |
+| **Rastro de la Estela** | Un punto cada cuarto de segundo (unos 2 m esprintando): la peste salía a trozos | Un punto cada 80 cm del camino recorrido: la línea sigue tu recorrido sin huecos |
 
 ## Novedades de la 1.10.8: Velocista rehecho, Sliquifier y torreta
 
@@ -229,7 +252,7 @@ La versión de las **builds**: hasta ahora cogías cartas sueltas; ahora eliges 
 |---|---|
 | **Arquetipos** | En el nivel 8 eliges 1 de 3 entre **10 arquetipos**; cada uno tiene **6 cartas propias** (una es la **firma**, una sinergia que solo aparece con dos cartas concretas). 43 cartas nuevas. |
 | **Tres jefes** | Brutus, la **Bruja** (aparece detrás de ti, no la dejes tocarte) y **Leroy** (te roba cartas y te las devuelve mejoradas). Nacen en el charco de lava del centro. |
-| **Bebidas nuevas** | La Bruja regala **Mule Kick, Deadshot, PhD Flopper, Electric Cherry y Tombstone**, con icono en la barra. |
+| **Bebidas nuevas** | La Bruja regala **Mule Kick, Deadshot, PhD Flopper, Electric Cherry y Tombstone**, con icono en la barra (la Tombstone cambió en la 1.10.9). |
 | **Mítica Hora bruja** | Cada 3 minutos, 10 s de zombies a cámara lenta para todo el equipo. Sustituye al Leaper, que ahora es del Domador. |
 | **Menús nuevos** | Marco del color de la rareza, fondo del color del arquetipo, la carta marcada crece, fundidos y título descifrándose. |
 | **Tanque y Pistolas** | Tanque: vida ×2 con Juggernog y escudo en la espalda cada ronda. Pistolas: **15 huecos** de carta. |
@@ -579,7 +602,7 @@ Cada **10 minutos** (el primero en el minuto 10) el siguiente zombie que sale es
 | **Bruja** | 40 | Aparece **a dos metros detrás de un jugador** al azar y cada 20 s se desvanece y reaparece detrás de otro. No se la puede frenar. Cada vez que **toca** a alguien (se le pega) ese jugador pierde el 10 % de sus puntos; al **segundo toque** (a cualquiera) queda *saciada* | Saciada: 2 power-ups. **Con menos de dos toques**: Munición máxima para todos y a cada jugador **una bebida al azar** de las que no se pueden comprar (sin contar para el límite de 4 de las máquinas); quien ya tenga las cinco elige una **carta entre 3** |
 | **Leroy** | 50 | Viene borracho: super sprint con arreones (acelera y frena cada segundo). Cada golpe te **roba una carta entera** (un tipo con todos sus stacks, como la penalización al caer), como mucho una cada 3 s y **3 por jugador**. En cooperativo, cuando ya te ha robado 3 va directo a por otro; si no puede robar a nadie (o en solo), solo pega | Deja en el suelo un **cuenco de caramelos** por cada carta robada: su dueño tiene **15 s** para recogerlo y la carta vuelve **mejorada** (×1.4 de valor). Si no robó nada, 2 power-ups |
 
-**Bebidas que regala la Bruja** (solo las que no están en las máquinas de Pueblo): **Mule Kick**, **Deadshot Daiquiri**, **PhD Flopper** (explosión al tirarse en plancha y resistencia a explosivos), **Electric Cherry** (descarga al recargar, más fuerte cuanto más vacío el cargador) y **Tombstone**. Con icono en la barra como las demás. Se pierden al caer, como todas. Who's Who no entra (necesita el clon y los filtros de Die Rise). En mapas con máquina de alguna de ellas, la da el propio juego.
+**Bebidas que regala la Bruja** (solo las que no están en las máquinas de Pueblo): **Mule Kick**, **Deadshot Daiquiri**, **PhD Flopper** (explosión al tirarse en plancha y resistencia a explosivos), **Electric Cherry** (descarga al recargar, más fuerte cuanto más vacío el cargador; los que sobreviven quedan aturdidos 2 s) y **Tombstone** (en Pueblo cuesta 15000 en su máquina: al caer no pierdes ninguna carta ni bebida, y se gasta). Con icono en la barra como las demás. Se pierden al caer, como todas (salvo con Tombstone). Who's Who no entra (necesita el clon y los filtros de Die Rise). En mapas con máquina de alguna de ellas, la da el propio juego.
 
 ### Brutus en detalle
 
@@ -695,6 +718,7 @@ Se escriben en la consola antes de entrar o antes de `map_restart`.
 | `set jodas_sprint 1` | Todos los zombies corren (2 = super sprint). |
 | `set jodas_caja_cartas 0` | Caja original (armas). |
 | `set jodas_caja_max 50000` | Precio máximo de la caja (999999 por defecto). |
+| `set jodas_tombstone_precio 2000` | Precio de la Tombstone en su máquina (15000 por defecto). |
 | `set jodas_mark2_pct 100` | % por ronda de que Pistolas reciba la Ray Gun Mark II (1 por defecto). |
 | `set jodas_super_pct 0` | Sin super sprinters. |
 | `set jodas_torreta_bajas 10` | Bajas que aguanta una torreta antes de romperse (100 por defecto). |
