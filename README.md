@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.6** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.7** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,10 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.7: cierre "A reliable command was cycled out"
+
+- **Arreglado**: la partida podía cerrarse de repente a mitad de ronda con *CL_CGameNeedsServerCommand: A reliable command was cycled out*. Lo provocaba la limpieza de textos del HUD (el arreglo del overflow): vaciar la tabla de textos manda al jugador un mensaje por cada texto borrado y otro por cada uno que se reescribe, y con 100 textos de golpe (a veces justo al abrir el menú de cartas) se pasaba de los ~128 que caben. Ahora se limpia cada 50 textos, un instante después de llegar al límite, y los textos se reescriben de 10 en 10. Puede verse algún texto en blanco durante una décima de segundo al limpiar.
 
 ## Novedades de la 1.10.6: recoger y reparar la torreta
 
@@ -672,7 +676,7 @@ Se escriben en la consola antes de entrar o antes de `map_restart`.
 | `set jodas_debug_torreta 1` | En partida: cada 2 s, el estado de tus torretas en pantalla. |
 | `set jodas_leroy_robos 3` | Cartas que Leroy puede robar a cada jugador. |
 | `set jodas_leroy_cuenco 15` | Segundos para recoger los cuencos de Leroy. |
-| `set jodas_textos_limite 100` | Cada cuántos textos nuevos se vacía la tabla de textos del juego (arreglo del overflow). |
+| `set jodas_textos_limite 50` | Cada cuántos textos nuevos se vacía la tabla de textos del juego (arreglo del overflow; 50 por defecto). |
 | `set jodas_bonus_escopetas 7.5` | Bonus de puntos por baja de Escopetas en % de la vida del zombie (`jodas_bonus_pistolas 5.1`, `jodas_bonus_rifles 0.13`). |
 | `set jodas_rifles_ejecutor 20` | % de vida por debajo del cual los Rifles rematan al zombie (`jodas_smr_mult 4`: daño del SMR). |
 | `set jodas_auto_racha_max 15` | Tope de la racha de Automáticas (`jodas_auto_doble 25`: % de gastar 2 balas). |

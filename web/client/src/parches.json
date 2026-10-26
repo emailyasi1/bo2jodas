@@ -1,5 +1,17 @@
 [
   {
+    "version": "1.10.7",
+    "fecha": "2026-10-26",
+    "titulo": "Sin cierres por mensajes del HUD",
+    "cambios": [
+      {
+        "tipo": "arreglo",
+        "que": "A reliable command was cycled out",
+        "texto": "La partida podía cerrarse de repente a mitad de ronda. Lo provocaba la limpieza de textos del HUD: vaciar la tabla manda al jugador un mensaje por cada texto, y con 100 de golpe (a veces justo al abrir el menú de cartas) se pasaba de los que caben. Ahora se limpia cada 50 textos, un instante después, y se reescriben de 10 en 10."
+      }
+    ]
+  },
+  {
     "version": "Web",
     "fecha": "2026-10-26",
     "titulo": "Límite de subidas sin bloqueos",
