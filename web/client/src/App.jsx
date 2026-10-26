@@ -96,7 +96,7 @@ export default function App() {
         <footer className="pie">
           <div className="contenedor">
             <span>bo2jodas · mod de Black Ops II Zombies para Plutonium T6. Las partidas las escribe el propio mod al acabar.</span>
-            <a href="https://github.com/emailyasi0-a11y/bo2jodas" target="_blank" rel="noreferrer">Código y descargas en GitHub</a>
+            <a href="https://github.com/emailyasi1/bo2jodas" target="_blank" rel="noreferrer">Código y descargas en GitHub</a>
           </div>
         </footer>
       </div>

@@ -20,7 +20,7 @@ Esta web lo recibe, lo guarda y lo enseña: lista de partidas, detalle de cada u
 Render da el servidor web gratis, pero su disco se borra en cada reinicio y el servicio se duerme tras 15 minutos sin visitas (la primera visita después tarda en torno a un minuto). Por eso los datos van a una base de datos Postgres gratuita de **Neon**, que no caduca (la Postgres gratis de Render se borra a los 30 días).
 
 1. **Neon** (neon.tech): crea una cuenta y un proyecto. Región: la misma que en Render (por ejemplo AWS Frankfurt). Copia la *connection string* (`postgresql://usuario:clave@ep-....neon.tech/neondb?sslmode=require`). La tabla la crea el servidor solo.
-2. **Render**: New, Web Service, conecta el repositorio `emailyasi0-a11y/bo2jodas` y rellena:
+2. **Render**: New, Web Service, conecta el repositorio `emailyasi1/bo2jodas` y rellena:
 
 | Campo | Valor |
 |---|---|
@@ -41,7 +41,7 @@ No hacen falta `PORT`, `DOMINIO` ni Caddy: Render pone el puerto y el HTTPS. La 
 Hace falta Docker. Sin comprar dominio: **sslip.io** convierte la IP en nombre (`203.0.113.7.sslip.io` apunta a `203.0.113.7`) y Caddy pide el certificado solo.
 
 ```bash
-git clone https://github.com/emailyasi0-a11y/bo2jodas
+git clone https://github.com/emailyasi1/bo2jodas
 cd bo2jodas/web
 cp .env.example .env        # DOMINIO=<tu ip>.sslip.io
 docker compose up -d --build

@@ -83,7 +83,7 @@ export default function Perfil() {
           <div>
             <p className="mut">
               Si eres anfitrión a menudo, el script <code>subir_partidas.bat</code> de la carpeta{" "}
-              <a href="https://github.com/emailyasi0-a11y/bo2jodas/tree/main/web/subidor" target="_blank" rel="noreferrer" style={{ color: "var(--lava)" }}>web/subidor</a>{" "}
+              <a href="https://github.com/emailyasi1/bo2jodas/tree/main/web/subidor" target="_blank" rel="noreferrer" style={{ color: "var(--lava)" }}>web/subidor</a>{" "}
               vigila la carpeta de partidas y sube cada una al acabar. Usa este token de tu cuenta:
             </p>
             <div className="token">{verToken ? yo.token : "•".repeat(32)}</div>
