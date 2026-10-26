@@ -58,6 +58,10 @@ function Partida-Muerta($json, $archivo) {
     return (((Get-Date) - $l.LastWriteTime).TotalMinutes -ge $SIN_TERMINAR_MIN)
 }
 
+# Si la web pide esperar (429, demasiadas subidas), no se vuelve a intentar
+# nada hasta la hora que diga.
+$script:esperarHasta = Get-Date
+
 function Subir-Archivo($archivo, $clave) {
     $minutos = ((Get-Date) - $archivo.LastWriteTime).TotalMinutes
     try {
@@ -87,21 +91,45 @@ function Subir-Archivo($archivo, $clave) {
         Add-Content -Path $registro -Value $clave
         return $true
     } catch {
-        # 422: la web la filtra (nadie paso del nivel 10). Se apunta para no reintentarla.
         $codigo = $null
-        if ($_.Exception.Response) { $codigo = [int]$_.Exception.Response.StatusCode }
-        if ($codigo -eq 422) {
-            Write-Host "$($archivo.Name): no se sube (nadie paso del nivel 10, se filtra como reset)" -ForegroundColor Yellow
+        $resp = $_.Exception.Response
+        if ($resp) { $codigo = [int]$resp.StatusCode }
+        $motivo = $_.Exception.Message
+        if ($_.ErrorDetails -and $_.ErrorDetails.Message) {
+            try { $motivo = ($_.ErrorDetails.Message | ConvertFrom-Json).error } catch { }
+        }
+        # 429: demasiadas subidas. Se espera lo que diga la web y se para la pasada.
+        if ($codigo -eq 429) {
+            $segundos = 600
+            try { $segundos = [int]$resp.Headers["Retry-After"] } catch { }
+            if ($segundos -lt 30) { $segundos = 30 }
+            $script:esperarHasta = (Get-Date).AddSeconds($segundos)
+            Write-Host "La web pide esperar: $motivo. Se reintenta a las $($script:esperarHasta.ToString('HH:mm'))." -ForegroundColor Yellow
+            return $false
+        }
+        # 401: token mal. Hay que arreglarlo en subir_partidas.cfg; se para un rato.
+        if ($codigo -eq 401) {
+            $script:esperarHasta = (Get-Date).AddMinutes(10)
+            Write-Host "Token incorrecto: copia el de tu perfil en subir_partidas.cfg. Se reintenta en 10 min." -ForegroundColor Red
+            return $false
+        }
+        # Otro 4xx (422: los datos no cuadran, formato viejo, archivo grande...):
+        # no se va a arreglar solo. Se apunta para no reintentarlo.
+        if ($codigo -ge 400 -and $codigo -lt 500) {
+            Write-Host "$($archivo.Name): la web no la acepta ($motivo); no se reintenta" -ForegroundColor Yellow
             Add-Content -Path $registro -Value $clave
             return $true
         }
-        Write-Host "$($archivo.Name): error al subir: $($_.Exception.Message)" -ForegroundColor Red
+        # Sin respuesta o 5xx (web dormida o caida): un minuto de espera.
+        $script:esperarHasta = (Get-Date).AddMinutes(1)
+        Write-Host "$($archivo.Name): no se pudo subir ($motivo); se reintenta en un minuto" -ForegroundColor Red
         return $false
     }
 }
 
 function Revisar {
     if (-not (Test-Path $carpeta)) { return }
+    if ((Get-Date) -lt $script:esperarHasta) { return }
     $subidas = Get-Content $registro
     foreach ($f in Get-ChildItem -Path $carpeta -Filter *.json | Sort-Object LastWriteTime) {
         if ($subidas -contains $f.Name) { continue }
@@ -109,6 +137,7 @@ function Revisar {
         # Esperar a que el juego termine de escribirlo.
         if (((Get-Date) - $f.LastWriteTime).TotalSeconds -lt 3) { continue }
         Subir-Archivo $f $f.Name | Out-Null
+        if ((Get-Date) -lt $script:esperarHasta) { return }
     }
 }
 

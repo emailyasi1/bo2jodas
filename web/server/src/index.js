@@ -73,20 +73,22 @@ function buscarRepetida(p) {
   return { id, repetida: false };
 }
 
-// Como mucho SUBIDAS_HORA subidas por cuenta (o IP) cada hora.
-const SUBIDAS_HORA = 30;
-const subidas = new Map(); // quien -> [instantes]
-function frenarSubida(quien) {
+// Limites de subida, por cuenta (o por IP sin cuenta), en la ultima hora:
+// - NUEVAS_HORA partidas guardadas. Solo gasta lo que se guarda: las repetidas,
+//   las sin terminar que no aportan y las rechazadas no cuentan.
+// - INTENTOS_HORA peticiones en total, contra inundaciones. Se corta antes de
+//   leer el cuerpo y se dice cuanto esperar (Retry-After).
+// Antes contaba cada intento: un JSON rechazado que el script reintentaba cada
+// 10 s gastaba el cupo en minutos y bloqueaba tambien las partidas buenas.
+const NUEVAS_HORA = 60;
+const INTENTOS_HORA = 600;
+const ventanas = { nuevas: new Map(), intentos: new Map() };
+function recientes(mapa, quien) {
   const ahora = Date.now();
-  const lista = (subidas.get(quien) || []).filter((t) => ahora - t < 3600_000);
-  if (lista.length >= SUBIDAS_HORA) {
-    subidas.set(quien, lista);
-    return true;
-  }
-  lista.push(ahora);
-  subidas.set(quien, lista);
-  if (subidas.size > 5000) subidas.clear();
-  return false;
+  const lista = (mapa.get(quien) || []).filter((t) => ahora - t < 3600_000);
+  mapa.set(quien, lista);
+  if (mapa.size > 5000) mapa.clear();
+  return lista;
 }
 
 async function guardar(p) {
@@ -112,16 +114,35 @@ function autorizarSubida(req) {
 const app = express();
 app.disable("x-powered-by");
 app.set("trust proxy", 1); // detras de Caddy: req.ip y req.secure reales
+// Freno de subidas antes de leer el cuerpo (hasta 1 MB): asi un cliente que
+// reintenta sin parar no cuesta nada.
+app.use("/api/runs", (req, res, siguiente) => {
+  if (req.method !== "POST" || req.path !== "/") return siguiente();
+  const auth = autorizarSubida(req);
+  const quien = auth.ok && auth.nombre ? `cuenta:${auth.nombre.toLowerCase()}` : `ip:${req.ip}`;
+  const intentos = recientes(ventanas.intentos, quien);
+  const nuevas = recientes(ventanas.nuevas, quien);
+  const lleno = intentos.length >= INTENTOS_HORA ? intentos : nuevas.length >= NUEVAS_HORA ? nuevas : null;
+  if (lleno) {
+    const segundos = Math.max(1, Math.ceil((lleno[0] + 3600_000 - Date.now()) / 1000));
+    res.set("Retry-After", String(segundos));
+    const que = lleno === nuevas ? `${NUEVAS_HORA} partidas nuevas por hora` : `${INTENTOS_HORA} intentos por hora`;
+    return res.status(429).json({ error: `demasiadas subidas (como mucho ${que}): prueba en ${Math.ceil(segundos / 60)} min`, reintentar_s: segundos });
+  }
+  intentos.push(Date.now());
+  req.claveSubida = quien;
+  siguiente();
+});
 app.use(express.json({ limit: "1mb" }));
 
 app.post("/api/runs", asinc(async (req, res) => {
   const auth = autorizarSubida(req);
   if (!auth.ok) return res.status(401).json({ error: "token incorrecto: registrate en la web y copia el token de tu perfil" });
-  if (frenarSubida(auth.nombre ? `cuenta:${auth.nombre.toLowerCase()}` : `ip:${req.ip}`))
-    return res.status(429).json({ error: `demasiadas subidas: como mucho ${SUBIDAS_HORA} por hora` });
   // Solo los campos que escribe el mod, con su tipo y rango, y que cuadren.
+  // 422 y no 400: el rechazo es por los datos, que no van a cambiar, y el
+  // script de subida apunta los 422 para no reintentarlos.
   const { partida: p, error } = limpiar(req.body);
-  if (error) return res.status(400).json({ error });
+  if (error) return res.status(422).json({ error, rechazada: true });
   // Resets (ronda < 10) y partidas de prueba (dvars cambiados) se guardan
   // marcadas: salen aparte y no cuentan para clasificaciones ni totales.
   p.categoria = categoria(p);
@@ -147,6 +168,7 @@ app.post("/api/runs", asinc(async (req, res) => {
   // Quien la subio: la cuenta del token o de la sesion (lo que diga el JSON no cuenta).
   if (auth.nombre) p.subido_por = auth.nombre;
   await guardar(p);
+  if (req.claveSubida) recientes(ventanas.nuevas, req.claveSubida).push(Date.now());
   console.log(`partida ${p.id}: ronda ${p.ronda}, ${p.jugadores.length} jugadores, ${p.mapa}, subida por ${p.subido_por || "?"}`);
   res.status(201).json({ ok: true, id: p.id });
 }));
@@ -280,7 +302,8 @@ app.get("/api/salud", (_req, res) => res.json({ ok: true, partidas: partidas.siz
 // JSON mal formado o fallo al guardar: respuesta JSON en vez de la pagina de error de express.
 app.use("/api", (err, _req, res, _siguiente) => {
   if (err.type === "entity.parse.failed") return res.status(400).json({ error: "JSON mal formado" });
-  if (err.type === "entity.too.large") return res.status(413).json({ error: "archivo demasiado grande" });
+  // 422: igual que un rechazo por datos, para que el script no lo reintente.
+  if (err.type === "entity.too.large") return res.status(422).json({ error: "archivo demasiado grande (como mucho 1 MB)", rechazada: true });
   console.error(err);
   res.status(500).json({ error: "error del servidor al guardar, prueba otra vez" });
 });

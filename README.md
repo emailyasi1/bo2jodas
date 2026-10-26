@@ -25,7 +25,6 @@ Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el d
 
 - **Latido**: mientras dura la partida, el mod escribe cada minuto `en_partida.txt` (junto a los JSON) con el id de la partida y si sigue en marcha; al acabar lo deja en "acabada". Es una escritura minúscula, sin tirón.
 - **El script de subida lo usa** en vez de "10 minutos sin cambiar el JSON" (que subía antes de tiempo las partidas con rondas largas): una partida sin terminar se sube si el latido es de otra partida (`map_restart` / `fast_restart`), dice "acabada" o lleva 40 minutos parado (juego cerrado). Si no, espera, dure lo que dure la ronda. Las terminadas se suben siempre al momento.
-- Límite de subidas: **30 por hora** por cuenta.
 
 ## Novedades de la 1.10.4: sin tirón al acabar la ronda
 
@@ -161,7 +160,7 @@ Al acabar cada partida, el mod escribe un **JSON con todo lo que ha pasado** en 
 2. Al acabar una partida, quien hizo de anfitrión tiene el JSON en la carpeta de arriba (el juego lo avisa en pantalla).
 3. En **Subir partida**, arrastra el JSON que quieras subir. Las repetidas no se duplican y cada partida queda con el nombre de quien la subió. Las partidas que acaban **antes de la ronda 10** van a la página **Resets** (desde la 1.10.3).
 
-La web comprueba cada partida antes de guardarla: solo se quedan los campos que escribe el mod (lo demás se descarta), cada número tiene que estar en su rango, las cartas, armas, clases y arquetipos tienen que existir y no pasar de su tope, y los números tienen que cuadrar entre sí (nivel con bajas, bajas con los zombies que salen hasta esa ronda, bajas por arma con el total, duración posible, huecos de carta de la clase). Si algo no cuadra, dice el motivo. Como mucho **1 MB** por archivo, **30 subidas por hora** por cuenta y **3 cuentas nuevas por conexión al día**.
+La web comprueba cada partida antes de guardarla: solo se quedan los campos que escribe el mod (lo demás se descarta), cada número tiene que estar en su rango, las cartas, armas, clases y arquetipos tienen que existir y no pasar de su tope, y los números tienen que cuadrar entre sí (nivel con bajas, bajas con los zombies que salen hasta esa ronda, bajas por arma con el total, duración posible, huecos de carta de la clase). Si algo no cuadra, dice el motivo. Como mucho **1 MB** por archivo, **60 partidas nuevas por hora** por cuenta (las repetidas y las rechazadas no cuentan) y **3 cuentas nuevas por conexión al día**.
 
 **Efectos con tus cartas de daño**: rayos (Pararrayos, Sobrecarga, Condensador, Tormenta) y fuego ahora también se multiplican por Calibre, Gatillo loco, Adrenalina, Cuerpo de cristal y demás, como ya hacían Espinas, Ciclón, los leapers y la Reacción en cadena. El fuego dura **6 tics** del 4 % (antes salían 5). Las estadísticas ya no cuentan dos veces el daño de Espinas, Ciclón, leapers, Reacción en cadena, Zeus, Fénix y Electric Cherry.
 

@@ -1,5 +1,28 @@
 [
   {
+    "version": "Web",
+    "fecha": "2026-10-26",
+    "titulo": "Límite de subidas sin bloqueos",
+    "cambios": [
+      {
+        "tipo": "arreglo",
+        "que": "Script de subida bloqueado",
+        "texto": "Un JSON que la web rechazaba (datos que no cuadran, formato viejo) se reintentaba cada 10 segundos para siempre, gastaba el cupo de la hora en minutos y bloqueaba también las partidas buenas con «Too Many Requests». Ahora la web responde de forma que el script lo apunta y no lo reintenta, sin tener que actualizar nada."
+      },
+      {
+        "tipo": "web",
+        "que": "Límite de subidas",
+        "antes": "30 intentos por hora",
+        "ahora": "60 partidas nuevas por hora; las repetidas y las rechazadas no cuentan"
+      },
+      {
+        "tipo": "cambio",
+        "que": "Script de subida nuevo",
+        "texto": "Opcional: si la web pide esperar, espera lo que diga en vez de insistir, y avisa del motivo cuando rechaza una partida."
+      }
+    ]
+  },
+  {
     "version": "1.10.6",
     "fecha": "2026-10-26",
     "titulo": "Recoger y reparar la torreta",
@@ -25,12 +48,6 @@
         "tipo": "cambio",
         "que": "Script de subida",
         "texto": "Usa el latido en vez de los 10 minutos sin cambiar el JSON: una partida sin terminar se sube si el latido es de otra partida (map_restart / fast_restart), dice \"acabada\" o lleva 40 minutos parado (juego cerrado). Las rondas largas ya no la suben antes de tiempo. Las terminadas se suben siempre al momento."
-      },
-      {
-        "tipo": "web",
-        "que": "Límite de subidas",
-        "antes": "20 por hora",
-        "ahora": "30 por hora"
       }
     ]
   },
