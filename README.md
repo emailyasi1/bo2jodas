@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.5** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.6** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,10 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.6: recoger y reparar la torreta
+
+- **Arreglado**: la torreta del Mecánico no se podía recoger ni reparar (no salía el texto y USAR no hacía nada). El disparador junto a la torreta se crea ahora con el mismo sistema que usa el juego para recoger el equipo y las piezas (`_zm_unitrigger`). Mantén USAR junto a tu torreta: la recoges (conserva su desgaste, también con 3) o, si está rota, la reparas por 2500. Solo lo ve su dueño.
 
 ## Novedades de la 1.10.5: latido del mod
 

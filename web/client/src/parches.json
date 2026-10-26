@@ -1,5 +1,17 @@
 [
   {
+    "version": "1.10.6",
+    "fecha": "2026-10-26",
+    "titulo": "Recoger y reparar la torreta",
+    "cambios": [
+      {
+        "tipo": "arreglo",
+        "que": "Torreta del Mecánico",
+        "texto": "No se podía recoger ni reparar: no salía el texto y USAR no hacía nada. El disparador se crea ahora con el mismo sistema que usa el juego para recoger el equipo y las piezas. Mantén USAR junto a tu torreta para recogerla (conserva su desgaste, también con 3) o repararla por 2500 cuando se rompe."
+      }
+    ]
+  },
+  {
     "version": "1.10.5",
     "fecha": "2026-10-25",
     "titulo": "Latido del mod",
