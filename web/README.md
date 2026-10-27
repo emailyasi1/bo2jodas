@@ -32,6 +32,7 @@ Render da el servidor web gratis, pero su disco se borra en cada reinicio y el s
 | Instance Type | Free |
 | Variable `DATABASE_URL` | la connection string de Neon |
 | Variable `SESSION_SECRET` | botón *Generate* |
+| Variable `GITHUB_TOKEN` | token de GitHub **de solo lectura** para el botón de descarga del mod: fine-grained, solo el repo `bo2jodas`, permiso *Contents: Read-only*. Sin él, el botón no sale |
 | Health Check Path (Advanced) | `/api/salud` |
 
 No hacen falta `PORT`, `DOMINIO` ni Caddy: Render pone el puerto y el HTTPS. La URL queda como `https://bo2jodas.onrender.com`. Cada push a `main` que toque `web/` vuelve a desplegar solo.
@@ -86,6 +87,8 @@ Hay una partida de ejemplo en `ejemplos/`: `curl -X POST localhost:3000/api/runs
 | `POST /api/auth/token` | Genera un token nuevo (el anterior deja de valer). |
 | `POST /api/auth/contrasena` | `{actual, nueva}`. |
 | `POST /api/auth/logout` | Cierra la sesión. |
+| `GET /api/descarga/info` | Con sesión: última versión del mod en GitHub (`{version, nombre, tamano, fecha}`; 503 sin `GITHUB_TOKEN`). |
+| `GET /api/descarga` | Con sesión: redirige al zip de la última release (enlace temporal de GitHub; el zip no pasa por el servidor). |
 | `GET /api/salud` | Health check: `{ok, partidas, cuentas}`. |
 | `DELETE /api/runs/:id` | Borra una partida (solo administradores: `lalay` y los de la variable `ADMINS`). Queda una línea en `borrado` con qué, quién y cuándo. |
 | `GET /api/jugadores/:nombre` | Perfil de un jugador: totales, cartas favoritas y sus partidas. |

@@ -1,5 +1,17 @@
 [
   {
+    "version": "Web",
+    "fecha": "2026-10-27",
+    "titulo": "Descargar el mod desde la web",
+    "cambios": [
+      {
+        "tipo": "nuevo",
+        "que": "Descarga",
+        "texto": "Botón \"Descargar la última versión\" arriba en Notas de parche (con tu cuenta): baja el zip de la última release de GitHub sin tener que ser colaborador del repositorio."
+      }
+    ]
+  },
+  {
     "version": "1.10.10",
     "fecha": "2026-10-27",
     "titulo": "10 copias por carta, aguante, dificultad y barra de vida",

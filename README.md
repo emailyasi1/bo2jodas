@@ -6,7 +6,7 @@
 
 ## Instalar
 
-1. Ve a [Releases](../../releases) y descarga el zip de la última versión.
+1. Descarga el zip de la última versión: en la web, **Notas de parche → Descargar la última versión** (con tu cuenta), o en [Releases](../../releases) si eres colaborador del repositorio.
 2. Descomprímelo y copia la carpeta `zm_bo2jodas` dentro de `%localappdata%\Plutonium\storage\t6\mods\` (crea `mods` si no existe). Si ya tenías una versión anterior, **sustitúyela entera**.
 3. En el juego: **Zombies → Mods → bo2jodas**. El juego se reinicia con el mod cargado.
 4. **Una sola vez**, en la consola, asigna la tecla de la lista de cartas: `bind h +actionslot 2` (la H o la que quieras).

@@ -14,6 +14,8 @@
 //   GET  /api/auth/yo             quien soy + mi token de subida (32 caracteres)
 //   POST /api/auth/token          genera un token nuevo (el viejo deja de valer)
 //   POST /api/auth/contrasena     { actual, nueva }
+//   GET  /api/descarga/info       ultima version del mod en GitHub (con sesion)
+//   GET  /api/descarga            redirige al zip de la ultima version (con sesion; ver descarga.js)
 //   GET  /api/salud               para el health check del hosting
 //   /                             la web (client/dist)
 //
@@ -31,6 +33,7 @@ import { limpiar } from "./validar.js";
 import { cargarTokens, comprobarToken } from "./tokens.js";
 import { Usuarios } from "./usuarios.js";
 import { crearAlmacen } from "./almacen.js";
+import { descargaConfigurada, enlaceZip, ultimaVersion } from "./descarga.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 3000);
@@ -296,6 +299,28 @@ app.post("/api/auth/contrasena", conSesion, asinc(async (req, res) => {
   if (r.error) return res.status(400).json({ error: r.error });
   res.json({ ok: true });
 }));
+
+// Descarga del mod: solo con sesion (el repo es privado).
+app.get("/api/descarga/info", conSesion, async (_req, res) => {
+  if (!descargaConfigurada()) return res.status(503).json({ error: "la descarga no está configurada en el servidor (falta GITHUB_TOKEN)" });
+  try {
+    const v = await ultimaVersion();
+    res.json({ version: v.version, nombre: v.nombre, tamano: v.tamano, fecha: v.fecha });
+  } catch (e) {
+    console.error("descarga:", e.message);
+    res.status(502).json({ error: "no se pudo consultar GitHub, prueba en un rato" });
+  }
+});
+
+app.get("/api/descarga", conSesion, async (_req, res) => {
+  if (!descargaConfigurada()) return res.status(503).type("text").send("La descarga no está configurada en el servidor (falta GITHUB_TOKEN).");
+  try {
+    res.redirect(302, await enlaceZip());
+  } catch (e) {
+    console.error("descarga:", e.message);
+    res.status(502).type("text").send("No se pudo pedir el zip a GitHub, prueba en un rato.");
+  }
+});
 
 app.get("/api/salud", (_req, res) => res.json({ ok: true, partidas: partidas.size, cuentas: usuarios.total }));
 

@@ -20,6 +20,15 @@ async function post(ruta, cuerpo, cabeceras = {}) {
   return datos;
 }
 
+// Ultima version del mod en GitHub (con sesion). null si la descarga no esta configurada.
+export async function infoDescarga() {
+  const r = await fetch("/api/descarga/info", { credentials: "same-origin" });
+  if (r.status === 503) return null;
+  const datos = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(datos.error || `${r.status}`);
+  return datos;
+}
+
 export async function borrarPartida(id) {
   const r = await fetch(`/api/runs/${encodeURIComponent(id)}`, { method: "DELETE", credentials: "same-origin" });
   const datos = await r.json().catch(() => ({}));

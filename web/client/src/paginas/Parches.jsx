@@ -1,7 +1,10 @@
-import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight, Download, LogIn } from "lucide-react";
 import parches from "../parches.json";
 import { Segmentos } from "../controles.jsx";
+import { infoDescarga } from "../api.js";
+import { useSesion } from "../sesion.jsx";
 
 // parches.json se escribe a mano con cada cambio que se sube a GitHub (lo mas
 // nuevo arriba). "Web" en version = cambio solo de la pagina.
@@ -31,6 +34,7 @@ export default function Parches() {
           <h1>Notas de parche</h1>
           <p className="mut">Cada cambio del mod y de la web, lo más nuevo arriba.</p>
         </div>
+        <Descarga />
       </div>
       <div className="filtros">
         <Segmentos valor={filtro} onCambio={setFiltro} opciones={FILTRO} ariaLabel="Qué cambios" />
@@ -39,6 +43,36 @@ export default function Parches() {
         {lista.map((p, i) => <Parche key={`${p.version}-${p.fecha}-${i}`} p={p} />)}
       </div>
     </>
+  );
+}
+
+// Boton de descarga de la ultima version (el servidor redirige al zip de la
+// release de GitHub; el repo es privado, por eso hace falta haber entrado).
+function Descarga() {
+  const { yo } = useSesion();
+  const [info, setInfo] = useState(undefined);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!yo) return;
+    infoDescarga().then(setInfo).catch((e) => setError(e.message));
+  }, [yo]);
+
+  if (yo === undefined) return null;
+  if (!yo)
+    return (
+      <Link to="/entrar" className="boton sec"><LogIn size={16} />Entra para descargar el mod</Link>
+    );
+  if (error) return <span className="ten peq">No se pudo consultar la última versión: {error}</span>;
+  if (info === null) return null;
+  const mb = info ? ` · ${Math.round(info.tamano / 1048576)} MB` : "";
+  return (
+    <div style={{ textAlign: "right" }}>
+      <a href="/api/descarga" className="boton"><Download size={16} />Descargar la última versión{info ? ` (${info.version})` : ""}</a>
+      <div className="ten peq" style={{ marginTop: 6 }}>
+        Zip de GitHub{mb}. Descomprímelo y copia la carpeta <code>zm_bo2jodas</code> en <code>%localappdata%\Plutonium\storage\t6\mods\</code>
+      </div>
+    </div>
   );
 }
 
