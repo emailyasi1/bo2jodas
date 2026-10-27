@@ -29,12 +29,15 @@ const NOMBRE_SUMANDO = { clase: "Ventaja de clase", ultimo: "Último aliento" };
 const CLAVE_RAREZA = ["COMUN", "POCO COMUN", "RARA", "EPICA", "LEGENDARIA"];
 const CORTO_RAREZA = ["C", "PC", "R", "É", "L"];
 
+// Como jodas_texto_valor: decimal 1 / 2 = decimas / centesimas; hasta 2 decimales.
 function valorTxt(c, v) {
-  let s = String(v);
-  if (c.decimal === 2) s = `${Math.trunc(v / 100)}.${String(v % 100).padStart(2, "0")}`;
-  else if (c.decimal === 1) s = `${Math.trunc(v / 10)}.${v % 10}`;
-  return `${c.prefijo}${s}${c.sufijo}`;
+  let x = Number(v);
+  if (c.decimal === 2) x /= 100;
+  else if (c.decimal === 1) x /= 10;
+  return `${c.prefijo}${Math.round(x * 100) / 100}${c.sufijo}`;
 }
+// Las copias suman decimales: se redondea para no arrastrar 0.30000000000000004.
+const redondo = (x) => Math.round(x * 10000) / 10000;
 const pct = (a, b) => (b > 0 ? `${((100 * a) / b).toFixed(a / b >= 0.1 ? 0 : 1)} %` : "");
 const n = (x) => (Number.isFinite(x) ? fmt(x) : "—");
 
@@ -88,11 +91,11 @@ function FilaCarta({ c, valor, setValor, quitar, build }) {
         </div>
       ) : (
         <div className="calc-carta-valor">
-          <Numero valor={valor} set={setValor} min={0} max={c.tope} />
-          <span className="nota">{valorTxt(c, valor)} · tope {valorTxt(c, c.tope)}</span>
+          <Numero valor={valor} set={setValor} min={0} max={c.tope} paso="any" />
+          <span className="nota">{valorTxt(c, valor)} · tope {valorTxt(c, c.tope)}{c.copias > 1 ? ` · ${c.copias} copias (10 legendarias = tope)` : ""}</span>
           <div className="calc-rarezas">
             {c.valores.map((x, i) => (
-              <button type="button" key={i} style={{ "--c": COLOR_RAREZA[CLAVE_RAREZA[i]] }} title={`Sumar una ${RAREZAS[i].toLowerCase()} (${valorTxt(c, x)})`} onClick={() => setValor(Math.min(c.tope, valor + x))}>
+              <button type="button" key={i} style={{ "--c": COLOR_RAREZA[CLAVE_RAREZA[i]] }} title={`Sumar una ${RAREZAS[i].toLowerCase()} (${valorTxt(c, x)})`} onClick={() => setValor(redondo(Math.min(c.tope, valor + x)))}>
                 +{CORTO_RAREZA[i]}
               </button>
             ))}

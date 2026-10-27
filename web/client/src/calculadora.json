@@ -71,10 +71,20 @@
   "rifles_ejecutor": 20.0,
   "smr_mult": 4.0,
   "bonus_escopetas": 7.5,
-  "bonus_pistolas": 5.1,
+  "bonus_pistolas": 2.5,
   "bonus_rifles": 0.13,
   "bruja_minutos": 3.0,
   "bruja_segundos": 10.0,
+  "tope_golpe": 90.0,
+  "copias": 10.0,
+  "aguante": 1.0,
+  "aguante_ronda": 30.0,
+  "aguante_pct": 6.0,
+  "dificultad": 1.0,
+  "dificultad_tope": 100.0,
+  "vida_barra": 1.0,
+  "vida_x": 10.0,
+  "vida_y": -62.0,
   "jefe_rugido": 15.0,
   "jefe_furia": 20.0,
   "espera_clases": 30.0,
@@ -89,7 +99,9 @@
   "zeus_objetivos": 3.0,
   "midas_puntos": 100.0,
   "midas_cada": 20.0,
-  "infinito_segundos": 45.0
+  "infinito_segundos": 45.0,
+  "dificultad_mitica_desde": 40.0,
+  "dificultad_mitica_pct": 8.0
  },
  "juego": {
   "zombie_max_ai": 24,
@@ -299,13 +311,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    3,
-    5,
-    7,
-    10,
-    16
+    2,
+    3.2,
+    4.4,
+    6,
+    8
    ],
    "tope": 80,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -319,13 +332,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    50,
-    70,
-    105,
-    145,
-    210
+    17.5,
+    28,
+    38.5,
+    52.5,
+    70
    ],
    "tope": 700,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -339,13 +353,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    5,
-    7,
-    10,
-    14,
-    22
+    4,
+    6.4,
+    8.8,
+    12,
+    16
    ],
-   "tope": 300,
+   "tope": 160,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -359,13 +374,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    2,
+    2.5,
     4,
-    6,
-    10,
-    14
+    5.5,
+    7.5,
+    10
    ],
-   "tope": 150,
+   "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -379,13 +395,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    4,
-    6,
-    10,
-    14,
-    20
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -399,13 +416,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    5,
-    30,
-    100,
-    250,
-    450
+    9,
+    14.4,
+    19.8,
+    27,
+    36
    ],
-   "tope": 450,
+   "tope": 360,
+   "copias": 10,
    "decimal": 2,
    "prefijo": "",
    "sufijo": "%"
@@ -419,13 +437,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    5,
-    8,
-    12,
-    18,
-    30
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": " b/min"
@@ -440,12 +459,13 @@
    "requiere": [],
    "valores": [
     8,
-    12,
-    20,
-    32,
-    48
+    12.8,
+    17.6,
+    24,
+    32
    ],
-   "tope": 400,
+   "tope": 320,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -459,13 +479,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
+    0.625,
     1,
-    1,
-    2,
-    3,
-    5
+    1.375,
+    1.875,
+    2.5
    ],
    "tope": 25,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -479,13 +500,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    2,
-    3,
-    4,
-    6,
-    10
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -499,13 +521,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    3,
-    5,
-    7,
-    10,
-    14
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "-",
    "sufijo": "%"
@@ -520,12 +543,13 @@
    "requiere": [],
    "valores": [
     8,
-    12,
-    20,
-    32,
-    48
+    12.8,
+    17.6,
+    24,
+    32
    ],
-   "tope": 400,
+   "tope": 320,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -540,12 +564,13 @@
    "requiere": [],
    "valores": [
     8,
-    12,
-    20,
-    32,
-    48
+    12.8,
+    17.6,
+    24,
+    32
    ],
-   "tope": 400,
+   "tope": 320,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -559,13 +584,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    2,
-    4,
-    6,
-    10,
-    14
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -580,12 +606,13 @@
    "requiere": [],
    "valores": [
     40,
-    65,
-    95,
-    145,
-    240
+    64,
+    88,
+    120,
+    160
    ],
-   "tope": 3000,
+   "tope": 1600,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -599,13 +626,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    4,
+    5,
     8,
-    12,
-    20,
-    32
+    11,
+    15,
+    20
    ],
-   "tope": 300,
+   "tope": 200,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -619,13 +647,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    3,
-    5,
-    7,
-    10,
-    16
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -639,13 +668,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    250,
-    360,
-    520,
-    720,
-    1040
+    125,
+    200,
+    275,
+    375,
+    500
    ],
    "tope": 5000,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -659,13 +689,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    4,
-    8,
-    12,
-    20,
-    32
+    1,
+    1.6,
+    2.2,
+    3,
+    4
    ],
-   "tope": 50,
+   "tope": 40,
+   "copias": 10,
    "decimal": 1,
    "prefijo": "",
    "sufijo": "%"
@@ -679,13 +710,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    8,
-    12,
-    18,
-    24,
-    36
+    2.25,
+    3.6,
+    4.95,
+    6.75,
+    9
    ],
    "tope": 90,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -699,13 +731,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    5,
-    8,
-    12,
-    16,
-    22
+    0.875,
+    1.4,
+    1.925,
+    2.625,
+    3.5
    ],
    "tope": 35,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -719,13 +752,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
+    2.5,
     4,
-    6,
-    10,
-    14,
-    20
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -739,13 +773,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    2,
-    4,
-    6,
-    10,
-    14
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -759,13 +794,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    12,
+    12.5,
     20,
-    32,
-    48,
-    72
+    27.5,
+    37.5,
+    50
    ],
    "tope": 500,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -779,13 +815,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    2,
-    4,
-    6,
-    10,
-    14
+    1.75,
+    2.8,
+    3.85,
+    5.25,
+    7
    ],
    "tope": 70,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -799,13 +836,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    2,
-    4,
-    6,
-    10,
-    14
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -819,13 +857,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    4,
-    6,
-    10,
-    13,
-    18
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -839,13 +878,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    6,
-    10,
-    14,
-    20,
-    32
+    5,
+    8,
+    11,
+    15,
+    20
    ],
    "tope": 200,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -859,13 +899,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
+    2.5,
     4,
-    6,
-    10,
-    14,
-    20
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -879,13 +920,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
+    5,
     8,
-    12,
-    18,
-    24,
-    36
+    11,
+    15,
+    20
    ],
    "tope": 200,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -899,13 +941,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    12,
-    20,
-    32,
-    48,
-    72
+    10,
+    16,
+    22,
+    30,
+    40
    ],
    "tope": 400,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -919,13 +962,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    10,
-    15,
-    22,
-    30,
-    45
+    3.75,
+    6,
+    8.25,
+    11.25,
+    15
    ],
    "tope": 150,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -939,13 +983,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    1,
-    2,
-    2,
-    3,
-    5
+    0.5,
+    0.8,
+    1.1,
+    1.5,
+    2
    ],
    "tope": 20,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -960,15 +1005,37 @@
    "requiere": [],
    "valores": [
     8,
-    12,
-    20,
-    32,
-    48
+    12.8,
+    17.6,
+    24,
+    32
    ],
-   "tope": 400,
+   "tope": 320,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
+  },
+  {
+   "id": "maldicion",
+   "nombre": "Maldicion",
+   "desc": "+% dificultad: mas zombies y mas premio",
+   "arquetipo": "",
+   "tipo": "normal",
+   "firma": false,
+   "requiere": [],
+   "valores": [
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
+   ],
+   "tope": 100,
+   "copias": 10,
+   "decimal": 0,
+   "prefijo": "+",
+   "sufijo": "%"
   },
   {
    "id": "monos",
@@ -985,7 +1052,8 @@
     1,
     1
    ],
-   "tope": 3,
+   "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "/ronda"
@@ -1005,7 +1073,8 @@
     1,
     1
    ],
-   "tope": 3,
+   "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "/ronda"
@@ -1025,7 +1094,8 @@
     1,
     1
    ],
-   "tope": 3,
+   "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "/ronda"
@@ -1045,7 +1115,8 @@
     1,
     1
    ],
-   "tope": 3,
+   "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "/ronda"
@@ -1066,6 +1137,7 @@
     0
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1086,6 +1158,7 @@
     0
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1106,6 +1179,7 @@
     0
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1126,6 +1200,7 @@
     0
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1146,6 +1221,7 @@
     0
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1166,6 +1242,7 @@
     0
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1179,13 +1256,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
+    2,
+    3.2,
+    4.4,
     6,
-    9,
-    13,
-    18,
-    26
+    8
    ],
    "tope": 80,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1199,13 +1277,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    15,
-    22,
-    30,
-    42,
-    60
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1219,13 +1298,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    4,
-    6,
-    9,
-    13,
-    18
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -1239,13 +1319,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    20,
-    30,
-    45,
-    65,
-    90
+    7.5,
+    12,
+    16.5,
+    22.5,
+    30
    ],
    "tope": 300,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -1269,6 +1350,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1282,13 +1364,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    8,
-    12,
-    17,
-    24,
-    34
+    2,
+    3.2,
+    4.4,
+    6,
+    8
    ],
    "tope": 80,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1302,13 +1385,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    25,
-    35,
-    50,
-    70,
-    100
+    5,
+    8,
+    11,
+    15,
+    20
    ],
    "tope": 200,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1322,13 +1406,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    50,
-    70,
-    100,
-    140,
-    200
+    7.5,
+    12,
+    16.5,
+    22.5,
+    30
    ],
    "tope": 300,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1342,13 +1427,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    12,
-    16,
-    22,
-    30,
-    42
+    2.25,
+    3.6,
+    4.95,
+    6.75,
+    9
    ],
    "tope": 90,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1372,6 +1458,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1385,13 +1472,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    5,
-    8,
-    11,
-    15,
-    22
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -1405,13 +1493,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    2,
+    1,
+    1.6,
+    2.2,
     3,
-    4,
-    6,
-    9
+    4
    ],
    "tope": 40,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -1425,13 +1514,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    3,
-    4,
-    5,
-    6,
-    8
+    0.3,
+    0.48,
+    0.66,
+    0.9,
+    1.2
    ],
    "tope": 12,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": " s"
@@ -1455,6 +1545,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1468,13 +1559,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
+    5,
+    8,
+    11,
     15,
-    22,
-    32,
-    45,
-    65
+    20
    ],
    "tope": 200,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -1488,13 +1580,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    25,
-    35,
-    45,
-    60,
-    80
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
-   "tope": 100,
+   "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1518,6 +1611,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1531,13 +1625,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    10,
-    15,
-    20,
-    28,
-    40
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "-",
    "sufijo": "%"
@@ -1551,13 +1646,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    5,
-    8,
-    12,
-    18,
-    25
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "-",
    "sufijo": ""
@@ -1571,13 +1667,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    5,
-    8,
-    12,
-    16,
-    24
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -1601,6 +1698,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1614,13 +1712,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    10,
-    15,
-    20,
-    25,
-    35
+    1.25,
+    2,
+    2.75,
+    3.75,
+    5
    ],
    "tope": 50,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1634,13 +1733,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    200,
-    300,
-    400,
-    600,
-    800
+    50,
+    80,
+    110,
+    150,
+    200
    ],
    "tope": 2000,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -1654,13 +1754,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    10,
-    15,
-    20,
-    30,
-    40
+    1.5,
+    2.4,
+    3.3,
+    4.5,
+    6
    ],
    "tope": 60,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "-",
    "sufijo": "%"
@@ -1684,6 +1785,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1697,13 +1799,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    8,
-    12,
-    18,
-    25,
-    36
+    3.75,
+    6,
+    8.25,
+    11.25,
+    15
    ],
    "tope": 150,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -1717,13 +1820,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    10,
-    15,
-    20,
-    30,
-    40
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1737,13 +1841,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    2,
-    3,
-    4,
-    6,
-    8
+    0.5,
+    0.8,
+    1.1,
+    1.5,
+    2
    ],
    "tope": 20,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -1767,6 +1872,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1780,13 +1886,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    6,
-    9,
-    13,
-    18,
-    25
+    0.875,
+    1.4,
+    1.925,
+    2.625,
+    3.5
    ],
    "tope": 35,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1800,13 +1907,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    10,
-    15,
-    22,
-    30,
-    42
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -1820,13 +1928,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    3,
-    4,
-    6,
-    8,
-    12
+    0.75,
+    1.2,
+    1.65,
+    2.25,
+    3
    ],
    "tope": 30,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -1850,6 +1959,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1870,6 +1980,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -1885,13 +1996,14 @@
     "silbato"
    ],
    "valores": [
-    10,
-    15,
-    20,
-    30,
-    40
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -1907,13 +2019,14 @@
     "silbato"
    ],
    "valores": [
+    5,
+    8,
+    11,
     15,
-    25,
-    35,
-    50,
-    70
+    20
    ],
    "tope": 200,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -1929,13 +2042,14 @@
     "silbato"
    ],
    "valores": [
-    3,
-    5,
-    7,
-    10,
-    15
+    1.25,
+    2,
+    2.75,
+    3.75,
+    5
    ],
    "tope": 50,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -1943,7 +2057,7 @@
   {
    "id": "manada",
    "nombre": "Manada",
-   "desc": "+1 leaper (maximo 3)",
+   "desc": "+% radio de caza; 2.o leaper a 5 copias, 3.o a 10",
    "arquetipo": "domador",
    "tipo": "normal",
    "firma": false,
@@ -1951,16 +2065,17 @@
     "silbato"
    ],
    "valores": [
-    1,
-    1,
-    1,
-    1,
-    1
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
-   "tope": 2,
+   "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
-   "sufijo": ""
+   "sufijo": "%"
   },
   {
    "id": "alfa",
@@ -1981,6 +2096,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -2001,6 +2117,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -2016,13 +2133,14 @@
     "herramientas"
    ],
    "valores": [
-    10,
-    15,
-    22,
-    30,
-    42
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -2038,13 +2156,14 @@
     "herramientas"
    ],
    "valores": [
-    10,
-    15,
-    22,
-    30,
-    40
+    1.75,
+    2.8,
+    3.85,
+    5.25,
+    7
    ],
    "tope": 70,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "-",
    "sufijo": "%"
@@ -2060,13 +2179,14 @@
     "herramientas"
    ],
    "valores": [
+    5,
+    8,
+    11,
     15,
-    25,
-    35,
-    50,
-    70
+    20
    ],
    "tope": 200,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -2082,13 +2202,14 @@
     "herramientas"
    ],
    "valores": [
-    10,
-    15,
-    22,
-    30,
-    40
+    2,
+    3.2,
+    4.4,
+    6,
+    8
    ],
    "tope": 80,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -2096,7 +2217,7 @@
   {
    "id": "montaje",
    "nombre": "Cadena de montaje",
-   "desc": "+1 torreta (maximo 3)",
+   "desc": "+% aguante; 2.a torreta a 5 copias, 3.a a 10",
    "arquetipo": "mecanico",
    "tipo": "normal",
    "firma": false,
@@ -2104,16 +2225,17 @@
     "herramientas"
    ],
    "valores": [
-    1,
-    1,
-    1,
-    1,
-    1
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
-   "tope": 2,
+   "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
-   "sufijo": ""
+   "sufijo": "%"
   },
   {
    "id": "mortero",
@@ -2134,6 +2256,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -2147,13 +2270,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    1,
-    2,
-    2,
-    3,
-    4
+    0.5,
+    0.8,
+    1.1,
+    1.5,
+    2
    ],
    "tope": 20,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -2167,13 +2291,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    15,
-    22,
-    30,
-    42,
-    60
+    2,
+    3.2,
+    4.4,
+    6,
+    8
    ],
    "tope": 80,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -2187,13 +2312,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    20,
-    30,
-    45,
-    60,
-    80
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -2207,13 +2333,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    20,
-    30,
-    45,
-    60,
-    80
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -2237,6 +2364,7 @@
     1
    ],
    "tope": 1,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "",
    "sufijo": ""
@@ -2250,13 +2378,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    1,
-    1,
-    2,
-    2,
-    3
+    0.15,
+    0.24,
+    0.33,
+    0.45,
+    0.6
    ],
    "tope": 6,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -2270,13 +2399,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    6,
-    10,
-    14,
-    20,
-    30
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -2290,13 +2420,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    20,
-    30,
-    45,
-    65,
-    100
+    6.25,
+    10,
+    13.75,
+    18.75,
+    25
    ],
    "tope": 250,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -2310,13 +2441,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    8,
-    12,
-    18,
-    25,
-    36
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -2330,13 +2462,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    1,
-    1,
-    2,
-    2,
-    3
+    0.25,
+    0.4,
+    0.55,
+    0.75,
+    1
    ],
    "tope": 10,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": "%"
@@ -2350,13 +2483,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    2,
-    3,
-    4,
-    6,
-    8
+    0.75,
+    1.2,
+    1.65,
+    2.25,
+    3
    ],
    "tope": 30,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -2370,13 +2504,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    5,
-    8,
-    10,
-    15,
-    20
+    2.5,
+    4,
+    5.5,
+    7.5,
+    10
    ],
    "tope": 100,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": ""
@@ -2390,13 +2525,14 @@
    "firma": false,
    "requiere": [],
    "valores": [
-    1,
-    1,
-    2,
-    2,
-    3
+    0.25,
+    0.4,
+    0.55,
+    0.75,
+    1
    ],
    "tope": 10,
+   "copias": 10,
    "decimal": 0,
    "prefijo": "",
    "sufijo": "%"
@@ -2417,6 +2553,7 @@
     3
    ],
    "tope": 99,
+   "copias": 1,
    "decimal": 0,
    "prefijo": "+",
    "sufijo": " niveles"

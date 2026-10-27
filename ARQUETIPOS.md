@@ -70,92 +70,92 @@ Cada arquetipo tiene 6 cartas; la **firma** sólo aparece cuando tienes las dos 
 ```mermaid
 flowchart LR
     subgraph piromano["Piromano: Fuego que se contagia y explosivos"]
-        explosivo["Polvora*<br/>+8% / +12% / +20% / +32% / +48%"]
-        fosforo["Fosforo<br/>6% / 9% / 13% / 18% / 26%"]
-        napalm["Napalm<br/>15% / 22% / 30% / 42% / 60%"]
-        rescoldos["Rescoldos<br/>+4 / +6 / +9 / +13 / +18"]
-        mecha["Mecha corta<br/>+20% / +30% / +45% / +65% / +90%"]
+        explosivo["Polvora*<br/>+8% / +12.8% / +17.6% / +24% / +32%"]
+        fosforo["Fosforo<br/>2% / 3.2% / 4.4% / 6% / 8%"]
+        napalm["Napalm<br/>2.5% / 4% / 5.5% / 7.5% / 10%"]
+        rescoldos["Rescoldos<br/>+1.5 / +2.4 / +3.3 / +4.5 / +6"]
+        mecha["Mecha corta<br/>+7.5% / +12% / +16.5% / +22.5% / +30%"]
         pirotecnico["Pirotecnico (firma)<br/>FIRMA (una vez)"]
     end
     subgraph electricista["Electricista: Rayos que saltan de zombie en zombie"]
-        cadena["Reaccion en cadena*<br/>3% / 5% / 7% / 10% / 16%"]
-        pararrayos["Pararrayos<br/>8% / 12% / 17% / 24% / 34%"]
-        sobrecarga["Sobrecarga<br/>25% / 35% / 50% / 70% / 100%"]
-        condensador["Condensador<br/>50% / 70% / 100% / 140% / 200%"]
-        tormenta["Tormenta<br/>12% / 16% / 22% / 30% / 42%"]
+        cadena["Reaccion en cadena*<br/>1.5% / 2.4% / 3.3% / 4.5% / 6%"]
+        pararrayos["Pararrayos<br/>2% / 3.2% / 4.4% / 6% / 8%"]
+        sobrecarga["Sobrecarga<br/>5% / 8% / 11% / 15% / 20%"]
+        condensador["Condensador<br/>7.5% / 12% / 16.5% / 22.5% / 30%"]
+        tormenta["Tormenta<br/>2.25% / 3.6% / 4.95% / 6.75% / 9%"]
         tesla["Tesla (firma)<br/>FIRMA (una vez)"]
     end
     subgraph berserker["Berserker: Cuanto mas herido, mas peligroso"]
-        vampiro["Vampiro*<br/>+2 / +3 / +4 / +6 / +10"]
-        adrenalina["Adrenalina*<br/>+6% / +10% / +14% / +20% / +32%"]
-        furia["Furia<br/>+5% / +8% / +11% / +15% / +22%"]
-        sangre["Sangre caliente<br/>+2 / +3 / +4 / +6 / +9"]
-        ultimo["Ultimo aliento<br/>3 s / 4 s / 5 s / 6 s / 8 s"]
+        vampiro["Vampiro*<br/>+1.5 / +2.4 / +3.3 / +4.5 / +6"]
+        adrenalina["Adrenalina*<br/>+5% / +8% / +11% / +15% / +20%"]
+        furia["Furia<br/>+1.5% / +2.4% / +3.3% / +4.5% / +6%"]
+        sangre["Sangre caliente<br/>+1 / +1.6 / +2.2 / +3 / +4"]
+        ultimo["Ultimo aliento<br/>0.3 s / 0.48 s / 0.66 s / 0.9 s / 1.2 s"]
         imparable["Imparable (firma)<br/>FIRMA (una vez)"]
     end
     subgraph francotirador["Francotirador: Tiros a la cabeza lentos y letales"]
-        cabeza["Ojo de halcon*<br/>+8% / +12% / +20% / +32% / +48%"]
-        punteria["Punteria*<br/>+4% / +6% / +10% / +14% / +20%"]
-        cazatanques["Cazatanques*<br/>+12% / +20% / +32% / +48% / +72%"]
-        pulso["Pulso firme<br/>+15% / +22% / +32% / +45% / +65%"]
-        unabala["Una bala basta<br/>25% / 35% / 45% / 60% / 80%"]
+        cabeza["Ojo de halcon*<br/>+8% / +12.8% / +17.6% / +24% / +32%"]
+        punteria["Punteria*<br/>+2.5% / +4% / +5.5% / +7.5% / +10%"]
+        cazatanques["Cazatanques*<br/>+10% / +16% / +22% / +30% / +40%"]
+        pulso["Pulso firme<br/>+5% / +8% / +11% / +15% / +20%"]
+        unabala["Una bala basta<br/>1.5% / 2.4% / 3.3% / 4.5% / 6%"]
         elites["Cazador de elites (firma)<br/>FIRMA (una vez)"]
     end
     subgraph tanque["Tanque: x2 vida con Jugg y escudo nuevo cada ronda"]
-        melee["Nudillos de hierro*<br/>+40% / +65% / +95% / +145% / +240%"]
-        espinas["Espinas*<br/>12% / 20% / 32% / 48% / 72%"]
-        piedra["Piel de piedra<br/>-10% / -15% / -20% / -28% / -40%"]
-        coraza["Coraza<br/>-5 / -8 / -12 / -18 / -25"]
-        masa["Masa<br/>+5 / +8 / +12 / +16 / +24"]
+        melee["Nudillos de hierro*<br/>+40% / +64% / +88% / +120% / +160%"]
+        espinas["Espinas*<br/>12.5% / 20% / 27.5% / 37.5% / 50%"]
+        piedra["Piel de piedra<br/>-1.5% / -2.4% / -3.3% / -4.5% / -6%"]
+        coraza["Coraza<br/>-1.5 / -2.4 / -3.3 / -4.5 / -6"]
+        masa["Masa<br/>+1.5 / +2.4 / +3.3 / +4.5 / +6"]
         coloso["Coloso (firma)<br/>FIRMA (una vez)"]
     end
     subgraph banquero["Banquero: Los puntos son poder"]
-        puntos["Codicia*<br/>+4 / +8 / +12 / +20 / +32"]
-        oro["Cabezas de oro*<br/>+8 / +12 / +20 / +32 / +48"]
-        interes["Interes compuesto<br/>10% / 15% / 20% / 25% / 35%"]
-        mercenario["Mercenario<br/>+200 / +300 / +400 / +600 / +800"]
-        cajaeco["Caja economica<br/>-10% / -15% / -20% / -30% / -40%"]
+        puntos["Codicia*<br/>+5 / +8 / +11 / +15 / +20"]
+        oro["Cabezas de oro*<br/>+8 / +12.8 / +17.6 / +24 / +32"]
+        interes["Interes compuesto<br/>1.25% / 2% / 2.75% / 3.75% / 5%"]
+        mercenario["Mercenario<br/>+50 / +80 / +110 / +150 / +200"]
+        cajaeco["Caja economica<br/>-1.5% / -2.4% / -3.3% / -4.5% / -6%"]
         plutocrata["Plutocrata (firma)<br/>FIRMA (una vez)"]
     end
     subgraph gatillo["Gatillo: Disparar sin parar y sin recargar"]
-        cadencia["Gatillo loco*<br/>+2% / +4% / +6% / +10% / +14%"]
-        ultimas["Ultimas balas*<br/>+8% / +12% / +18% / +24% / +36%"]
-        tambor["Tambor caliente<br/>+8% / +12% / +18% / +25% / +36%"]
-        plomo["Plomo<br/>10% / 15% / 20% / 30% / 40%"]
-        cinta["Cinta de balas<br/>+2 / +3 / +4 / +6 / +8"]
+        cadencia["Gatillo loco*<br/>+2.5% / +4% / +5.5% / +7.5% / +10%"]
+        ultimas["Ultimas balas*<br/>+5% / +8% / +11% / +15% / +20%"]
+        tambor["Tambor caliente<br/>+3.75% / +6% / +8.25% / +11.25% / +15%"]
+        plomo["Plomo<br/>2.5% / 4% / 5.5% / 7.5% / 10%"]
+        cinta["Cinta de balas<br/>+0.5 / +0.8 / +1.1 / +1.5 / +2"]
         continuo["Fuego continuo (firma)<br/>FIRMA (una vez)"]
     end
     subgraph velocista["Velocista: Correr, esquivar y no parar"]
-        escurridizo["Escurridizo*<br/>5% / 8% / 12% / 16% / 22%"]
-        sed["Sed de sangre*<br/>+4% / +6% / +10% / +13% / +18%"]
-        resbaladizo["Esquiva<br/>6% / 9% / 13% / 18% / 25%"]
-        zancada["Zancada<br/>+10% / +15% / +22% / +30% / +42%"]
-        estela["Estela<br/>3% / 4% / 6% / 8% / 12%"]
+        escurridizo["Escurridizo*<br/>0.88% / 1.4% / 1.93% / 2.62% / 3.5%"]
+        sed["Sed de sangre*<br/>+1.5% / +2.4% / +3.3% / +4.5% / +6%"]
+        resbaladizo["Esquiva<br/>0.88% / 1.4% / 1.93% / 2.62% / 3.5%"]
+        zancada["Zancada<br/>+2.5% / +4% / +5.5% / +7.5% / +10%"]
+        estela["Estela<br/>0.75% / 1.2% / 1.65% / 2.25% / 3%"]
         ciclon["Ciclon (firma)<br/>FIRMA (una vez)"]
     end
     subgraph domador["Domador: Leapers que luchan por ti"]
         silbato["Silbato<br/>1 / 1 / 1 / 1 / 1"]
-        correa["Correa larga<br/>+10% / +15% / +20% / +30% / +40%"]
-        collar["Collar de puas<br/>+15% / +25% / +35% / +50% / +70%"]
-        carne["Carne fresca<br/>+3 / +5 / +7 / +10 / +15"]
-        manada["Manada<br/>+1 / +1 / +1 / +1 / +1"]
+        correa["Correa larga<br/>+2.5% / +4% / +5.5% / +7.5% / +10%"]
+        collar["Collar de puas<br/>+5% / +8% / +11% / +15% / +20%"]
+        carne["Carne fresca<br/>+1.25 / +2 / +2.75 / +3.75 / +5"]
+        manada["Manada<br/>+2.5% / +4% / +5.5% / +7.5% / +10%"]
         alfa["Alfa (firma)<br/>FIRMA (una vez)"]
     end
     subgraph mecanico["Mecanico: Torretas que disparan por ti"]
         herramientas["Caja de herramientas<br/>1 / 1 / 1 / 1 / 1"]
-        engranajes["Engranajes<br/>+10% / +15% / +22% / +30% / +42%"]
-        recargatorreta["Recarga rapida<br/>-10% / -15% / -22% / -30% / -40%"]
-        calibre50["Calibre .50<br/>+15% / +25% / +35% / +50% / +70%"]
-        rebote["Rebote<br/>10% / 15% / 22% / 30% / 40%"]
-        montaje["Cadena de montaje<br/>+1 / +1 / +1 / +1 / +1"]
+        engranajes["Engranajes<br/>+2.5% / +4% / +5.5% / +7.5% / +10%"]
+        recargatorreta["Recarga rapida<br/>-1.75% / -2.8% / -3.85% / -5.25% / -7%"]
+        calibre50["Calibre .50<br/>+5% / +8% / +11% / +15% / +20%"]
+        rebote["Rebote<br/>2% / 3.2% / 4.4% / 6% / 8%"]
+        montaje["Cadena de montaje<br/>+2.5% / +4% / +5.5% / +7.5% / +10%"]
         mortero["Mortero (firma)<br/>FIRMA (una vez)"]
     end
     subgraph suertudo["Suertudo: Rerolls, dados y cartas mejores"]
-        botin["Buscador de botin*<br/>0.4% / 0.8% / 1.2% / 2.0% / 3.2%"]
-        conejo["Pata de conejo<br/>+1 / +2 / +2 / +3 / +4"]
-        dados["Dados<br/>15% / 22% / 30% / 42% / 60%"]
-        amuleto["Amuleto<br/>20% / 30% / 45% / 60% / 80%"]
-        herradura["Herradura<br/>20% / 30% / 45% / 60% / 80%"]
+        botin["Buscador de botin*<br/>0.1% / 0.16% / 0.22% / 0.3% / 0.4%"]
+        conejo["Pata de conejo<br/>+0.5 / +0.8 / +1.1 / +1.5 / +2"]
+        dados["Dados<br/>2% / 3.2% / 4.4% / 6% / 8%"]
+        amuleto["Amuleto<br/>2.5% / 4% / 5.5% / 7.5% / 10%"]
+        herradura["Herradura<br/>2.5% / 4% / 5.5% / 7.5% / 10%"]
         jackpot["Jackpot (firma)<br/>FIRMA (una vez)"]
     end
     fosforo -->|requiere| pirotecnico
@@ -197,11 +197,11 @@ flowchart LR
 
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
-| Polvora | Potencia de los explosivos | +8% / +12% / +20% / +32% / +48% | +400% | variable |
-| Fosforo | Probabilidad de que tus balas incendien | 6% / 9% / 13% / 18% / 26% | 80% | variable |
-| Napalm | Un zombie ardiendo contagia: % por s | 15% / 22% / 30% / 42% / 60% | 100% | variable |
-| Rescoldos | Vida al matar a un zombie ardiendo | +4 / +6 / +9 / +13 / +18 | +60 | variable |
-| Mecha corta | Granadas: estallan al caer y hacen +% | +20% / +30% / +45% / +65% / +90% | +300% | variable |
+| Polvora | Potencia de los explosivos | +8% / +12.8% / +17.6% / +24% / +32% | +320% | variable |
+| Fosforo | Probabilidad de que tus balas incendien | 2% / 3.2% / 4.4% / 6% / 8% | 80% | variable |
+| Napalm | Un zombie ardiendo contagia: % por s | 2.5% / 4% / 5.5% / 7.5% / 10% | 100% | variable |
+| Rescoldos | Vida al matar a un zombie ardiendo | +1.5 / +2.4 / +3.3 / +4.5 / +6 | +60 | variable |
+| Mecha corta | Granadas: estallan al caer y hacen +% | +7.5% / +12% / +16.5% / +22.5% / +30% | +300% | variable |
 | **Pirotecnico** | FIRMA: tus explosiones incendian a todos | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -212,16 +212,16 @@ flowchart LR
     rescoldos["Rescoldos"]
     mecha["Mecha corta"]
     pirotecnico{{"Pirotecnico (firma)"}}
+    EXPLO(["Explosiones: granadas, Mecha corta, Bomberman, Reaccion en cadena, PhD"])
     BALAS(["Impactos de bala (MOD_RIFLE_BULLET / MOD_PISTOL_BULLET)"])
     FUEGO(["Zombie ardiendo: pierde 4% de su vida maxima por segundo durante 6 s (cada impacto reinicia). El jefe, un cuarto. Al apagarse queda quemado: el Napalm ya no lo contagia"])
-    EXPLO(["Explosiones: granadas, Mecha corta, Bomberman, Reaccion en cadena, PhD"])
-    BALAS -->|"6-26% por impacto (tope 80%)"| fosforo
+    BALAS -->|"2-8% por impacto (tope 80%)"| fosforo
     fosforo -->|"prende (impacto directo: tambien a quemados)"| FUEGO
     FUEGO -->|"cada segundo, por zombie a menos de 80 u"| napalm
-    napalm -->|"15-60% de contagiar (no a quemados)"| FUEGO
-    FUEGO -->|"baja de un zombie ardiendo: +4-18 vida (tope 60)"| rescoldos
-    mecha -->|"granada estalla al pararse, +20-90% (tope 300%)"| EXPLO
-    explosivo -->|"+8-48% a todo lo explosivo (tope 400%)"| EXPLO
+    napalm -->|"2.5-10% de contagiar (no a quemados)"| FUEGO
+    FUEGO -->|"baja de un zombie ardiendo: +1.5-6 vida (tope 60)"| rescoldos
+    mecha -->|"granada estalla al pararse, +7.5-30% (tope 300%)"| EXPLO
+    explosivo -->|"+8-32% a todo lo explosivo (tope 320%)"| EXPLO
     fosforo -->|"requiere"| pirotecnico
     explosivo -->|"requiere"| pirotecnico
     EXPLO -->|"cada zombie alcanzado por una explosion tuya"| pirotecnico
@@ -232,11 +232,11 @@ flowchart LR
 
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
-| Reaccion en cadena | Probabilidad de que el zombie explote | 3% / 5% / 7% / 10% / 16% | 60% | variable |
-| Pararrayos | % de rayo al matar: 15% vida a otro | 8% / 12% / 17% / 24% / 34% | 80% | variable |
-| Sobrecarga | Al recargar, rayo al mas cercano: % vida | 25% / 35% / 50% / 70% / 100% | 200% | variable |
-| Condensador | 10 bajas sin dano: 3 rayos de % vida | 50% / 70% / 100% / 140% / 200% | 300% | variable |
-| Tormenta | Descarga alrededor: % vida, y mas seguido | 12% / 16% / 22% / 30% / 42% | 90% | variable |
+| Reaccion en cadena | Probabilidad de que el zombie explote | 1.5% / 2.4% / 3.3% / 4.5% / 6% | 60% | variable |
+| Pararrayos | % de rayo al matar: 15% vida a otro | 2% / 3.2% / 4.4% / 6% / 8% | 80% | variable |
+| Sobrecarga | Al recargar, rayo al mas cercano: % vida | 5% / 8% / 11% / 15% / 20% | 200% | variable |
+| Condensador | 10 bajas sin dano: 3 rayos de % vida | 7.5% / 12% / 16.5% / 22.5% / 30% | 300% | variable |
+| Tormenta | Descarga alrededor: % vida, y mas seguido | 2.25% / 3.6% / 4.95% / 6.75% / 9% | 90% | variable |
 | **Tesla** | FIRMA: todos tus rayos alcanzan a 2 mas | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -247,19 +247,19 @@ flowchart LR
     condensador["Condensador"]
     tormenta["Tormenta"]
     tesla{{"Tesla (firma)"}}
+    DISPARO(["Siguiente impacto de bala"])
     RAYO(["Rayo: dano fijo en % de la vida maxima del zombie (100% o mas = mata; al jefe 15%) y luego se multiplica por tus cartas de dano. Alcance 350 u"])
     RECARGA(["Empezar a recargar"])
-    DISPARO(["Siguiente impacto de bala"])
     BAJA(["Baja tuya (cualquier arma)"])
-    BAJA -->|"8-34% (tope 80%)"| pararrayos
+    BAJA -->|"2-8% (tope 80%)"| pararrayos
     pararrayos -->|"1 rayo del 15% a otro zombie"| RAYO
-    BAJA -->|"3-16% (tope 60%): explosion de 0.6x vida de ronda + 100 a 160 u"| cadena
+    BAJA -->|"1.5-6% (tope 60%): explosion de 0.6x vida de ronda + 100 a 160 u"| cadena
     RECARGA -->|"maximo 1 por segundo"| sobrecarga
-    sobrecarga -->|"1 rayo de 25-100% (tope 200%) al mas cercano"| RAYO
+    sobrecarga -->|"1 rayo de 5-20% (tope 200%) al mas cercano"| RAYO
     BAJA -->|"10 bajas seguidas sin recibir dano lo cargan"| condensador
     DISPARO -->|"con carga: la gasta"| condensador
-    condensador -->|"3 rayos de 50-200% (tope 300%)"| RAYO
-    tormenta -->|"cada 4.5 s menos 0.03 s por punto (min 1.5 s): 12-42% (tope 90%) a todos a 160 u y 1 s al 50% de velocidad"| RAYO
+    condensador -->|"3 rayos de 7.5-30% (tope 300%)"| RAYO
+    tormenta -->|"cada 4.5 s menos 0.03 s por punto (min 1.5 s): 2.25-9% (tope 90%) a todos a 160 u y 1 s al 50% de velocidad"| RAYO
     pararrayos -->|"requiere"| tesla
     condensador -->|"requiere"| tesla
     tesla -->|"todos los rayos (y los de Ira de Zeus) alcanzan a 2 zombies mas"| RAYO
@@ -269,11 +269,11 @@ flowchart LR
 
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
-| Vampiro | Vida por baja | +2 / +3 / +4 / +6 / +10 | +60 | variable |
-| Adrenalina | +% potencia con menos de media vida | +6% / +10% / +14% / +20% / +32% | +200% | variable |
-| Furia | +% potencia 5 s por golpe recibido (x3) | +5% / +8% / +11% / +15% / +22% | +60% | variable |
-| Sangre caliente | Vida por segundo con menos de media vida | +2 / +3 / +4 / +6 / +9 | +40 | variable |
-| Ultimo aliento | Bajo 25% vida: s de invulnerable, 1/ronda | 3 s / 4 s / 5 s / 6 s / 8 s | 12 s | variable |
+| Vampiro | Vida por baja | +1.5 / +2.4 / +3.3 / +4.5 / +6 | +60 | variable |
+| Adrenalina | +% potencia con menos de media vida | +5% / +8% / +11% / +15% / +20% | +200% | variable |
+| Furia | +% potencia 5 s por golpe recibido (x3) | +1.5% / +2.4% / +3.3% / +4.5% / +6% | +60% | variable |
+| Sangre caliente | Vida por segundo con menos de media vida | +1 / +1.6 / +2.2 / +3 / +4 | +40 | variable |
+| Ultimo aliento | Bajo 25% vida: s de invulnerable, 1/ronda | 0.3 s / 0.48 s / 0.66 s / 0.9 s / 1.2 s | 12 s | variable |
 | **Imparable** | FIRMA: bajo 25% vida +20% vel, golpes -50% | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -284,14 +284,14 @@ flowchart LR
     sangre["Sangre caliente"]
     ultimo["Ultimo aliento"]
     imparable{{"Imparable (firma)"}}
+    VIDA(["Tu vida (100, 250 con Juggernog, 500 si eres Tanque con Juggernog)"])
     BAJA(["Baja tuya (cualquier arma)"])
     GOLPE(["Golpe de zombie recibido"])
-    VIDA(["Tu vida (100, 250 con Juggernog, 500 si eres Tanque con Juggernog)"])
-    VIDA -->|"con menos de la mitad: +6-32% dano (tope 200%)"| adrenalina
-    VIDA -->|"con menos de la mitad: +2-9 vida/s (tope 40)"| sangre
-    GOLPE -->|"+5-22% dano 5 s, acumula hasta 3 golpes (tope 60% por golpe)"| furia
-    VIDA -->|"al bajar del 25% o golpe mortal, 1 vez por ronda: 3-8 s (tope 12) invulnerable y +100% dano"| ultimo
-    BAJA -->|"+2-10 vida por baja (tope 60)"| vampiro
+    VIDA -->|"con menos de la mitad: +5-20% dano (tope 200%)"| adrenalina
+    VIDA -->|"con menos de la mitad: +1-4 vida/s (tope 40)"| sangre
+    GOLPE -->|"+1.5-6% dano 5 s, acumula hasta 3 golpes (tope 60% por golpe)"| furia
+    VIDA -->|"al bajar del 25% o golpe mortal, 1 vez por ronda: 0.3-1.2 s (tope 12) invulnerable y +100% dano"| ultimo
+    BAJA -->|"+1.5-6 vida por baja (tope 60)"| vampiro
     adrenalina -->|"requiere"| imparable
     furia -->|"requiere"| imparable
     VIDA -->|"con menos del 25%: +20% velocidad y los golpes hacen la mitad"| imparable
@@ -301,11 +301,11 @@ flowchart LR
 
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
-| Ojo de halcon | Potencia en tiros a la cabeza | +8% / +12% / +20% / +32% / +48% | +400% | variable |
-| Punteria | +% potencia apuntando con la mira | +4% / +6% / +10% / +14% / +20% | +100% | variable |
-| Cazatanques | +% potencia contra tanques | +12% / +20% / +32% / +48% / +72% | +400% | variable |
-| Pulso firme | +% potencia tras 2 s sin disparar | +15% / +22% / +32% / +45% / +65% | +200% | variable |
-| Una bala basta | Cabeza lejos mata si al zombie le queda <% | 25% / 35% / 45% / 60% / 80% | 100% | variable |
+| Ojo de halcon | Potencia en tiros a la cabeza | +8% / +12.8% / +17.6% / +24% / +32% | +320% | variable |
+| Punteria | +% potencia apuntando con la mira | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% | variable |
+| Cazatanques | +% potencia contra tanques | +10% / +16% / +22% / +30% / +40% | +400% | variable |
+| Pulso firme | +% potencia tras 2 s sin disparar | +5% / +8% / +11% / +15% / +20% | +200% | variable |
+| Una bala basta | Cabeza lejos mata si al zombie le queda <% | 1.5% / 2.4% / 3.3% / 4.5% / 6% | 60% | variable |
 | **Cazador de elites** | FIRMA: cabeza a tanque o jefe hace x3 | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -316,17 +316,17 @@ flowchart LR
     pulso["Pulso firme"]
     unabala["Una bala basta"]
     elites{{"Cazador de elites (firma)"}}
-    MATA(["Muerte instantanea"])
-    ELITE(["Tanque (x4 vida) o jefe"])
-    CABEZA(["Tiro a la cabeza (head / helmet; el arma ya multiplica por su locHead)"])
     QUIETO2S(["2 s sin disparar"])
+    CABEZA(["Tiro a la cabeza (head / helmet; el arma ya multiplica por su locHead)"])
     MIRA(["Apuntando con la mira"])
-    CABEZA -->|"+8-48% (tope 400%)"| cabeza
-    MIRA -->|"apuntando: +4-20% (tope 100%)"| punteria
-    ELITE -->|"solo tanques: +12-72% (tope 400%)"| cazatanques
-    QUIETO2S -->|"+15-65% (tope 200%)"| pulso
+    ELITE(["Tanque (x4 vida) o jefe"])
+    MATA(["Muerte instantanea"])
+    CABEZA -->|"+8-32% (tope 320%)"| cabeza
+    MIRA -->|"apuntando: +2.5-10% (tope 100%)"| punteria
+    ELITE -->|"solo tanques: +10-40% (tope 400%)"| cazatanques
+    QUIETO2S -->|"+5-20% (tope 200%)"| pulso
     CABEZA -->|"y a mas de 600 u, no al jefe"| unabala
-    unabala -->|"mata si le queda menos del 25-80% de vida (tope 100%)"| MATA
+    unabala -->|"mata si le queda menos del 1.5-6% de vida (tope 60%)"| MATA
     cabeza -->|"requiere"| elites
     pulso -->|"requiere"| elites
     ELITE -->|"cabeza a tanque o jefe: dano x3 (el jefe sigue con tope del 15% por golpe)"| elites
@@ -336,11 +336,11 @@ flowchart LR
 
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
-| Nudillos de hierro | Potencia cuerpo a cuerpo | +40% / +65% / +95% / +145% / +240% | +3000% | variable |
-| Espinas | Quien te golpea pierde % de su vida | 12% / 20% / 32% / 48% / 72% | 500% | variable |
-| Piel de piedra | -% dano recibido estando quieto | -10% / -15% / -20% / -28% / -40% | -60% | variable |
-| Coraza | Cada golpe de zombie hace esto menos | -5 / -8 / -12 / -18 / -25 | -60 | variable |
-| Masa | +vida maxima por cada carta de Tanque | +5 / +8 / +12 / +16 / +24 | +60 | variable |
+| Nudillos de hierro | Potencia cuerpo a cuerpo | +40% / +64% / +88% / +120% / +160% | +1600% | variable |
+| Espinas | Quien te golpea pierde % de su vida | 12.5% / 20% / 27.5% / 37.5% / 50% | 500% | variable |
+| Piel de piedra | -% dano recibido estando quieto | -1.5% / -2.4% / -3.3% / -4.5% / -6% | -60% | variable |
+| Coraza | Cada golpe de zombie hace esto menos | -1.5 / -2.4 / -3.3 / -4.5 / -6 | -60 | variable |
+| Masa | +vida maxima por cada carta de Tanque | +1.5 / +2.4 / +3.3 / +4.5 / +6 | +60 | variable |
 | **Coloso** | FIRMA: quieto reflejas todo; cuchillo x3 | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -351,15 +351,15 @@ flowchart LR
     coraza["Coraza"]
     masa["Masa"]
     coloso{{"Coloso (firma)"}}
+    QUIETO(["Quieto (velocidad &lt; 10)"])
     CUCHILLO(["Cuchillo"])
     PASIVA(["Pasiva del arquetipo: vida x2 con Juggernog (500) y escudo de zombies (2250 de dano) en la espalda, nuevo o reparado cada ronda"])
-    QUIETO(["Quieto (velocidad &lt; 10)"])
     GOLPE(["Golpe de zombie recibido (60; tanque x2; jefe x2.5)"])
-    GOLPE -->|"el zombie pierde 12-72% de su vida (tope 500%)"| espinas
-    CUCHILLO -->|"+40-240% (tope 3000%)"| melee
-    QUIETO -->|"golpes -10-40% (tope 60%)"| piedra
-    GOLPE -->|"cada golpe hace 5-25 menos (tope 60; minimo 1)"| coraza
-    masa -->|"+5-24 vida maxima por cada carta de Tanque que tengas, Masa incluida (tope 60 por carta)"| PASIVA
+    GOLPE -->|"el zombie pierde 12.5-50% de su vida (tope 500%)"| espinas
+    CUCHILLO -->|"+40-160% (tope 1600%)"| melee
+    QUIETO -->|"golpes -1.5-6% (tope 60%)"| piedra
+    GOLPE -->|"cada golpe hace 1.5-6 menos (tope 60; minimo 1)"| coraza
+    masa -->|"+1.5-6 vida maxima por cada carta de Tanque que tengas, Masa incluida (tope 60 por carta)"| PASIVA
     espinas -->|"requiere"| coloso
     piedra -->|"requiere"| coloso
     QUIETO -->|"quieto: Espinas pasa a 100% (el zombie que te golpea muere) y el cuchillo hace x3"| coloso
@@ -369,11 +369,11 @@ flowchart LR
 
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
-| Codicia | Puntos extra por baja | +4 / +8 / +12 / +20 / +32 | +300 | variable |
-| Cabezas de oro | Puntos extra por baja a la cabeza | +8 / +12 / +20 / +32 / +48 | +400 | variable |
-| Interes compuesto | +1% potencia por cada 1000 puntos (tope %) | 10% / 15% / 20% / 25% / 35% | 50% | variable |
-| Mercenario | Cada 50 bajas tuyas +puntos a todos | +200 / +300 / +400 / +600 / +800 | +2000 | variable |
-| Caja economica | La caja te cuesta menos | -10% / -15% / -20% / -30% / -40% | -60% | variable |
+| Codicia | Puntos extra por baja | +5 / +8 / +11 / +15 / +20 | +200 | variable |
+| Cabezas de oro | Puntos extra por baja a la cabeza | +8 / +12.8 / +17.6 / +24 / +32 | +320 | variable |
+| Interes compuesto | +1% potencia por cada 1000 puntos (tope %) | 1.25% / 2% / 2.75% / 3.75% / 5% | 50% | variable |
+| Mercenario | Cada 50 bajas tuyas +puntos a todos | +50 / +80 / +110 / +150 / +200 | +2000 | variable |
+| Caja economica | La caja te cuesta menos | -1.5% / -2.4% / -3.3% / -4.5% / -6% | -60% | variable |
 | **Plutocrata** | FIRMA: +6% potencia por perk, +50 puntos | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -384,16 +384,16 @@ flowchart LR
     mercenario["Mercenario"]
     cajaeco["Caja economica"]
     plutocrata{{"Plutocrata (firma)"}}
+    CABEZA(["Baja a la cabeza"])
+    PERKS(["Bebidas que llevas"])
+    BAJA(["Baja tuya"])
     CAJA(["Caja de cartas (2500 x1.17 por tirada)"])
     PUNTOS(["Tus puntos (sin gastar)"])
-    CABEZA(["Baja a la cabeza"])
-    BAJA(["Baja tuya"])
-    PERKS(["Bebidas que llevas"])
-    BAJA -->|"+4-32 puntos (tope 300)"| puntos
-    CABEZA -->|"+8-48 puntos (tope 400)"| oro
-    PUNTOS -->|"+1% dano por cada 1000 puntos, tope 10-35% (maximo 50%)"| interes
-    BAJA -->|"cada 50 bajas tuyas: +200-800 puntos a todos (tope 2000)"| mercenario
-    cajaeco -->|"-10-40% de precio (tope 60%)"| CAJA
+    BAJA -->|"+5-20 puntos (tope 200)"| puntos
+    CABEZA -->|"+8-32 puntos (tope 320)"| oro
+    PUNTOS -->|"+1% dano por cada 1000 puntos, tope 1.25-5% (maximo 50%)"| interes
+    BAJA -->|"cada 50 bajas tuyas: +50-200 puntos a todos (tope 2000)"| mercenario
+    cajaeco -->|"-1.5-6% de precio (tope 60%)"| CAJA
     puntos -->|"requiere"| plutocrata
     interes -->|"requiere"| plutocrata
     PERKS -->|"+6% dano por bebida"| plutocrata
@@ -404,11 +404,11 @@ flowchart LR
 
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
-| Gatillo loco | Double Tap gratis y mas potencia | +2% / +4% / +6% / +10% / +14% | +150% | variable |
-| Ultimas balas | +% potencia con el cargador casi vacio | +8% / +12% / +18% / +24% / +36% | +200% | variable |
-| Tambor caliente | +% potencia tras 1 s disparando seguido | +8% / +12% / +18% / +25% / +36% | +150% | variable |
-| Plomo | +1% potencia por bala seguida (tope %) | 10% / 15% / 20% / 30% / 40% | 100% | variable |
-| Cinta de balas | Balas al cargador por baja | +2 / +3 / +4 / +6 / +8 | +20 | variable |
+| Gatillo loco | Double Tap gratis y mas potencia | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% | variable |
+| Ultimas balas | +% potencia con el cargador casi vacio | +5% / +8% / +11% / +15% / +20% | +200% | variable |
+| Tambor caliente | +% potencia tras 1 s disparando seguido | +3.75% / +6% / +8.25% / +11.25% / +15% | +150% | variable |
+| Plomo | +1% potencia por bala seguida (tope %) | 2.5% / 4% / 5.5% / 7.5% / 10% | 100% | variable |
+| Cinta de balas | Balas al cargador por baja | +0.5 / +0.8 / +1.1 / +1.5 / +2 | +20 | variable |
 | **Fuego continuo** | FIRMA: con combo 10 el cargador no baja | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -419,16 +419,16 @@ flowchart LR
     plomo["Plomo"]
     cinta["Cinta de balas"]
     continuo{{"Fuego continuo (firma)"}}
-    DT(["Double Tap comprado"])
-    BAJA(["Baja tuya (cualquier arma)"])
     CARGADOR(["Cargador del arma de la mano"])
-    COMBO10(["Combo 10: 10 bajas seguidas con menos de 2 s entre ellas"])
     RAFAGA(["Disparando seguido (menos de 0.4 s entre tiros)"])
-    cadencia -->|"da Double Tap gratis y +2-14% dano (tope 150%); con Double Tap comprado el % se dobla"| DT
-    CARGADOR -->|"por debajo del 30%: +8-36% (tope 200%)"| ultimas
-    RAFAGA -->|"tras 1 s seguido: +8-36% (tope 150%); se pierde al parar 0.5 s"| tambor
-    RAFAGA -->|"+1% por bala sin recargar ni cambiar de arma, tope 10-40% (maximo 100%)"| plomo
-    BAJA -->|"+2-8 balas al cargador (tope 20)"| cinta
+    BAJA(["Baja tuya (cualquier arma)"])
+    DT(["Double Tap comprado"])
+    COMBO10(["Combo 10: 10 bajas seguidas con menos de 2 s entre ellas"])
+    cadencia -->|"da Double Tap gratis y +2.5-10% dano (tope 100%); con Double Tap comprado el % se dobla"| DT
+    CARGADOR -->|"por debajo del 30%: +5-20% (tope 200%)"| ultimas
+    RAFAGA -->|"tras 1 s seguido: +3.75-15% (tope 150%); se pierde al parar 0.5 s"| tambor
+    RAFAGA -->|"+1% por bala sin recargar ni cambiar de arma, tope 2.5-10% (maximo 100%)"| plomo
+    BAJA -->|"+0.5-2 balas al cargador (tope 20)"| cinta
     tambor -->|"requiere"| continuo
     plomo -->|"requiere"| continuo
     COMBO10 -->|"mientras dura el combo 10 el cargador se rellena solo"| continuo
@@ -438,11 +438,11 @@ flowchart LR
 
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
-| Escurridizo | % de que te ignoren 2 s tras un golpe | 5% / 8% / 12% / 16% / 22% | 35% | variable |
-| Sed de sangre | +% velocidad 3 s tras cada baja | +4% / +6% / +10% / +13% / +18% | +60% | variable |
-| Esquiva | % de esquivar golpes en movimiento | 6% / 9% / 13% / 18% / 25% | 35% | variable |
-| Zancada | Stamin-Up gratis y +% dano 2 s tras correr | +10% / +15% / +22% / +30% / +42% | +100% | variable |
-| Estela | Rastro de fuego: % vida por segundo | 3% / 4% / 6% / 8% / 12% | 30% | variable |
+| Escurridizo | % de que te ignoren 2 s tras un golpe | 0.88% / 1.4% / 1.93% / 2.62% / 3.5% | 35% | variable |
+| Sed de sangre | +% velocidad 3 s tras cada baja | +1.5% / +2.4% / +3.3% / +4.5% / +6% | +60% | variable |
+| Esquiva | % de esquivar golpes en movimiento | 0.88% / 1.4% / 1.93% / 2.62% / 3.5% | 35% | variable |
+| Zancada | Stamin-Up gratis y +% dano 2 s tras correr | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% | variable |
+| Estela | Rastro de fuego: % vida por segundo | 0.75% / 1.2% / 1.65% / 2.25% / 3% | 30% | variable |
 | **Ciclon** | FIRMA: esprintando danas a tu alrededor | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -454,16 +454,16 @@ flowchart LR
     estela["Estela"]
     ciclon{{"Ciclon (firma)"}}
     CERCA3(["3 o mas zombies a menos de 150 u"])
+    ESPRINT(["Esprintando"])
     FRENO(["Zombie frenado (velocidad de animacion reducida; no al jefe ni a uno ya frenado por el Paralizador)"])
     BAJA(["Baja tuya"])
     GOLPE(["Golpe de zombie recibido"])
-    ESPRINT(["Esprintando"])
-    BAJA -->|"+4-18% velocidad 3 s (tope 60%)"| sed
-    GOLPE -->|"te ignoran 5%-22% (tope 35%)"| escurridizo
-    CERCA3 -->|"+6-25% velocidad (tope 35%)"| resbaladizo
-    ESPRINT -->|"Stamin-Up gratis y +10-42% velocidad esprintando (tope 100%)"| zancada
+    BAJA -->|"+1.5-6% velocidad 3 s (tope 60%)"| sed
+    GOLPE -->|"te ignoran 0.88%-3.5% (tope 35%)"| escurridizo
+    CERCA3 -->|"+0.875-3.5% velocidad (tope 35%)"| resbaladizo
+    ESPRINT -->|"Stamin-Up gratis y +2.5-10% velocidad esprintando (tope 100%)"| zancada
     ESPRINT -->|"rastro de 2 s"| estela
-    estela -->|"zombie a menos de 60 u del rastro: 3-12% mas lento 2 s (tope 30%)"| FRENO
+    estela -->|"zombie a menos de 60 u del rastro: 0.75-3% mas lento 2 s (tope 30%)"| FRENO
     sed -->|"requiere"| ciclon
     estela -->|"requiere"| ciclon
     ESPRINT -->|"zombie a menos de 56 u: pierde 25% de su vida cada 0.5 s"| ciclon
@@ -474,10 +474,10 @@ flowchart LR
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
 | Silbato | Un leaper cachorro te sigue y muerde | 1 / 1 / 1 / 1 / 1 | 1 | Rara |
-| Correa larga | Tus leapers van +% mas rapido | +10% / +15% / +20% / +30% / +40% | +100% | variable |
-| Collar de puas | Mordiscos de tus leapers +% | +15% / +25% / +35% / +50% / +70% | +200% | variable |
-| Carne fresca | Vida por mordisco letal de tus leapers | +3 / +5 / +7 / +10 / +15 | +50 | variable |
-| Manada | +1 leaper (maximo 3) | +1 / +1 / +1 / +1 / +1 | +2 | Rara |
+| Correa larga | Tus leapers van +% mas rapido | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% | variable |
+| Collar de puas | Mordiscos de tus leapers +% | +5% / +8% / +11% / +15% / +20% | +200% | variable |
+| Carne fresca | Vida por mordisco letal de tus leapers | +1.25 / +2 / +2.75 / +3.75 / +5 | +50 | variable |
+| Manada | +% radio de caza; 2.o leaper a 5 copias, 3.o a 10 | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% | variable |
 | **Alfa** | FIRMA: al matar, tus leapers x2 e incendian | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -491,10 +491,10 @@ flowchart LR
     BAJA(["Baja tuya"])
     LEAPER(["Leaper: mordisco de 1000 (o un tercio de la vida del zombie de la ronda si es mas), no se le puede matar, maximo 3 en total"])
     silbato -->|"1 leaper (sin Silbato las demas no hacen nada; si lo pierdes se van todos)"| LEAPER
-    manada -->|"+1 leaper por carta (tope 2)"| LEAPER
-    correa -->|"+10-40% velocidad (tope 100%)"| LEAPER
-    collar -->|"mordisco +15-70% (tope 200%)"| LEAPER
-    LEAPER -->|"mordisco letal: +3-15 vida para ti (tope 50)"| carne
+    manada -->|"+1 leaper por carta (tope 100)"| LEAPER
+    correa -->|"+2.5-10% velocidad (tope 100%)"| LEAPER
+    collar -->|"mordisco +5-20% (tope 200%)"| LEAPER
+    LEAPER -->|"mordisco letal: +1.25-5 vida para ti (tope 50)"| carne
     collar -->|"requiere"| alfa
     manada -->|"requiere"| alfa
     BAJA -->|"3 s: mordiscos x2 y prenden fuego (como Fosforo)"| alfa
@@ -505,11 +505,11 @@ flowchart LR
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
 | Caja de herramientas | Construyes una torreta automatica | 1 / 1 / 1 / 1 / 1 | 1 | Rara |
-| Engranajes | Tus torretas disparan +% mas rapido | +10% / +15% / +22% / +30% / +42% | +100% | variable |
-| Recarga rapida | Tus torretas recargan en -% de tiempo | -10% / -15% / -22% / -30% / -40% | -70% | variable |
-| Calibre .50 | Balas de tus torretas +% dano | +15% / +25% / +35% / +50% / +70% | +200% | variable |
-| Rebote | % de que la bala salte a otro zombie cercano | 10% / 15% / 22% / 30% / 40% | 80% | variable |
-| Cadena de montaje | +1 torreta (maximo 3) | +1 / +1 / +1 / +1 / +1 | +2 | Rara |
+| Engranajes | Tus torretas disparan +% mas rapido | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% | variable |
+| Recarga rapida | Tus torretas recargan en -% de tiempo | -1.75% / -2.8% / -3.85% / -5.25% / -7% | -70% | variable |
+| Calibre .50 | Balas de tus torretas +% dano | +5% / +8% / +11% / +15% / +20% | +200% | variable |
+| Rebote | % de que la bala salte a otro zombie cercano | 2% / 3.2% / 4.4% / 6% / 8% | 80% | variable |
+| Cadena de montaje | +% aguante; 2.a torreta a 5 copias, 3.a a 10 | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% | variable |
 | **Mortero** | FIRMA: cada 8 s tus torretas lanzan mortero | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -524,11 +524,11 @@ flowchart LR
     TORRETA(["Torreta: 6% de la vida del zombie de la ronda por bala (minimo 300), cargador de 30, recarga de 4 s, maximo 3 por jugador; sus bajas dan puntos y cuentan x0.75 para subir de nivel, no hace dano a jugadores y los zombies no la atacan"])
     DESGASTE(["A las 100 bajas se rompe: repararla cuesta 2500 (mantener USAR junto a ella)"])
     herramientas -->|"1 torreta (kit en la tecla de accion 1, se coloca como en TranZit; sin esta carta las demas no hacen nada)"| TORRETA
-    montaje -->|"+1 torreta por carta (tope 2, maximo 3)"| TORRETA
-    engranajes -->|"+10-42% velocidad de disparo (tope 100%)"| TORRETA
-    recargatorreta -->|"-10-40% tiempo de recarga (tope 70%)"| TORRETA
-    calibre50 -->|"+15-70% dano por bala (tope 200%)"| TORRETA
-    TORRETA -->|"10-40% de que la bala salte al zombie mas cercano (4 m) con el 60% del dano (tope 80%)"| rebote
+    montaje -->|"+1 torreta por carta (tope 100, maximo 3)"| TORRETA
+    engranajes -->|"+2.5-10% velocidad de disparo (tope 100%)"| TORRETA
+    recargatorreta -->|"-1.75-7% tiempo de recarga (tope 70%)"| TORRETA
+    calibre50 -->|"+5-20% dano por bala (tope 200%)"| TORRETA
+    TORRETA -->|"2-8% de que la bala salte al zombie mas cercano (4 m) con el 60% del dano (tope 80%)"| rebote
     TORRETA -->|"cada baja de la torreta"| DESGASTE
     calibre50 -->|"requiere"| mortero
     montaje -->|"requiere"| mortero
@@ -539,11 +539,11 @@ flowchart LR
 
 | Carta | Efecto | Valores | Tope | Rareza |
 |---|---|---|---|---|
-| Buscador de botin | Probabilidad de power-up por baja | 0.4% / 0.8% / 1.2% / 2.0% / 3.2% | 5.0% | variable |
-| Pata de conejo | +rerolls ahora y +1 cada 3 niveles | +1 / +2 / +2 / +3 / +4 | +20 | variable |
-| Dados | % de que la carta que cojas valga el doble | 15% / 22% / 30% / 42% / 60% | 80% | variable |
-| Amuleto | % de ver 4 cartas en vez de 3 | 20% / 30% / 45% / 60% / 80% | 100% | variable |
-| Herradura | % de power-up a tus pies al empezar ronda | 20% / 30% / 45% / 60% / 80% | 100% | variable |
+| Buscador de botin | Probabilidad de power-up por baja | 0.1% / 0.16% / 0.22% / 0.3% / 0.4% | 4% | variable |
+| Pata de conejo | +rerolls ahora y +1 cada 3 niveles | +0.5 / +0.8 / +1.1 / +1.5 / +2 | +20 | variable |
+| Dados | % de que la carta que cojas valga el doble | 2% / 3.2% / 4.4% / 6% / 8% | 80% | variable |
+| Amuleto | % de ver 4 cartas en vez de 3 | 2.5% / 4% / 5.5% / 7.5% / 10% | 100% | variable |
+| Herradura | % de power-up a tus pies al empezar ronda | 2.5% / 4% / 5.5% / 7.5% / 10% | 100% | variable |
 | **Jackpot** | FIRMA: 1 legendaria por ronda y rerolls al 50% | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -555,14 +555,14 @@ flowchart LR
     herradura["Herradura"]
     jackpot{{"Jackpot (firma)"}}
     RONDA(["Empieza una ronda"])
-    BAJA(["Baja tuya"])
     REROLL(["Rerolls (3 por partida, Granada)"])
+    BAJA(["Baja tuya"])
     NIVEL(["Subida de nivel (menu de 3 cartas)"])
-    BAJA -->|"0.4%-3.2% de soltar power-up (tope 5.0%)"| botin
-    conejo -->|"+1-4 rerolls al cogerla (tope 20) y +1 cada 3 niveles"| REROLL
-    NIVEL -->|"15-60% de que la carta cogida valga el doble (tope 80%; no a firmas ni Silbato)"| dados
-    NIVEL -->|"20-80% de ver 4 cartas en vez de 3 (tope 100%)"| amuleto
-    RONDA -->|"20-80% de power-up a tus pies (tope 100%)"| herradura
+    BAJA -->|"0.1%-0.4% de soltar power-up (tope 4%)"| botin
+    conejo -->|"+0.5-2 rerolls al cogerla (tope 20) y +1 cada 3 niveles"| REROLL
+    NIVEL -->|"2-8% de que la carta cogida valga el doble (tope 80%; no a firmas ni Silbato)"| dados
+    NIVEL -->|"2.5-10% de ver 4 cartas en vez de 3 (tope 100%)"| amuleto
+    RONDA -->|"2.5-10% de power-up a tus pies (tope 100%)"| herradura
     dados -->|"requiere"| jackpot
     conejo -->|"requiere"| jackpot
     NIVEL -->|"1 vez por ronda la primera carta ofrecida es LEGENDARIA"| jackpot
@@ -573,42 +573,43 @@ flowchart LR
 
 | Carta | Tipo | Efecto | Valores | Tope |
 |---|---|---|---|---|
-| Piernas ligeras | normal | Velocidad de movimiento | +3% / +5% / +7% / +10% / +16% | +80% |
-| Muelles | normal | Saltas mas alto caer no te hiere | +50 / +70 / +105 / +145 / +210 | +700 |
-| Calibre | normal | Mas potencia con todas las armas | +5% / +7% / +10% / +14% / +22% | +300% |
-| Cargador magico | normal | Probabilidad de no gastar bala | 4% / 6% / 10% / 14% / 20% | 60% |
-| Manos rapidas | normal | Speed Cola gratis y recarga al matar | 0.05% / 0.30% / 1.00% / 2.50% / 4.50% | 4.50% |
-| Mochila | normal | Balas de reserva por minuto | +5 b/min / +8 b/min / +12 b/min / +18 b/min / +30 b/min | +60 b/min |
-| Corazon de hierro | normal | Vida maxima | +8 / +12 / +20 / +32 / +48 | +400 |
-| Regeneracion | normal | Vida por segundo | +1 / +1 / +2 / +3 / +5 | +25 |
-| Blindaje | normal | Golpes de zombie hacen menos | -3% / -5% / -7% / -10% / -14% | -60% |
-| Golpe critico | normal | Probabilidad de golpe x2.5 | 2% / 4% / 6% / 10% / 14% | 60% |
-| Iman | normal | Atrae power-ups en este radio | 250 / 360 / 520 / 720 / 1040 | 5000 |
-| Segundo aliento | normal | Probabilidad de evitar caer | 8% / 12% / 18% / 24% / 36% | 90% |
-| Suerte del Pack | normal | Arma de ronda mejorada | 4% / 6% / 10% / 14% / 20% | 100% |
-| Granadero | normal | Recuperar granada al matar | 2% / 4% / 6% / 10% / 14% | 60% |
-| Afortunado | normal | Arma especial de tu clase | +2% / +4% / +6% / +10% / +14% | +70% |
-| Trebol | normal | Las cartas salen de mas rareza | 2% / 4% / 6% / 10% / 14% | 60% |
-| Experiencia | normal | Cada baja cuenta +% para las cartas | +10% / +15% / +22% / +30% / +45% | +150% |
-| Combo | normal | +% potencia por baja seguida (max 10) | +1% / +2% / +2% / +3% / +5% | +20% |
-| Monos | equipo | equipo cymbal_monkey_zm | +1/ronda / +1/ronda / +1/ronda / +1/ronda / +1/ronda | +3/ronda |
-| Claymores | equipo | equipo claymore_zm | +1/ronda / +1/ronda / +1/ronda / +1/ronda / +1/ronda | +3/ronda |
-| Semtex | equipo | equipo sticky_grenade_zm | +1/ronda / +1/ronda / +1/ronda / +1/ronda / +1/ronda | +3/ronda |
-| Granadas EMP | equipo | equipo emp_grenade_zm | +1/ronda / +1/ronda / +1/ronda / +1/ronda / +1/ronda | +3/ronda |
+| Piernas ligeras | normal | Velocidad de movimiento | +2% / +3.2% / +4.4% / +6% / +8% | +80% |
+| Muelles | normal | Saltas mas alto caer no te hiere | +17.5 / +28 / +38.5 / +52.5 / +70 | +700 |
+| Calibre | normal | Mas potencia con todas las armas | +4% / +6.4% / +8.8% / +12% / +16% | +160% |
+| Cargador magico | normal | Probabilidad de no gastar bala | 1.5% / 2.4% / 3.3% / 4.5% / 6% | 60% |
+| Manos rapidas | normal | Speed Cola gratis y recarga al matar | 0.09% / 0.14% / 0.2% / 0.27% / 0.36% | 3.6% |
+| Mochila | normal | Balas de reserva por minuto | +1.5 b/min / +2.4 b/min / +3.3 b/min / +4.5 b/min / +6 b/min | +60 b/min |
+| Corazon de hierro | normal | Vida maxima | +8 / +12.8 / +17.6 / +24 / +32 | +320 |
+| Regeneracion | normal | Vida por segundo | +0.62 / +1 / +1.38 / +1.88 / +2.5 | +25 |
+| Blindaje | normal | Golpes de zombie hacen menos | -1.5% / -2.4% / -3.3% / -4.5% / -6% | -60% |
+| Golpe critico | normal | Probabilidad de golpe x2.5 | 1.5% / 2.4% / 3.3% / 4.5% / 6% | 60% |
+| Iman | normal | Atrae power-ups en este radio | 125 / 200 / 275 / 375 / 500 | 5000 |
+| Segundo aliento | normal | Probabilidad de evitar caer | 2.25% / 3.6% / 4.95% / 6.75% / 9% | 90% |
+| Suerte del Pack | normal | Arma de ronda mejorada | 2.5% / 4% / 5.5% / 7.5% / 10% | 100% |
+| Granadero | normal | Recuperar granada al matar | 1.5% / 2.4% / 3.3% / 4.5% / 6% | 60% |
+| Afortunado | normal | Arma especial de tu clase | +1.75% / +2.8% / +3.85% / +5.25% / +7% | +70% |
+| Trebol | normal | Las cartas salen de mas rareza | 1.5% / 2.4% / 3.3% / 4.5% / 6% | 60% |
+| Experiencia | normal | Cada baja cuenta +% para las cartas | +3.75% / +6% / +8.25% / +11.25% / +15% | +150% |
+| Combo | normal | +% potencia por baja seguida (max 10) | +0.5% / +0.8% / +1.1% / +1.5% / +2% | +20% |
+| Maldicion | normal | +% dificultad: mas zombies y mas premio | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% |
+| Monos | equipo | equipo cymbal_monkey_zm | +1/ronda / +1/ronda / +1/ronda / +1/ronda / +1/ronda | +1/ronda |
+| Claymores | equipo | equipo claymore_zm | +1/ronda / +1/ronda / +1/ronda / +1/ronda / +1/ronda | +1/ronda |
+| Semtex | equipo | equipo sticky_grenade_zm | +1/ronda / +1/ronda / +1/ronda / +1/ronda / +1/ronda | +1/ronda |
+| Granadas EMP | equipo | equipo emp_grenade_zm | +1/ronda / +1/ronda / +1/ronda / +1/ronda / +1/ronda | +1/ronda |
 | Pack-a-Punch | instantanea | Mejora el arma que llevas en la mano | 0 / 0 / 0 / 0 / 0 | 1 |
 | Municion maxima | powerup | power-up full_ammo | — | — |
 | Instakill | powerup | power-up insta_kill | — | — |
 | Doble puntos | powerup | power-up double_points | — | — |
 | Carpintero | powerup | power-up carpenter | — | — |
 | Nuke | powerup | power-up nuke | — | — |
-| Armadura | normal | Golpes que absorbes del todo cada ronda | +1 / +1 / +2 / +2 / +3 | +6 |
-| Sangre fria | normal | +% dano sin zombies a menos de 4 m | +6% / +10% / +14% / +20% / +30% | +100% |
-| Medico | normal | Al reanimar, vida para los dos y os ignoran 2 s | +20 / +30 / +45 / +65 / +100 | +250 |
-| Madrugador | normal | +% dano los primeros 30 s de cada ronda | +8% / +12% / +18% / +25% / +36% | +100% |
-| Cordones nuevos | relleno | Velocidad de movimiento | +1% / +1% / +2% / +2% / +3% | +10% |
-| Cantimplora | relleno | Vida maxima | +2 / +3 / +4 / +6 / +8 | +30 |
-| Calderilla | relleno | Puntos extra por baja | +5 / +8 / +10 / +15 / +20 | +100 |
-| Pulsera de la suerte | relleno | Las cartas salen de mas rareza | 1% / 1% / 2% / 2% / 3% | 10% |
+| Armadura | normal | Golpes que absorbes del todo cada ronda | +0.15 / +0.24 / +0.33 / +0.45 / +0.6 | +6 |
+| Sangre fria | normal | +% dano sin zombies a menos de 4 m | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% |
+| Medico | normal | Al reanimar, vida para los dos y os ignoran 2 s | +6.25 / +10 / +13.75 / +18.75 / +25 | +250 |
+| Madrugador | normal | +% dano los primeros 30 s de cada ronda | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% |
+| Cordones nuevos | relleno | Velocidad de movimiento | +0.25% / +0.4% / +0.55% / +0.75% / +1% | +10% |
+| Cantimplora | relleno | Vida maxima | +0.75 / +1.2 / +1.65 / +2.25 / +3 | +30 |
+| Calderilla | relleno | Puntos extra por baja | +2.5 / +4 / +5.5 / +7.5 / +10 | +100 |
+| Pulsera de la suerte | relleno | Las cartas salen de mas rareza | 0.25% / 0.4% / 0.55% / 0.75% / 1% | 10% |
 | Medalla | instantanea | Subes de nivel ahora mismo | +1 niveles / +1 niveles / +1 niveles / +2 niveles / +3 niveles | +99 niveles |
 
 Míticas (una por jugador, 5 % por oferta): **Bomberman** (Explosivos mejorados x1.5 recibes x2 (zombies y bombas)); **Fenix** (Renaces y explotas 1 vez por ronda); **Cuerpo de cristal** (Tu potencia x3 recibes x1.75); **Ira de Zeus** (30% de rayo que mata a 3 zombies); **Rey Midas** (+100 puntos por baja power-up cada 20); **Gatillo infinito** (Nunca gastas balas arma nueva cada 45s); **Hora bruja** (Cada 3 min, 10 s de zombies a camara lenta).
@@ -620,7 +621,7 @@ Columna «Galil r10/r20/r30»: balas de Galil al cuerpo para matar un zombie nor
 
 Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). Recuerda que los % de todas las cartas se suman antes de multiplicar.
 
-### Calibre (siempre): valores +5% / +7% / +10% / +14% / +22%, tope +300%
+### Calibre (siempre): valores +4% / +6.4% / +8.8% / +12% / +16%, tope +160%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -633,10 +634,9 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
 | +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
 | +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
-| +300% | ×4.00 | 600 | 420 | 640 | 3200 | 3 | 8 | 27 |
+| +160% | ×2.60 | 390 | 273 | 416 | 2080 | 4 | 13 | 41 |
 
-### Gatillo loco (siempre; x2 con Double Tap comprado): valores +2% / +4% / +6% / +10% / +14%, tope +150%
+### Gatillo loco (siempre; x2 con Double Tap comprado): valores +2.5% / +4% / +5.5% / +7.5% / +10%, tope +100%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -648,9 +648,8 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
 | +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
 | +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
 
-### Ojo de halcon (tiro a la cabeza): valores +8% / +12% / +20% / +32% / +48%, tope +400%
+### Ojo de halcon (tiro a la cabeza): valores +8% / +12.8% / +17.6% / +24% / +32%, tope +320%
 
 | % | mult | Galil (cabeza) | M14 (cabeza) | Five-seven (cabeza) | DSR 50 (cabeza) | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -665,27 +664,9 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +150% | ×2.50 | 1500 | 787 | 1400 | 20000 | 4 | 13 | 43 |
 | +200% | ×3.00 | 1800 | 945 | 1680 | 24000 | 4 | 11 | 36 |
 | +300% | ×4.00 | 2400 | 1260 | 2240 | 32000 | 3 | 8 | 27 |
-| +400% | ×5.00 | 3000 | 1575 | 2800 | 40000 | 2 | 7 | 22 |
+| +320% | ×4.20 | 2520 | 1323 | 2352 | 33600 | 3 | 8 | 26 |
 
-### Nudillos de hierro (cuchillo): valores +40% / +65% / +95% / +145% / +240%, tope +3000%
-
-| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
-|---|---|---|---|---|---|---|---|---|
-| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
-| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
-| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
-| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
-| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
-| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
-| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
-| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
-| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
-| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
-| +300% | ×4.00 | 600 | 420 | 640 | 3200 | 3 | 8 | 27 |
-| +400% | ×5.00 | 750 | 525 | 800 | 4000 | 2 | 7 | 22 |
-| +3000% | ×31.00 | 4650 | 3255 | 4960 | 24800 | 1 | 2 | 4 |
-
-### Polvora (explosiones): valores +8% / +12% / +20% / +32% / +48%, tope +400%
+### Nudillos de hierro (cuchillo): valores +40% / +64% / +88% / +120% / +160%, tope +1600%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -701,8 +682,26 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
 | +300% | ×4.00 | 600 | 420 | 640 | 3200 | 3 | 8 | 27 |
 | +400% | ×5.00 | 750 | 525 | 800 | 4000 | 2 | 7 | 22 |
+| +1600% | ×17.00 | 2550 | 1785 | 2720 | 13600 | 1 | 2 | 7 |
 
-### Adrenalina (menos de media vida): valores +6% / +10% / +14% / +20% / +32%, tope +200%
+### Polvora (explosiones): valores +8% / +12.8% / +17.6% / +24% / +32%, tope +320%
+
+| % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
+|---|---|---|---|---|---|---|---|---|
+| +5% | ×1.05 | 157 | 110 | 168 | 840 | 9 | 30 | 102 |
+| +10% | ×1.10 | 165 | 115 | 176 | 880 | 9 | 29 | 97 |
+| +20% | ×1.20 | 180 | 126 | 192 | 960 | 8 | 27 | 89 |
+| +30% | ×1.30 | 195 | 136 | 208 | 1040 | 8 | 25 | 82 |
+| +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
+| +60% | ×1.60 | 240 | 168 | 256 | 1280 | 6 | 20 | 67 |
+| +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
+| +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
+| +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
+| +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
+| +300% | ×4.00 | 600 | 420 | 640 | 3200 | 3 | 8 | 27 |
+| +320% | ×4.20 | 630 | 441 | 672 | 3360 | 3 | 8 | 26 |
+
+### Adrenalina (menos de media vida): valores +5% / +8% / +11% / +15% / +20%, tope +200%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -717,7 +716,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
 | +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
 
-### Punteria (apuntando): valores +4% / +6% / +10% / +14% / +20%, tope +100%
+### Punteria (apuntando): valores +2.5% / +4% / +5.5% / +7.5% / +10%, tope +100%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -730,7 +729,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
 | +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
 
-### Ultimas balas (cargador por debajo del 30%): valores +8% / +12% / +18% / +24% / +36%, tope +200%
+### Ultimas balas (cargador por debajo del 30%): valores +5% / +8% / +11% / +15% / +20%, tope +200%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -745,7 +744,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
 | +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
 
-### Cazatanques (contra tanques): valores +12% / +20% / +32% / +48% / +72%, tope +400%
+### Cazatanques (contra tanques): valores +10% / +16% / +22% / +30% / +40%, tope +400%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -762,7 +761,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +300% | ×4.00 | 600 | 420 | 640 | 3200 | 3 | 8 | 27 |
 | +400% | ×5.00 | 750 | 525 | 800 | 4000 | 2 | 7 | 22 |
 
-### Combo (por baja seguida (hasta x10: el % de la tabla es carta x bajas)): valores +1% / +2% / +2% / +3% / +5%, tope +20% por stack
+### Combo (por baja seguida (hasta x10: el % de la tabla es carta x bajas)): valores +0.5% / +0.8% / +1.1% / +1.5% / +2%, tope +20% por stack
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -777,7 +776,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
 | +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
 
-### Furia (por golpe recibido 5 s (hasta x3)): valores +5% / +8% / +11% / +15% / +22%, tope +60% por stack
+### Furia (por golpe recibido 5 s (hasta x3)): valores +1.5% / +2.4% / +3.3% / +4.5% / +6%, tope +60% por stack
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -792,7 +791,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
 | +180% | ×2.80 | 420 | 294 | 448 | 2240 | 4 | 12 | 38 |
 
-### Pulso firme (2 s sin disparar): valores +15% / +22% / +32% / +45% / +65%, tope +200%
+### Pulso firme (2 s sin disparar): valores +5% / +8% / +11% / +15% / +20%, tope +200%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -807,7 +806,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
 | +200% | ×3.00 | 450 | 315 | 480 | 2400 | 4 | 11 | 36 |
 
-### Tambor caliente (tras 1 s disparando seguido): valores +8% / +12% / +18% / +25% / +36%, tope +150%
+### Tambor caliente (tras 1 s disparando seguido): valores +3.75% / +6% / +8.25% / +11.25% / +15%, tope +150%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -821,7 +820,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
 | +150% | ×2.50 | 375 | 262 | 400 | 2000 | 4 | 13 | 43 |
 
-### Plomo (balas seguidas sin recargar (1% por bala hasta el tope)): valores 10% / 15% / 20% / 30% / 40%, tope 100%
+### Plomo (balas seguidas sin recargar (1% por bala hasta el tope)): valores 2.5% / 4% / 5.5% / 7.5% / 10%, tope 100%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -834,7 +833,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
 | +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
 
-### Sangre fria (sin zombies a 4 m): valores +6% / +10% / +14% / +20% / +30%, tope +100%
+### Sangre fria (sin zombies a 4 m): valores +2.5% / +4% / +5.5% / +7.5% / +10%, tope +100%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -847,7 +846,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
 | +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
 
-### Madrugador (primeros 30 s de ronda): valores +8% / +12% / +18% / +25% / +36%, tope +100%
+### Madrugador (primeros 30 s de ronda): valores +2.5% / +4% / +5.5% / +7.5% / +10%, tope +100%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -860,7 +859,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +80% | ×1.80 | 270 | 189 | 288 | 1440 | 6 | 18 | 60 |
 | +100% | ×2.00 | 300 | 210 | 320 | 1600 | 5 | 16 | 54 |
 
-### Interes compuesto (1% por cada 1000 puntos hasta el tope): valores 10% / 15% / 20% / 25% / 35%, tope 50%
+### Interes compuesto (1% por cada 1000 puntos hasta el tope): valores 1.25% / 2% / 2.75% / 3.75% / 5%, tope 50%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -871,7 +870,7 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 | +40% | ×1.40 | 210 | 147 | 224 | 1120 | 7 | 23 | 76 |
 | +50% | ×1.50 | 225 | 157 | 240 | 1200 | 7 | 21 | 71 |
 
-### Mecha corta (granadas): valores +20% / +30% / +45% / +65% / +90%, tope +300%
+### Mecha corta (granadas): valores +7.5% / +12% / +16.5% / +22.5% / +30%, tope +300%
 
 | % | mult | Galil | M14 | Five-seven | DSR 50 | Galil r10 | Galil r20 | Galil r30 |
 |---|---|---|---|---|---|---|---|---|
@@ -891,13 +890,13 @@ Cada fila es el % acumulado de **esa** carta (coges varias hasta llegar a él). 
 
 | Factor | Cuándo | Efecto |
 |---|---|---|
-| Golpe crítico | 2% / 4% / 6% / 10% / 14% de probabilidad por disparo (tope 60%) | ×2.5 |
+| Golpe crítico | 1.5% / 2.4% / 3.3% / 4.5% / 6% de probabilidad por disparo (tope 60%) | ×2.5 |
 | Cazador de élites (firma) | cabeza a tanque o jefe | ×3 |
 | Coloso (firma) | cuchillo estando quieto | ×3 |
 | Cuerpo de cristal (mítica) | siempre | ×3 (recibes ×1.75) |
 | Bomberman (mítica) | explosiones | ×1.5 (recibes ×2) |
-| Último aliento | 3 s / 4 s / 5 s / 6 s / 8 s s tras bajar del 25 %, 1 vez por ronda | +100 % (se suma con los demás %) |
-| Una bala basta | cabeza a más de 15 m con el zombie por debajo del 25% / 35% / 45% / 60% / 80% de vida | mata |
+| Último aliento | 0.3 s / 0.48 s / 0.66 s / 0.9 s / 1.2 s s tras bajar del 25 %, 1 vez por ronda | +100 % (se suma con los demás %) |
+| Una bala basta | cabeza a más de 15 m con el zombie por debajo del 1.5% / 2.4% / 3.3% / 4.5% / 6% de vida | mata |
 | Tiro de suerte de Escopetas | 15 % por perdigón, 35 % con francotirador | mata (jefe ×3) |
 
 ## Efectos que parten de un % de la vida del zombie
@@ -908,30 +907,30 @@ Daño base, antes de multiplicarlo por tus cartas de daño (ver la fórmula de a
 |---|---|---|---|---|---|---|---|
 | Fósforo / Pirotécnico / Alfa: fuego, por segundo | 4 % | 6 tics, uno por segundo (total 24 %); cada prendida vuelve a dar 6; jefe un cuarto | 55 | 187 | 637 | 2164 | 7346 |
 | Pararrayos: rayo | 15 % | a 1 zombie (3 con Tesla) | 208 | 704 | 2391 | 8116 | 27551 |
-| Sobrecarga: rayo | 25 % | al recargar, al más cercano; 100 % o más mata | 346 | 1174 | 3985 | 13527 | 45918 |
-| Sobrecarga: rayo | 35 % | al recargar, al más cercano; 100 % o más mata | 485 | 1644 | 5580 | 18938 | 64285 |
-| Sobrecarga: rayo | 50 % | al recargar, al más cercano; 100 % o más mata | 693 | 2349 | 7971 | 27055 | 91837 |
-| Sobrecarga: rayo | 70 % | al recargar, al más cercano; 100 % o más mata | 970 | 3289 | 11160 | 37877 | 128571 |
-| Sobrecarga: rayo | 100 % | al recargar, al más cercano; 100 % o más mata | 1387 | 4699 | 15943 | 54111 | 183674 |
+| Sobrecarga: rayo | 5 % | al recargar, al más cercano; 100 % o más mata | 69 | 234 | 797 | 2705 | 9183 |
+| Sobrecarga: rayo | 8 % | al recargar, al más cercano; 100 % o más mata | 110 | 375 | 1275 | 4328 | 14693 |
+| Sobrecarga: rayo | 11 % | al recargar, al más cercano; 100 % o más mata | 152 | 516 | 1753 | 5952 | 20204 |
+| Sobrecarga: rayo | 15 % | al recargar, al más cercano; 100 % o más mata | 208 | 704 | 2391 | 8116 | 27551 |
+| Sobrecarga: rayo | 20 % | al recargar, al más cercano; 100 % o más mata | 277 | 939 | 3188 | 10822 | 36734 |
 | Sobrecarga: rayo | 200 % | al recargar, al más cercano; 100 % o más mata | 2774 | 9398 | 31886 | 108222 | 367348 |
-| Condensador: 3 rayos | 50 % | tras 10 bajas sin recibir daño | 693 | 2349 | 7971 | 27055 | 91837 |
-| Condensador: 3 rayos | 70 % | tras 10 bajas sin recibir daño | 970 | 3289 | 11160 | 37877 | 128571 |
-| Condensador: 3 rayos | 100 % | tras 10 bajas sin recibir daño | 1387 | 4699 | 15943 | 54111 | 183674 |
-| Condensador: 3 rayos | 140 % | tras 10 bajas sin recibir daño | 1941 | 6578 | 22320 | 75755 | 257143 |
-| Condensador: 3 rayos | 200 % | tras 10 bajas sin recibir daño | 2774 | 9398 | 31886 | 108222 | 367348 |
+| Condensador: 3 rayos | 7.5 % | tras 10 bajas sin recibir daño | 104 | 352 | 1195 | 4058 | 13775 |
+| Condensador: 3 rayos | 12 % | tras 10 bajas sin recibir daño | 166 | 563 | 1913 | 6493 | 22040 |
+| Condensador: 3 rayos | 16.5 % | tras 10 bajas sin recibir daño | 228 | 775 | 2630 | 8928 | 30306 |
+| Condensador: 3 rayos | 22.5 % | tras 10 bajas sin recibir daño | 312 | 1057 | 3587 | 12174 | 41326 |
+| Condensador: 3 rayos | 30 % | tras 10 bajas sin recibir daño | 416 | 1409 | 4782 | 16233 | 55102 |
 | Condensador: 3 rayos | 300 % | tras 10 bajas sin recibir daño | 4161 | 14097 | 47829 | 162333 | 551022 |
-| Tormenta: descarga | 12 % | cada 4.1 s a todos a 160 u | 166 | 563 | 1913 | 6493 | 22040 |
-| Tormenta: descarga | 16 % | cada 4.0 s a todos a 160 u | 221 | 751 | 2550 | 8657 | 29387 |
-| Tormenta: descarga | 22 % | cada 3.8 s a todos a 160 u | 305 | 1033 | 3507 | 11904 | 40408 |
-| Tormenta: descarga | 30 % | cada 3.6 s a todos a 160 u | 416 | 1409 | 4782 | 16233 | 55102 |
-| Tormenta: descarga | 42 % | cada 3.2 s a todos a 160 u | 582 | 1973 | 6696 | 22726 | 77143 |
+| Tormenta: descarga | 2.25 % | cada 4.4 s a todos a 160 u | 31 | 105 | 358 | 1217 | 4132 |
+| Tormenta: descarga | 3.6 % | cada 4.4 s a todos a 160 u | 49 | 169 | 573 | 1947 | 6612 |
+| Tormenta: descarga | 4.95 % | cada 4.4 s a todos a 160 u | 68 | 232 | 789 | 2678 | 9091 |
+| Tormenta: descarga | 6.75 % | cada 4.3 s a todos a 160 u | 93 | 317 | 1076 | 3652 | 12397 |
+| Tormenta: descarga | 9 % | cada 4.2 s a todos a 160 u | 124 | 422 | 1434 | 4869 | 16530 |
 | Tormenta: descarga | 90 % | cada 1.8 s a todos a 160 u | 1248 | 4229 | 14348 | 48699 | 165306 |
 | Ciclón (firma): tocar esprintando | 25 % | cada 0.5 s por zombie | 346 | 1174 | 3985 | 13527 | 45918 |
-| Espinas: al golpearte | 12 % | 100 % o más mata; Coloso quieto = 100 % | 166 | 563 | 1913 | 6493 | 22040 |
+| Espinas: al golpearte | 12.5 % | 100 % o más mata; Coloso quieto = 100 % | 173 | 587 | 1992 | 6763 | 22959 |
 | Espinas: al golpearte | 20 % | 100 % o más mata; Coloso quieto = 100 % | 277 | 939 | 3188 | 10822 | 36734 |
-| Espinas: al golpearte | 32 % | 100 % o más mata; Coloso quieto = 100 % | 443 | 1503 | 5101 | 17315 | 58775 |
-| Espinas: al golpearte | 48 % | 100 % o más mata; Coloso quieto = 100 % | 665 | 2255 | 7652 | 25973 | 88163 |
-| Espinas: al golpearte | 72 % | 100 % o más mata; Coloso quieto = 100 % | 998 | 3383 | 11478 | 38959 | 132245 |
+| Espinas: al golpearte | 27.5 % | 100 % o más mata; Coloso quieto = 100 % | 381 | 1292 | 4384 | 14880 | 50510 |
+| Espinas: al golpearte | 37.5 % | 100 % o más mata; Coloso quieto = 100 % | 520 | 1762 | 5978 | 20291 | 68877 |
+| Espinas: al golpearte | 50 % | 100 % o más mata; Coloso quieto = 100 % | 693 | 2349 | 7971 | 27055 | 91837 |
 | Espinas: al golpearte | 500 % | 100 % o más mata; Coloso quieto = 100 % | 6935 | 23495 | 79715 | 270555 | 918370 |
 | Leaper: mordisco | fijo | 1000, o un tercio de la vida del zombie si es más; Collar +%; Alfa ×2 | 1000 | 1566 | 5314 | 18037 | 61224 |
 | Reacción en cadena: explosión | fijo | 0.6 × vida de ronda + 100 a 160 u | 932 | 2919 | 9665 | 32566 | 110304 |

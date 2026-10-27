@@ -1,5 +1,90 @@
 [
   {
+    "version": "1.10.10",
+    "fecha": "2026-10-27",
+    "titulo": "10 copias por carta, aguante, dificultad y barra de vida",
+    "cambios": [
+      {
+        "tipo": "rework",
+        "que": "Cartas: 10 copias",
+        "antes": "Cada carta se cogía sin límite hasta su tope: con tiempo, todo el mundo llegaba al tope fueran comunes o legendarias",
+        "ahora": "Cada carta se coge como mucho 10 veces y cada copia da 25 / 40 / 55 / 75 / 100 % de su tope ÷ 10 según su rareza: 10 comunes = 25 % del tope, build normal ~50 %, 10 legendarias = tope"
+      },
+      {
+        "tipo": "nerf",
+        "que": "Topes rebajados",
+        "texto": "Calibre 300 → 160 %, Gatillo loco 150 → 100 %, Corazón de hierro, Pólvora, Ojo de halcón y Cabezas de oro 400 → 320, Nudillos 3000 → 1600 %, Codicia 300 → 200, Manos rápidas 4.5 → 3.6 %, Buscador de botín 5 → 4 %. Una bala basta 100 → 60 %."
+      },
+      {
+        "tipo": "rework",
+        "que": "Manada y Cadena de montaje",
+        "antes": "+1 leaper / torreta por carta (máximo 2)",
+        "ahora": "10 copias con rareza: 2.º leaper / torreta con 5 copias y 3.º con 10; cada copia da además + radio de caza (Manada) o + aguante de la torreta (Cadena de montaje)"
+      },
+      {
+        "tipo": "cambio",
+        "que": "Cartas de equipo",
+        "texto": "Monos, Claymores, Semtex y EMP: una sola copia (+1 por ronda), no salen en la lista y no se pierden al caer ni con Leroy. Monos y EMP se quitan entre sí."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Build completa",
+        "texto": "Con los 15 huecos llenos y todas sus copias cogidas, cada subida de nivel es un Insta-Kill para todo el equipo."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Aguante de los zombies",
+        "texto": "Desde la ronda 30, los efectos de carta, las torretas, el tiro de suerte de Escopetas, la Sliquifier y el Paralizador hacen un 6 % menos por ronda (54 % en la 40, 16 % en la 60). Eventualmente los zombies escalan más que tu build; con mejor build, más tarde."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Dificultad: carta Maldición",
+        "texto": "Sube la dificultad del equipo (tope 100 %): zombies con más vida y golpe, más tanques, más zombies y el aguante antes. A cambio, más experiencia y puntos para todos y mítica al 8 % desde el 40 %."
+      },
+      {
+        "tipo": "buff",
+        "que": "Tope del golpe",
+        "texto": "Ningún golpe de zombie, tanque o jefe quita más del 90 % de tu vida máxima: con la vida llena nada te tumba de un golpe."
+      },
+      {
+        "tipo": "nerf",
+        "que": "Pistolas",
+        "antes": "Bonus de puntos del 5.1 % de la vida del zombie por baja",
+        "ahora": "2.5 %"
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Fénix",
+        "texto": "Se gastaba antes que Segundo aliento y Último aliento. Ahora va el último: solo salta si nada más te salva."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Bomberman",
+        "texto": "Una explosión que con el ×2 te tumbaba no daba opción a Segundo aliento ni a Último aliento."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Barra de vida",
+        "texto": "Encima de los iconos de las bebidas: se llena con la vida que te queda y crece con tu vida máxima. Clase, arquetipo y mítica pasan a la cabecera de la lista de cartas."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Lista de cartas",
+        "texto": "Con la build llena la cabecera se metía debajo de la segunda columna. Y con Leroy a veces se quedaba en pantalla una copia vieja de la lista."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Números muy grandes",
+        "texto": "El daño y los puntos del JSON ya no se vuelven negativos en partidas largas (límite de 32 bits), y la vida de jefes y tanques pasada la ronda 90 ya no sale corrupta."
+      },
+      {
+        "tipo": "web",
+        "que": "Web",
+        "texto": "Valores con decimales y copias (3/10) en las cartas, distintivo de dificultad en partidas y clasificación, partidas largas con daño y puntos por encima de 2.147 millones, y las de versiones antiguas con el daño negativo se arreglan solas."
+      }
+    ]
+  },
+  {
     "version": "1.10.9",
     "fecha": "2026-10-26",
     "titulo": "Tombstone nueva y bebidas arregladas",

@@ -27,6 +27,15 @@ const CFG = CAT.cfg;
 // Resbaladizo de velocidad (40) y Estela de frenado (75).
 const ANTES_1103 = { pistolas_huecos: 5, topes: { botin: 150 } };
 const ANTES_1108 = { topes: { escurridizo: 60, resbaladizo: 40, estela: 75 } };
+// Hasta la 1.10.9 las cartas no tenian 10 copias: los topes que no se
+// alcanzaban nunca eran mas altos, Una bala basta llegaba al 100 % y las de
+// equipo se cogian hasta 3 veces.
+const ANTES_11010 = {
+  topes: {
+    danio: 300, cadencia: 150, recarga: 450, vida: 400, explosivo: 400, cabeza: 400, melee: 3000, puntos: 300,
+    botin: 50, oro: 400, unabala: 100, monos: 3, claymores: 3, semtex: 3, emp: 3,
+  },
+};
 const numVersion = (v) => {
   const [a, b, c = 0] = String(v).split(".").map(Number);
   return a * 1e6 + b * 1e3 + c;
@@ -35,7 +44,20 @@ const antesDe1103 = (v) => numVersion(v) < 1010003;
 const topeViejo = (v, id) => Math.max(
   antesDe1103(v) ? ANTES_1103.topes[id] || 0 : 0,
   numVersion(v) < 1010008 ? ANTES_1108.topes[id] || 0 : 0,
+  numVersion(v) < 1010010 ? ANTES_11010.topes[id] || 0 : 0,
 );
+// Desde la 1.10.10 los valores por copia llevan decimales: cada carta lleva
+// tambien v100 (el valor exacto en centesimas) y valor va redondeado.
+function valorExacto(c, que, tope) {
+  if (c.v100 === undefined || c.v100 === null) {
+    const valor = entero(c.valor, que, 1);
+    if (valor > tope) fallo(`${que}: vale ${valor} y su tope es ${tope}`);
+    return valor;
+  }
+  const v100 = entero(c.v100, `${que} (centésimas)`, 1);
+  if (v100 > tope * 100 + 1) fallo(`${que}: vale ${v100 / 100} y su tope es ${tope}`);
+  return v100 / 100;
+}
 
 // Campos de analisis (1.10.3): valores permitidos.
 const CAUSAS = new Set(["zombie", "tanque", "brutus", "bruja", "leroy", "caida", "fuego", "propio", "explosion", "otro"]);
@@ -46,6 +68,10 @@ const TECNICO = new Set(["max_vivos", "atascos_recolocados", "atascos_muertos", 
 export const HITOS = ["30", "50", "100", "200"];
 
 const MAX_INT = 2147483647; // los numeros del mod son enteros de 32 bits
+// Desde la 1.10.10 el mod escribe el dano como texto unido (contadores de dos
+// piezas) y puede pasar de 32 bits: el tope es el entero exacto de JavaScript.
+const MAX_GRANDE = Number.MAX_SAFE_INTEGER;
+const VUELTA_32 = 2 ** 32;
 const MAX_JUGADORES = 8;
 const MAPA_PUEBLO = "zm_transit";
 
@@ -81,7 +107,7 @@ function deLista(v, que, conjunto, vacio = true) {
   return v;
 }
 
-function tabla(v, que, claveValida, maxClaves = 250) {
+function tabla(v, que, claveValida, maxClaves = 250, max = MAX_INT) {
   if (v === undefined || v === null) return {};
   if (typeof v !== "object" || Array.isArray(v)) fallo(`${que}: tiene que ser una tabla`);
   const claves = Object.keys(v);
@@ -89,7 +115,7 @@ function tabla(v, que, claveValida, maxClaves = 250) {
   const out = {};
   for (const k of claves) {
     if (!claveValida(k)) fallo(`${que}: clave desconocida: ${k.slice(0, 40)}`);
-    out[k] = entero(v[k], `${que}.${k.slice(0, 40)}`);
+    out[k] = entero(v[k], `${que}.${k.slice(0, 40)}`, 0, max);
   }
   return out;
 }
@@ -104,11 +130,36 @@ function lista(v, que, max) {
 const suma = (t) => Object.values(t).reduce((a, b) => a + b, 0);
 
 // Lista de filas de enteros con un numero fijo de columnas ([[ronda, ...], ...]).
-function filas(v, que, columnas, max) {
+function filas(v, que, columnas, max, maxValor = MAX_INT) {
   return lista(v, que, max).map((f, i) => {
     if (!Array.isArray(f) || f.length !== columnas) fallo(`${que}: la fila ${i + 1} no tiene ${columnas} números`);
-    return f.map((x) => entero(x, `${que} (fila ${i + 1})`, -MAX_INT));
+    return f.map((x) => entero(x, `${que} (fila ${i + 1})`, -MAX_INT, maxValor));
   });
+}
+
+// Hasta la 1.10.9 el dano y los puntos se sumaban en enteros de 32 bits y en
+// partidas largas se daban la vuelta a negativo (danio_total -1304071967 en
+// la ronda 60; los puntos, hacia la 80). Un negativo es una vuelta: se le suman 2^32. Si diera mas de una vuelta
+// no se puede saber y las sumas no cuadrarian (se rechaza como antes).
+function desenrollar(entrada) {
+  const arreglar = (x) => (typeof x === "number" && Number.isInteger(x) && x < 0 && x >= -VUELTA_32 ? x + VUELTA_32 : x);
+  const arreglarTabla = (t) => {
+    if (t && typeof t === "object" && !Array.isArray(t)) for (const k of Object.keys(t)) t[k] = arreglar(t[k]);
+  };
+  for (const j of Array.isArray(entrada.jugadores) ? entrada.jugadores : []) {
+    if (!j || typeof j !== "object") continue;
+    j.danio_total = arreglar(j.danio_total);
+    j.puntos_total = arreglar(j.puntos_total);
+    arreglarTabla(j.danio_cartas);
+    arreglarTabla(j.danio_armas);
+    arreglarTabla(j.puntos_fuente);
+    arreglarTabla(j.gastos);
+    if (Array.isArray(j.rondas)) for (const f of j.rondas) if (Array.isArray(f) && f.length === 6) {
+      f[2] = arreglar(f[2]);
+      f[3] = arreglar(f[3]);
+    }
+  }
+  for (const jefe of Array.isArray(entrada.jefes) ? entrada.jefes : []) if (jefe) arreglarTabla(jefe.danio);
 }
 
 // Pone en out[clave] el campo si viene en la entrada (los JSON antiguos no lo traen).
@@ -163,14 +214,14 @@ function jugador(j, i, p) {
     arquetipo: deLista(j.arquetipo, `${nombre}: arquetipo`, ARQUETIPOS),
     mitica: deLista(j.mitica, `${nombre}: mítica`, MITICAS),
     nivel: entero(j.nivel, `${nombre}: nivel`, 0, 999),
-    puntos_total: entero(j.puntos_total, `${nombre}: puntos totales`),
+    puntos_total: entero(j.puntos_total, `${nombre}: puntos totales`, 0, MAX_GRANDE),
     puntos_final: entero(j.puntos_final, `${nombre}: puntos finales`),
     bajas: entero(j.bajas, `${nombre}: bajas`),
     cabezas: entero(j.cabezas, `${nombre}: bajas a la cabeza`),
     caidas: entero(j.caidas, `${nombre}: caídas`, 0, 100000),
     reanimaciones: entero(j.reanimaciones, `${nombre}: reanimaciones`, 0, 100000),
     max_combo: entero(j.max_combo, `${nombre}: combo máximo`, 0, 1000),
-    danio_total: entero(j.danio_total, `${nombre}: daño total`),
+    danio_total: entero(j.danio_total, `${nombre}: daño total`, 0, MAX_GRANDE),
     rerolls_usados: entero(j.rerolls_usados, `${nombre}: rerolls`, 0, 10000),
     bloqueos_usados: entero(j.bloqueos_usados, `${nombre}: bloqueos`, 0, 10000),
     saltos: entero(j.saltos, `${nombre}: saltos`, 0, 100000),
@@ -178,8 +229,8 @@ function jugador(j, i, p) {
     recuperadas: entero(j.recuperadas, `${nombre}: cartas recuperadas`, 0, 10000),
   };
   const armaValida = p.mapa === MAPA_PUEBLO ? (k) => ARMAS.has(k) : (k) => /^[a-z0-9_]{1,48}$/.test(k);
-  out.danio_cartas = tabla(j.danio_cartas, `${nombre}: daño por carta`, (k) => FUENTES.has(k));
-  out.danio_armas = tabla(j.danio_armas, `${nombre}: daño por arma`, armaValida);
+  out.danio_cartas = tabla(j.danio_cartas, `${nombre}: daño por carta`, (k) => FUENTES.has(k), 250, MAX_GRANDE);
+  out.danio_armas = tabla(j.danio_armas, `${nombre}: daño por arma`, armaValida, 250, MAX_GRANDE);
   out.bajas_armas = tabla(j.bajas_armas, `${nombre}: bajas por arma`, armaValida);
   out.jefes_matados = tabla(j.jefes_matados, `${nombre}: jefes rematados`, (k) => JEFES.has(k));
   out.bebidas = lista(j.bebidas, `${nombre}: bebidas`, 20).map((b) => texto(b, `${nombre}: bebida`, 48, /^specialty_[a-z0-9_]+$/));
@@ -192,9 +243,8 @@ function jugador(j, i, p) {
     if (!def || def.tipo === "mitica") fallo(`${nombre}: carta desconocida: ${id}`);
     if (vistas.has(id)) fallo(`${nombre}: carta repetida: ${id}`);
     vistas.add(id);
-    const valor = entero(c.valor, `${nombre}: valor de ${id}`, 1);
     const tope = Math.max(def.tope, topeViejo(p.version, id));
-    if (valor > tope) fallo(`${nombre}: ${id} vale ${valor} y su tope es ${tope}`);
+    const valor = valorExacto(c, `${nombre}: ${id}`, tope);
     return {
       id,
       nombre: texto(c.nombre, `${nombre}: nombre de ${id}`, 48),
@@ -210,16 +260,19 @@ function jugador(j, i, p) {
     if (!CARTAS[id]) fallo(`${nombre}: carta desconocida en el historial: ${id}`);
     const rareza = texto(h.rareza, `${nombre}: rareza`, 16);
     if (!RAREZAS.has(rareza)) fallo(`${nombre}: rareza desconocida: ${rareza}`);
-    return { ronda: entero(h.ronda, `${nombre}: ronda del historial`, 0, p.ronda), id, rareza, valor: entero(h.valor, `${nombre}: valor del historial`) };
+    const valor = entero(h.valor, `${nombre}: valor del historial`);
+    const exacto = h.v100 === undefined || h.v100 === null ? valor : entero(h.v100, `${nombre}: valor del historial (centésimas)`) / 100;
+    // valor (entero) sigue sirviendo para las Medallas (niveles); exacto, para mostrarlo.
+    return { ronda: entero(h.ronda, `${nombre}: ronda del historial`, 0, p.ronda), id, rareza, valor, exacto };
   });
   // Analisis (1.10.3)
   for (const k of ["desangrados", "clase_letales", "racha_max", "caja_usos"]) opcional(out, j, k, (v) => entero(v, `${nombre}: ${k}`));
   opcional(out, j, "danio_recibido", (v) => tabla(v, `${nombre}: daño recibido`, (k) => CAUSAS.has(k)));
-  opcional(out, j, "puntos_fuente", (v) => tabla(v, `${nombre}: puntos por fuente`, (k) => PUNTOS.has(k)));
-  opcional(out, j, "gastos", (v) => tabla(v, `${nombre}: gastos`, (k) => GASTOS.has(k)));
+  opcional(out, j, "puntos_fuente", (v) => tabla(v, `${nombre}: puntos por fuente`, (k) => PUNTOS.has(k), 250, MAX_GRANDE));
+  opcional(out, j, "gastos", (v) => tabla(v, `${nombre}: gastos`, (k) => GASTOS.has(k), 250, MAX_GRANDE));
   opcional(out, j, "torretas", (v) => tabla(v, `${nombre}: torretas`, (k) => TORRETA.has(k)));
   for (const k of ["arma_tiempo", "disparos_armas", "impactos_armas", "cabezas_armas"]) opcional(out, j, k, (v) => tabla(v, `${nombre}: ${k}`, armaValida));
-  opcional(out, j, "rondas", (v) => filas(v, `${nombre}: rondas`, 6, 300));
+  opcional(out, j, "rondas", (v) => filas(v, `${nombre}: rondas`, 6, 300, MAX_GRANDE));
   opcional(out, j, "caidas_detalle", (v) => lista(v, `${nombre}: caídas`, 1000).map((c) => ({
     ronda: entero(c?.ronda, `${nombre}: ronda de la caída`, 0, p.ronda),
     causa: deLista(c?.causa, `${nombre}: causa de la caída`, CAUSAS),
@@ -265,7 +318,8 @@ function coherencia(p) {
     // Nivel: con la carta Experiencia al tope cada baja cuenta x2.5, y la
     // Medalla sube niveles al momento (va en el historial con los niveles).
     const medallas = j.historial.filter((h) => h.id === "medalla").reduce((a, h) => a + h.valor, 0);
-    const maxNivel = nivelMaximo(Math.floor(j.bajas * 2.5)) + medallas + 2;
+    // Con dificultad (1.10.10) cada baja cuenta ademas x(1 + D/100).
+    const maxNivel = nivelMaximo(Math.floor(j.bajas * 2.5 * (1 + (p.dificultad_max || 0) / 100))) + medallas + 2;
     if (j.nivel > maxNivel) fallo(`${n}: nivel ${j.nivel} imposible con ${j.bajas} bajas (máximo ${maxNivel})`);
     // Huecos de carta: las de tipo normal (equipo, power-ups e instantaneas no gastan hueco).
     const huecos = j.cartas.filter((c) => c.tipo === "normal").length;
@@ -276,7 +330,8 @@ function coherencia(p) {
   // Bajas del equipo frente a los zombies que han salido (con un jugador mas
   // por si alguno se fue a mitad, y un margen por jefes y escoltas).
   const n = Math.min(MAX_JUGADORES, p.jugadores.length + 1);
-  const maxBajas = Math.ceil(zombiesHasta(p.ronda, n) * 1.3) + 50;
+  // Con dificultad (1.10.10) salen x(1 + D/100) zombies por ronda.
+  const maxBajas = Math.ceil(zombiesHasta(p.ronda, n) * 1.3 * (1 + (p.dificultad_max || 0) / 100)) + 50;
   if (bajasEquipo > maxBajas) fallo(`${bajasEquipo} bajas imposibles hasta la ronda ${p.ronda} (salen como mucho ${maxBajas} zombies)`);
   // Y por abajo: para pasar de ronda hay que matar a los zombies de las
   // anteriores. En partidas reales sale del 60 % (rondas bajas) al 95-100 %
@@ -328,6 +383,7 @@ export function limpiar(entrada) {
       baston_forjados: entero(entrada.baston_forjados, "bastones forjados", 0, 1000),
     };
     if (!p.version) fallo("sin versión del mod");
+    if (numVersion(p.version) < 1010010) desenrollar(entrada);
     if (!p.id) fallo("sin id de partida");
     if (!p.mapa) fallo("sin mapa");
     // Analisis (1.10.3). terminada: 0 = punto de control de una partida sin acabar
@@ -342,6 +398,9 @@ export function limpiar(entrada) {
     opcional(p, entrada, "hitos", (v) => tabla(v, "tiempos de ronda", (k) => HITOS.includes(k), 10));
     opcional(p, entrada, "rondas", (v) => filas(v, "rondas", 3, 300));
     opcional(p, entrada, "tecnico", (v) => tabla(v, "datos técnicos", (k) => TECNICO.has(k), 20));
+    // Dificultad (1.10.10, carta Maldicion): la mas alta y la de cada ronda ([ronda, %]).
+    opcional(p, entrada, "dificultad_max", (v) => entero(v, "dificultad máxima", 0, 1000));
+    opcional(p, entrada, "dificultad_rondas", (v) => filas(v, "dificultad por ronda", 2, 300, 1000));
     opcional(p, entrada, "jefes", (v) => lista(v, "jefes", 200).map((j) => {
       if (!j || typeof j !== "object") fallo("jefe con formato no válido");
       return {
@@ -353,7 +412,7 @@ export function limpiar(entrada) {
         robadas: entero(j.robadas, "cartas robadas", 0, 1000),
         recuperadas: entero(j.recuperadas, "cartas recuperadas", 0, 1000),
         toques: entero(j.toques, "toques de la Bruja", 0, 1000),
-        danio: tabla(j.danio, "daño al jefe", (k) => k.length > 0 && k.length <= 32, 16),
+        danio: tabla(j.danio, "daño al jefe", (k) => k.length > 0 && k.length <= 32, 16, MAX_GRANDE),
       };
     }));
     opcional(p, entrada, "abandonos", (v) => lista(v, "abandonos", 64).map((a) => ({

@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.9** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.10** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,84 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.10: 10 copias por carta, aguante, dificultad y barra de vida
+
+### 10 copias por carta: el tier importa
+
+Antes cada carta se cogía una y otra vez hasta su tope, así que con tiempo todo el mundo llegaba al tope fueran comunes o legendarias. Ahora **cada carta se coge como mucho 10 veces** y cada copia da una parte de su tope según su rareza:
+
+| Rareza de la copia | Común | Poco común | Rara | Épica | Legendaria |
+|---|---|---|---|---|---|
+| Lo que da (del tope ÷ 10) | 25 % | 40 % | 55 % | 75 % | 100 % |
+
+- **10 comunes** dan el 25 % del tope, **una build normal** ~50 %, y **10 legendarias**, el tope entero. Por ejemplo, Calibre: +4 / 6.4 / 8.8 / 12 / 16 % por copia, tope +160 %.
+- **Hasta la ronda ~70 compensa coger lo que salga.** En partidas más largas compensa ser exigente con tus cartas principales: una común gasta una de las 10 copias para siempre. Granada, Táctica y Trébol valen más que nunca.
+- **Topes que no se alcanzaban nunca, rebajados** a lo que dan 10 legendarias:
+
+| Carta | Antes | Ahora |
+|---|---|---|
+| Calibre | 300 % | 160 % |
+| Gatillo loco | 150 % | 100 % |
+| Corazón de hierro, Pólvora, Ojo de halcón, Cabezas de oro | 400 | 320 |
+| Nudillos de hierro | 3000 % | 1600 % |
+| Codicia | 300 | 200 |
+| Manos rápidas | 4.5 % | 3.6 % |
+| Buscador de botín | 5 % | 4 % |
+| Una bala basta | 100 % | 60 % (hay que quitar antes el 40 % con el arma) |
+
+- **Manada y Cadena de montaje:** con 5 copias llega el 2.º leaper / torreta y con 10 el 3.º. Además, cada copia da algo según su rareza:
+  - Manada: + radio de caza de los leapers.
+  - Cadena de montaje: + bajas que aguanta la torreta antes de romperse.
+- **Cartas de equipo** (Monos, Claymores, Semtex, EMP):
+  - 1 sola copia, siempre +1 por ronda;
+  - Monos y EMP se quitan entre sí;
+  - no salen en la lista ni se pierden al caer o con Leroy.
+- **Build completa** (15 huecos y todas sus copias): cada subida de nivel es un **Insta-Kill** para todo el equipo.
+- **Armadura** cuenta la parte entera de lo que suman sus copias.
+
+### Aguante de los zombies
+
+Algunas cosas mataban de un golpe **en cualquier ronda**, porque quitan un % de la vida del zombie: rayos, fuego, Espinas, mordiscos, Sobrecarga, Zeus… Ahora, **desde la ronda 30**, los efectos de carta, las torretas, el tiro de suerte de Escopetas y las armas especiales hacen un **6 % menos por ronda**:
+
+| Ronda | 30 | 40 | 50 | 60 | 70 | 100 |
+|---|---|---|---|---|---|---|
+| Daño de los efectos | 100 % | 54 % | 29 % | 16 % | 8 % | 1 % |
+
+Matar de un golpe sigue estando bien si llevas buena run, pero **eventualmente los zombies escalan más que tu build**: con mejor build, más tarde. No cambian el Insta-Kill, Una bala basta, el Ejecutor de Rifles ni los disparos normales.
+
+### Dificultad: carta Maldición
+
+Carta general nueva. Sube la **dificultad del equipo** (+2.5 / 4 / 5.5 / 7.5 / 10 % por copia; la del equipo es la suma de la de todos, con tope 100 %).
+
+- **Empeora:**
+  - vida y golpe de los zombies ×(1 + D/200), ×1.5 al 100 %;
+  - más tanques y super sprinters;
+  - más zombies por ronda y aparecen antes;
+  - el aguante empieza D/10 rondas antes.
+- **A cambio, para todo el equipo:**
+  - cada baja cuenta ×(1 + D/100) para subir de nivel;
+  - +D/2 % de puntos por baja;
+  - desde el 40 %, la mítica sale al 8 %.
+
+Compensa en rondas medias. Para un récord de ronda o un Speedrun, mejor no. La web marca las partidas con su dificultad.
+
+### Otros cambios
+
+| | Antes | Ahora |
+|---|---|---|
+| **Golpes que tumban de uno** | Un tanque (120) te tumbaba de un golpe sin Juggernog | Ningún golpe de zombie, tanque o jefe quita más del **90 %** de tu vida máxima |
+| **Fénix** | Se gastaba antes que Segundo aliento y Último aliento | Va el último: solo se gasta si nada más te salva |
+| **Bomberman** | Una explosión que con el ×2 te tumbaba no daba opción a Segundo aliento ni a Último aliento | Ya la da |
+| **Pistolas** | Bonus de puntos del 5.1 % de la vida del zombie por baja | **2.5 %** |
+| **HUD** | "Clase: …" arriba a la izquierda | Clase, arquetipo y mítica en la cabecera de la lista; **barra de vida** encima de las bebidas (crece con tu vida máxima y cambia de color) |
+| **Lista con la build llena** | La cabecera se metía debajo de la segunda columna | Cada cosa en su fila |
+| **Leroy** | A veces se quedaba en pantalla una copia vieja de la lista de cartas | Arreglo de la limpieza de textos; si vuelve a pasar, `set jodas_debug_textos 1` da pistas |
+
+### Arreglos de números muy grandes (32 bits)
+
+- **Daño y puntos** del JSON ya no se vuelven negativos en partidas largas: pasaban de 2.147 millones hacia la ronda 60 (daño) y 80 (puntos). La web arregla los de partidas antiguas que dieron una vuelta.
+- **Vida de jefes y tanques** en rondas de más de 90: ya no sale corrupta.
 
 ## Novedades de la 1.10.9: Tombstone nueva y bebidas arregladas
 
@@ -294,56 +372,56 @@ Cada arquetipo tiene **6 cartas** (el Mecánico, 7): las normales y una **firma*
 
 | Arquetipo | Carta | Efecto | Valores | Tope |
 |---|---|---|---|---|
-| Pirómano | Fósforo | % de que cada bala incendie al zombie: pierde un 4 % de su vida máxima por segundo durante 6 s (cada impacto reinicia el tiempo). Al apagarse queda "quemado" | 6 / 9 / 13 / 18 / 26 % | 80 % |
-| Pirómano | Napalm | Cada segundo, un zombie ardiendo tiene este % de contagiar a cada zombie pegado a él. Un zombie que ya se apagó no se contagia (solo un impacto directo lo vuelve a prender) | 15 / 22 / 30 / 42 / 60 % | 100 % |
-| Pirómano | Rescoldos | +vida al matar a un zombie que está ardiendo | 4 / 6 / 9 / 13 / 18 | 60 |
-| Pirómano | Mecha corta | Las granadas estallan en cuanto dejan de moverse y hacen +% de daño | 20 / 30 / 45 / 65 / 90 % | 300 % |
+| Pirómano | Fósforo | % de que cada bala incendie al zombie: pierde un 4 % de su vida máxima por segundo durante 6 s (cada impacto reinicia el tiempo). Al apagarse queda "quemado" | 2 / 3.2 / 4.4 / 6 / 8 % | 80 % |
+| Pirómano | Napalm | Cada segundo, un zombie ardiendo tiene este % de contagiar a cada zombie pegado a él. Un zombie que ya se apagó no se contagia (solo un impacto directo lo vuelve a prender) | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Pirómano | Rescoldos | +vida al matar a un zombie que está ardiendo | 1.5 / 2.4 / 3.3 / 4.5 / 6 | 60 |
+| Pirómano | Mecha corta | Las granadas estallan en cuanto dejan de moverse y hacen +% de daño | 7.5 / 12 / 16.5 / 22.5 / 30 % | 300 % |
 | Pirómano | **Pirotécnico** (firma) | Requiere Fósforo + Pólvora. Todas tus explosiones incendian a los zombies que alcanzan | — | — |
-| Electricista | Pararrayos | % de que cada baja lance un rayo (15 % de la vida) a otro zombie cercano | 8 / 12 / 17 / 24 / 34 % | 80 % |
-| Electricista | Sobrecarga | Al recargar, un rayo al zombie más cercano con este % de su vida (más de 100 % mata) | 25 / 35 / 50 / 70 / 100 % | 200 % |
-| Electricista | Condensador | 10 bajas seguidas sin recibir daño lo cargan: el siguiente tiro lanza 3 rayos de este % de vida | 50 / 70 / 100 / 140 / 200 % | 300 % |
-| Electricista | Tormenta | Descarga a tu alrededor: este % de vida a cada zombie cercano y 1 s a cámara lenta. Cada 4.5 s, menos 0.03 s por punto de la carta (mínimo 1.5 s: con 42 % cada 3.2 s, con 90 % cada 1.8 s) | 12 / 16 / 22 / 30 / 42 % | 90 % |
+| Electricista | Pararrayos | % de que cada baja lance un rayo (15 % de la vida) a otro zombie cercano | 2 / 3.2 / 4.4 / 6 / 8 % | 80 % |
+| Electricista | Sobrecarga | Al recargar, un rayo al zombie más cercano con este % de su vida (más de 100 % mata) | 5 / 8 / 11 / 15 / 20 % | 200 % |
+| Electricista | Condensador | 10 bajas seguidas sin recibir daño lo cargan: el siguiente tiro lanza 3 rayos de este % de vida | 7.5 / 12 / 16.5 / 22.5 / 30 % | 300 % |
+| Electricista | Tormenta | Descarga a tu alrededor: este % de vida a cada zombie cercano y 1 s a cámara lenta. Cada 4.5 s, menos 0.03 s por punto de la carta (mínimo 1.5 s: con 42 % cada 3.2 s, con 90 % cada 1.8 s) | 2.25 / 3.6 / 4.95 / 6.75 / 9 % | 90 % |
 | Electricista | **Tesla** (firma) | Requiere Pararrayos + Condensador. Todos tus rayos (también los de Zeus) alcanzan a 2 zombies más | — | — |
-| Berserker | Furia | Cada golpe recibido da +% de daño durante 5 s, acumulable 3 veces | 5 / 8 / 11 / 15 / 22 % | 60 % |
-| Berserker | Sangre caliente | +vida por segundo mientras tienes menos de media vida | 2 / 3 / 4 / 6 / 9 | 40 |
-| Berserker | Último aliento | Una vez por ronda, al bajar del 25 % de vida (o al recibir un golpe mortal) eres invulnerable estos segundos y haces el doble de daño | 3 / 4 / 5 / 6 / 8 s | 12 s |
+| Berserker | Furia | Cada golpe recibido da +% de daño durante 5 s, acumulable 3 veces | 1.5 / 2.4 / 3.3 / 4.5 / 6 % | 60 % |
+| Berserker | Sangre caliente | +vida por segundo mientras tienes menos de media vida | 1 / 1.6 / 2.2 / 3 / 4 | 40 |
+| Berserker | Último aliento | Una vez por ronda, al bajar del 25 % de vida (o al recibir un golpe mortal) eres invulnerable estos segundos y haces el doble de daño | 0.3 / 0.48 / 0.66 / 0.9 / 1.2 | 12 |
 | Berserker | **Imparable** (firma) | Requiere Adrenalina + Furia. Con menos del 25 % de vida: +20 % de velocidad y los golpes de zombie hacen la mitad | — | — |
-| Francotirador | Pulso firme | +% de daño si llevas 2 s sin disparar | 15 / 22 / 32 / 45 / 65 % | 200 % |
-| Francotirador | Una bala basta | Un tiro a la cabeza desde lejos (15 m) mata si al zombie le queda menos de este % de vida (no al jefe) | 25 / 35 / 45 / 60 / 80 % | 100 % |
+| Francotirador | Pulso firme | +% de daño si llevas 2 s sin disparar | 5 / 8 / 11 / 15 / 20 % | 200 % |
+| Francotirador | Una bala basta | Un tiro a la cabeza desde lejos (15 m) mata si al zombie le queda menos de este % de vida (no al jefe) | 1.5 / 2.4 / 3.3 / 4.5 / 6 % | 60 % |
 | Francotirador | **Cazador de élites** (firma) | Requiere Ojo de halcón + Pulso firme. Cabeza a un tanque o al jefe: daño ×3 (el jefe sigue con su tope del 15 %) | — | — |
-| Tanque | Piel de piedra | −% de daño recibido estando quieto | 10 / 15 / 20 / 28 / 40 % | 60 % |
-| Tanque | Coraza | Cada golpe de zombie hace esta cantidad menos (mínimo 1) | 5 / 8 / 12 / 18 / 25 | 60 |
-| Tanque | Masa | +vida máxima por cada carta de Tanque que tengas (Masa incluida) | 5 / 8 / 12 / 16 / 24 | 60 |
+| Tanque | Piel de piedra | −% de daño recibido estando quieto | 1.5 / 2.4 / 3.3 / 4.5 / 6 % | 60 % |
+| Tanque | Coraza | Cada golpe de zombie hace esta cantidad menos (mínimo 1) | 1.5 / 2.4 / 3.3 / 4.5 / 6 | 60 |
+| Tanque | Masa | +vida máxima por cada carta de Tanque que tengas (Masa incluida) | 1.5 / 2.4 / 3.3 / 4.5 / 6 | 60 |
 | Tanque | **Coloso** (firma) | Requiere Espinas + Piel de piedra. Quieto, el zombie que te golpea pierde toda su vida y tu cuchillo hace ×3 | — | — |
-| Banquero | Interés compuesto | +1 % de daño por cada 1000 puntos que tengas sin gastar, hasta este tope | 10 / 15 / 20 / 25 / 35 % | 50 % |
-| Banquero | Mercenario | Cada 50 bajas tuyas, +puntos para todo el equipo | 200 / 300 / 400 / 600 / 800 | 2000 |
-| Banquero | Caja económica | La caja te cuesta −% | 10 / 15 / 20 / 30 / 40 % | 60 % |
+| Banquero | Interés compuesto | +1 % de daño por cada 1000 puntos que tengas sin gastar, hasta este tope | 1.25 / 2 / 2.75 / 3.75 / 5 % | 50 % |
+| Banquero | Mercenario | Cada 50 bajas tuyas, +puntos para todo el equipo | 50 / 80 / 110 / 150 / 200 | 2000 |
+| Banquero | Caja económica | La caja te cuesta −% | 1.5 / 2.4 / 3.3 / 4.5 / 6 % | 60 % |
 | Banquero | **Plutócrata** (firma) | Requiere Codicia + Interés compuesto. +6 % de daño por cada perk que llevas y +50 puntos por baja | — | — |
-| Gatillo | Tambor caliente | +% de daño tras 1 s disparando seguido (se pierde al parar) | 8 / 12 / 18 / 25 / 36 % | 150 % |
-| Gatillo | Plomo | +1 % de daño por cada bala seguida sin recargar ni cambiar de arma, hasta este tope | 10 / 15 / 20 / 30 / 40 % | 100 % |
-| Gatillo | Cinta de balas | +balas al cargador por cada baja | 2 / 3 / 4 / 6 / 8 | 20 |
+| Gatillo | Tambor caliente | +% de daño tras 1 s disparando seguido (se pierde al parar) | 3.75 / 6 / 8.25 / 11.25 / 15 % | 150 % |
+| Gatillo | Plomo | +1 % de daño por cada bala seguida sin recargar ni cambiar de arma, hasta este tope | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Gatillo | Cinta de balas | +balas al cargador por cada baja | 0.5 / 0.8 / 1.1 / 1.5 / 2 | 20 |
 | Gatillo | **Fuego continuo** (firma) | Requiere Tambor caliente + Plomo. Con combo 10 (bajas seguidas) el cargador se rellena solo | — | — |
-| Velocista | Esquiva | Moviéndote, % de esquivar del todo un golpe de zombie o de jefe | 6 / 9 / 13 / 18 / 25 % | 35 % |
-| Velocista | Zancada | Stamin-Up gratis (se puede comprar igual) e Inercia: durante 2 s después de esprintar, +% de daño con el arma | 10 / 15 / 22 / 30 / 42 % | 100 % |
-| Velocista | Estela | Esprintando dejas un rastro de peste de 3 s: los zombies que lo pisan pierden este % de su vida por segundo y van un 30 % más lentos | 3 / 4 / 6 / 8 / 12 % | 30 % |
+| Velocista | Esquiva | Moviéndote, % de esquivar del todo un golpe de zombie o de jefe | 0.88 / 1.4 / 1.93 / 2.62 / 3.5 % | 35 % |
+| Velocista | Zancada | Stamin-Up gratis (se puede comprar igual) e Inercia: durante 2 s después de esprintar, +% de daño con el arma | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Velocista | Estela | Esprintando dejas un rastro de peste de 3 s: los zombies que lo pisan pierden este % de su vida por segundo y van un 30 % más lentos | 0.75 / 1.2 / 1.65 / 2.25 / 3 % | 30 % |
 | Velocista | **Ciclón** (firma) | Requiere Sed de sangre + Estela. Esprintando, cada medio segundo los zombies a menos de 2,5 m pierden un 20 % de su vida, y la Estela hace el doble de daño | — | — |
 | Domador | Silbato | Un leaper te sigue y muerde a los zombies que se acercan (1000 de daño o un tercio de su vida). Carta base: sin ella las demás no hacen nada. Siempre RARA, una sola vez | — | 1 |
-| Domador | Correa larga | Tus leapers se mueven +% más rápido | 10 / 15 / 20 / 30 / 40 % | 100 % |
-| Domador | Collar de púas | Los mordiscos de tus leapers hacen +% | 15 / 25 / 35 / 50 / 70 % | 200 % |
-| Domador | Carne fresca | +vida cada vez que un leaper tuyo mata | 3 / 5 / 7 / 10 / 15 | 50 |
-| Domador | Manada | +1 leaper, hasta 3 en total | — | 2 |
+| Domador | Correa larga | Tus leapers se mueven +% más rápido | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Domador | Collar de púas | Los mordiscos de tus leapers hacen +% | 5 / 8 / 11 / 15 / 20 % | 200 % |
+| Domador | Carne fresca | +vida cada vez que un leaper tuyo mata | 1.25 / 2 / 2.75 / 3.75 / 5 | 50 |
+| Domador | Manada | **Cada copia**: +% radio de caza de tus leapers (a qué distancia ven a un zombie y cuánto se alejan de ti; de serie 260 y 520). **2.º leaper con 5 copias y 3.º con 10** | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
 | Domador | **Alfa** (firma) | Requiere Collar de púas + Manada. Durante 3 s tras cada baja tuya, tus leapers hacen ×2 y sus mordiscos incendian | — | — |
-| Suertudo | Pata de conejo | +rerolls al cogerla y +1 reroll cada 3 niveles | 1 / 2 / 2 / 3 / 4 | 20 |
-| Suertudo | Dados | % de que la carta que cojas valga el doble | 15 / 22 / 30 / 42 / 60 % | 80 % |
-| Suertudo | Amuleto | % de que cada subida de nivel te ofrezca 4 cartas en vez de 3 | 20 / 30 / 45 / 60 / 80 % | 100 % |
-| Suertudo | Herradura | % de que al empezar cada ronda aparezca un power-up a tus pies | 20 / 30 / 45 / 60 / 80 % | 100 % |
+| Suertudo | Pata de conejo | +rerolls al cogerla y +1 reroll cada 3 niveles | 0.5 / 0.8 / 1.1 / 1.5 / 2 | 20 |
+| Suertudo | Dados | % de que la carta que cojas valga el doble | 2 / 3.2 / 4.4 / 6 / 8 % | 80 % |
+| Suertudo | Amuleto | % de que cada subida de nivel te ofrezca 4 cartas en vez de 3 | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Suertudo | Herradura | % de que al empezar cada ronda aparezca un power-up a tus pies | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
 | Suertudo | **Jackpot** (firma) | Requiere Dados + Pata de conejo. Una vez por ronda, la primera carta que te ofrecen es LEGENDARIA, y la mitad de los rerolls no se gastan | — | — |
 | Mecánico | Caja de herramientas | Puedes construir 1 torreta (kit en la tecla de acción 1). Carta base: sin ella las demás no hacen nada. Siempre RARA, una sola vez | — | 1 |
-| Mecánico | Engranajes | Tus torretas disparan +% más rápido | 10 / 15 / 22 / 30 / 42 % | 100 % |
-| Mecánico | Recarga rápida | Tus torretas recargan en −% de tiempo | 10 / 15 / 22 / 30 / 40 % | 70 % |
-| Mecánico | Calibre .50 | +% de daño por bala de tus torretas | 15 / 25 / 35 / 50 / 70 % | 200 % |
-| Mecánico | Rebote | % de que la bala salte al zombie más cercano (4 m) con el 60 % del daño | 10 / 15 / 22 / 30 / 40 % | 80 % |
-| Mecánico | Cadena de montaje | +1 torreta, hasta 3 en total | — | 2 |
+| Mecánico | Engranajes | Tus torretas disparan +% más rápido | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Mecánico | Recarga rápida | Tus torretas recargan en −% de tiempo | 1.75 / 2.8 / 3.85 / 5.25 / 7 % | 70 % |
+| Mecánico | Calibre .50 | +% de daño por bala de tus torretas | 5 / 8 / 11 / 15 / 20 % | 200 % |
+| Mecánico | Rebote | % de que la bala salte al zombie más cercano (4 m) con el 60 % del daño | 2 / 3.2 / 4.4 / 6 / 8 % | 80 % |
+| Mecánico | Cadena de montaje | **Cada copia**: +% bajas que aguantan tus torretas antes de romperse (de serie 100). **2.ª torreta con 5 copias y 3.ª con 10** | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
 | Mecánico | **Mortero** (firma) | Requiere Calibre .50 + Cadena de montaje. Cada 8 s cada torreta lanza un mortero al zombie con más zombies alrededor (250 % del daño de una bala en 1.6 m) | — | — |
 
 </details>
@@ -485,7 +563,7 @@ Al empezar eliges clase (los zombies no salen hasta que todos eligen). Al **empe
 | **Rifles** | M14, FAL, SMR (×4 de daño por bala), M16, Type 25, M8A1, Chicom CQB | Paralizador | **Ejecutor**: la bala que deja a un zombie por debajo del 20 % de su vida lo remata (al jefe no) | Ninguna |
 | **Pistolas** | M1911 (siempre Mustang & Sally), Five-seven (y dual), B23R (y cargador ampliado), KAP-45, Python, Executioner, Remington New Model Army, Mauser C96 (siempre Boomhilda) | Ray Gun (la Mark II, 1 % por ronda) | +40 % de daño, ×1.3 de velocidad, −50 % de daño explosivo recibido, 15 huecos de carta y **empiezan con un Trébol ÉPICO** | Ninguna |
 
-- **Bonus de puntos por baja**: el juego da 10 puntos por cada impacto, y Automáticas necesita muchos más impactos por zombie que el resto. Para igualarlo, Escopetas cobra un extra del **7.5 %** de la vida del zombie por cada baja, Pistolas el **5.1 %** y Rifles el **0.13 %** (sus balas ya necesitan casi tantos impactos como Automáticas). El extra se divide entre tus cartas de Calibre y Gatillo loco, porque con ellas Automáticas también necesita menos impactos. Al jefe no. Así las cuatro clases sacan casi los mismos puntos por zombie en cualquier ronda.
+- **Bonus de puntos por baja**: el juego da 10 puntos por cada impacto, y Automáticas necesita muchos más impactos por zombie que el resto. Para igualarlo, Escopetas cobra un extra del **7.5 %** de la vida del zombie por cada baja, Pistolas el **2.5 %** (5.1 % hasta la 1.10.9) y Rifles el **0.13 %** (sus balas ya necesitan casi tantos impactos como Automáticas). El extra se divide entre tus cartas de Calibre y Gatillo loco, porque con ellas Automáticas también necesita menos impactos. Al jefe no. Así las cuatro clases sacan casi los mismos puntos por zombie en cualquier ronda.
 - Las paredes funcionan normal. **La caja da cartas, no armas**. **El Pack-a-Punch no se puede usar pagando**: las armas solo se mejoran con cartas.
 - El Bastón de fuego nunca se cambia por el arma de ronda.
 
@@ -499,77 +577,79 @@ Subes de nivel matando: el primer nivel a las **9 bajas** (los zombies de la ron
 |---|---|---|---|---|
 | 50 % | 28 % | 14 % | 6 % | 2 % |
 
-- Cada carta del menú tira su rareza por separado. Las cartas se **acumulan** hasta su tope.
+- Cada carta del menú tira su rareza por separado. **Cada carta se coge como mucho 10 veces (10 copias)** y cada copia da más o menos según su rareza: el tope es lo que dan 10 legendarias. 10 comunes dan una cuarta parte del tope y una build normal, la mitad. En el menú y en la lista se ve cuántas llevas ("3/10").
+- **Build completa** (los 15 huecos llenos y todas sus cartas con las 10 copias): cada subida de nivel da un **Insta-Kill** para todo el equipo, sin menú.
 - Cada vez que coges una carta, su probabilidad de volver a salir sube un 8 %. **Trébol** sube la rareza de las que te salen.
-- **15 huecos** (para todas las clases): cartas distintas que puedes tener (Calibre ×3 ocupa uno). Las de equipo, los power-ups, Pack-a-Punch y Medalla no ocupan hueco. Con los huecos llenos solo salen las que ya tienes y las que no ocupan hueco.
+- **15 huecos** (para todas las clases): cartas distintas que puedes tener (Calibre con 3 copias ocupa uno). Las de equipo, los power-ups, Pack-a-Punch y Medalla no ocupan hueco. Con los huecos llenos solo salen las que ya tienes y las que no ocupan hueco.
 - **3 rerolls** por partida (**Granada** en el menú), **1 bloqueo** por partida (**Táctica**: la carta no vuelve a salirte, pero gastas esa subida) y **no coger nada** (**Cuchillo**: gastas la subida). Mientras eliges, tu lista de cartas se ve abajo.
 
 ### Cartas generales
 
-Valores por rareza: común / poco común / rara / épica / legendaria. Las marcadas con (A) ahora son de un arquetipo: solo le salen a quien lo tiene.
+Valores **por copia** (10 copias por carta): común / poco común / rara / épica / legendaria. El tope es lo que dan 10 legendarias. Las marcadas con (A) son de un arquetipo: solo le salen a quien lo tiene.
 
 | Carta | Efecto | Valores | Tope |
 |---|---|---|---|
-| Piernas ligeras | +% velocidad | 3 / 5 / 7 / 10 / 16 % | 80 % |
-| Muelles | Saltas más alto y sin daño por caída | 50 / 70 / 105 / 145 / 210 | 700 |
-| Calibre | +% daño con todo | 5 / 7 / 10 / 14 / 22 % | 300 % |
-| Gatillo loco (A: Gatillo) | Double Tap gratis + % daño (×2 si además compras Double Tap) | 2 / 4 / 6 / 10 / 14 % | 150 % |
-| Cargador mágico | % de no gastar bala | 4 / 6 / 10 / 14 / 20 % | 60 % |
-| Manos rápidas | Speed Cola gratis + % de rellenar el cargador al matar (×2 con Speed Cola) | 0.05 / 0.3 / 1 / 2.5 / 4.5 % | 4.5 % |
-| Mochila | Balas de reserva por minuto para el arma de la mano | 5 / 8 / 12 / 18 / 30 | 60 |
-| Corazón de hierro | +vida máxima | 8 / 12 / 20 / 32 / 48 | 400 |
-| Regeneración | +vida por segundo | 1 / 1 / 2 / 3 / 5 | 25 |
-| Vampiro (A: Berserker) | +vida por baja | 2 / 3 / 4 / 6 / 10 | 60 |
-| Blindaje | −% daño de zombies | 3 / 5 / 7 / 10 / 14 % | 60 % |
-| Pólvora (A: Pirómano) | +% daño explosivo | 8 / 12 / 20 / 32 / 48 % | 400 % |
-| Ojo de halcón (A: Francotirador) | +% daño a la cabeza | 8 / 12 / 20 / 32 / 48 % | 400 % |
-| Golpe crítico | % de golpe ×2.5 | 2 / 4 / 6 / 10 / 14 % | 60 % |
-| Nudillos de hierro (A: Tanque) | +% daño cuerpo a cuerpo | 40 / 65 / 95 / 145 / 240 % | 3000 % |
-| Codicia (A: Banquero) | +puntos por baja | 4 / 8 / 12 / 20 / 32 | 300 |
-| Reacción en cadena (A: Electricista) | % de que el zombie explote al morir | 3 / 5 / 7 / 10 / 16 % | 60 % |
-| Imán | Atrae power-ups en este radio | 250 / 360 / 520 / 720 / 1040 | 5000 |
-| Buscador de botín (A: Suertudo) | % de power-up por baja | 0.4 / 0.8 / 1.2 / 2.0 / 3.2 % | 5 % |
-| Segundo aliento | % de evitar un golpe mortal (quedas a media vida) | 8 / 12 / 18 / 24 / 36 % | 90 % |
-| Escurridizo (A: Velocista) | % de que te ignoren 2 s tras recibir un golpe | 5 / 8 / 12 / 16 / 22 % | 35 % |
-| Suerte del Pack | % de que el arma de ronda venga mejorada | 4 / 6 / 10 / 14 / 20 % | 100 % |
-| Granadero | % de recuperar granada al matar | 2 / 4 / 6 / 10 / 14 % | 60 % |
-| Espinas (A: Tanque) | El zombie que te pega pierde este % de su vida | 12 / 20 / 32 / 48 / 72 % | 500 % |
-| Afortunado | +% de arma especial de tu clase | 2 / 4 / 6 / 10 / 14 % | 70 % |
-| Trébol | Suerte: sube la rareza de las cartas | 2 / 4 / 6 / 10 / 14 % | 60 % |
-| Sed de sangre (A: Velocista) | +% velocidad 3 s tras cada baja | 4 / 6 / 10 / 13 / 18 % | 60 % |
-| Adrenalina (A: Berserker) | +% daño con menos de media vida | 6 / 10 / 14 / 20 / 32 % | 200 % |
-| Puntería (A: Francotirador) | +% daño apuntando con la mira | 4 / 6 / 10 / 14 / 20 % | 100 % |
-| Últimas balas (A: Gatillo) | +% daño con el cargador por debajo del 30 % | 8 / 12 / 18 / 24 / 36 % | 200 % |
-| Cazatanques (A: Francotirador) | +% daño a tanques | 12 / 20 / 32 / 48 / 72 % | 400 % |
-| Experiencia | Cada baja cuenta +% para subir de nivel | 10 / 15 / 22 / 30 / 45 % | 150 % |
-| Combo | +% daño por cada baja seguida (2 s entre bajas, máx. 10) | 1 / 2 / 2 / 3 / 5 % | 20 % |
-| Cabezas de oro (A: Banquero) | +puntos por baja a la cabeza | 8 / 12 / 20 / 32 / 48 | 400 |
-| Armadura | Absorbe del todo este número de golpes de zombie por ronda | 1 / 1 / 2 / 2 / 3 | 6 |
-| Sangre fría | +% daño sin ningún zombie a menos de 4 m | 6 / 10 / 14 / 20 / 30 % | 100 % |
-| Médico | Al reanimar, vida para los dos y 2 s de que os ignoren | 20 / 30 / 45 / 65 / 100 | 250 |
-| Madrugador | +% daño los primeros 30 s de cada ronda | 8 / 12 / 18 / 25 / 36 % | 100 % |
-| Cordones nuevos | +% velocidad (relleno) | 1 / 1 / 2 / 2 / 3 % | 10 % |
-| Cantimplora | +vida máxima (relleno) | 2 / 3 / 4 / 6 / 8 | 30 |
-| Calderilla | +puntos por baja (relleno) | 5 / 8 / 10 / 15 / 20 | 100 |
-| Pulsera de la suerte | Como Trébol, pero casi nada (relleno) | 1 / 1 / 2 / 2 / 3 % | 10 % |
+| Piernas ligeras | +% velocidad | 2 / 3.2 / 4.4 / 6 / 8 % | 80 % |
+| Muelles | Saltas más alto y sin daño por caída | 17.5 / 28 / 38.5 / 52.5 / 70 | 700 |
+| Calibre | +% daño con todo | 4 / 6.4 / 8.8 / 12 / 16 % | 160 % |
+| Gatillo loco (A: Gatillo) | Double Tap gratis + % daño (×2 si además compras Double Tap) | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Cargador mágico | % de no gastar bala | 1.5 / 2.4 / 3.3 / 4.5 / 6 % | 60 % |
+| Manos rápidas | Speed Cola gratis + % de rellenar el cargador al matar (×2 con Speed Cola) | 0.09 / 0.14 / 0.2 / 0.27 / 0.36 % | 3.6 % |
+| Mochila | Balas de reserva por minuto para el arma de la mano | 1.5 / 2.4 / 3.3 / 4.5 / 6 | 60 |
+| Corazón de hierro | +vida máxima | 8 / 12.8 / 17.6 / 24 / 32 | 320 |
+| Regeneración | +vida por segundo | 0.62 / 1 / 1.38 / 1.88 / 2.5 | 25 |
+| Vampiro (A: Berserker) | +vida por baja | 1.5 / 2.4 / 3.3 / 4.5 / 6 | 60 |
+| Blindaje | −% daño de zombies | 1.5 / 2.4 / 3.3 / 4.5 / 6 % | 60 % |
+| Pólvora (A: Pirómano) | +% daño explosivo | 8 / 12.8 / 17.6 / 24 / 32 % | 320 % |
+| Ojo de halcón (A: Francotirador) | +% daño a la cabeza | 8 / 12.8 / 17.6 / 24 / 32 % | 320 % |
+| Golpe crítico | % de golpe ×2.5 | 1.5 / 2.4 / 3.3 / 4.5 / 6 % | 60 % |
+| Nudillos de hierro (A: Tanque) | +% daño cuerpo a cuerpo | 40 / 64 / 88 / 120 / 160 % | 1600 % |
+| Codicia (A: Banquero) | +puntos por baja | 5 / 8 / 11 / 15 / 20 | 200 |
+| Reacción en cadena (A: Electricista) | % de que el zombie explote al morir | 1.5 / 2.4 / 3.3 / 4.5 / 6 % | 60 % |
+| Imán | Atrae power-ups en este radio | 125 / 200 / 275 / 375 / 500 | 5000 |
+| Buscador de botín (A: Suertudo) | % de power-up por baja | 0.1 / 0.16 / 0.22 / 0.3 / 0.4 % | 4 % |
+| Segundo aliento | % de evitar un golpe mortal (quedas a media vida) | 2.25 / 3.6 / 4.95 / 6.75 / 9 % | 90 % |
+| Escurridizo (A: Velocista) | % de que te ignoren 2 s tras recibir un golpe | 0.88 / 1.4 / 1.93 / 2.62 / 3.5 % | 35 % |
+| Suerte del Pack | % de que el arma de ronda venga mejorada | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Granadero | % de recuperar granada al matar | 1.5 / 2.4 / 3.3 / 4.5 / 6 % | 60 % |
+| Espinas (A: Tanque) | El zombie que te pega pierde este % de su vida | 12.5 / 20 / 27.5 / 37.5 / 50 % | 500 % |
+| Afortunado | +% de arma especial de tu clase | 1.75 / 2.8 / 3.85 / 5.25 / 7 % | 70 % |
+| Trébol | Suerte: sube la rareza de las cartas | 1.5 / 2.4 / 3.3 / 4.5 / 6 % | 60 % |
+| Sed de sangre (A: Velocista) | +% velocidad 3 s tras cada baja | 1.5 / 2.4 / 3.3 / 4.5 / 6 % | 60 % |
+| Adrenalina (A: Berserker) | +% daño con menos de media vida | 5 / 8 / 11 / 15 / 20 % | 200 % |
+| Puntería (A: Francotirador) | +% daño apuntando con la mira | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Últimas balas (A: Gatillo) | +% daño con el cargador por debajo del 30 % | 5 / 8 / 11 / 15 / 20 % | 200 % |
+| Cazatanques (A: Francotirador) | +% daño a tanques | 10 / 16 / 22 / 30 / 40 % | 400 % |
+| Experiencia | Cada baja cuenta +% para subir de nivel | 3.75 / 6 / 8.25 / 11.25 / 15 % | 150 % |
+| Combo | +% daño por cada baja seguida (2 s entre bajas, máx. 10) | 0.5 / 0.8 / 1.1 / 1.5 / 2 % | 20 % |
+| Cabezas de oro (A: Banquero) | +puntos por baja a la cabeza | 8 / 12.8 / 17.6 / 24 / 32 | 320 |
+| Armadura | Absorbe del todo este número de golpes de zombie por ronda (se suma con decimales y cuenta la parte entera) | 0.15 / 0.24 / 0.33 / 0.45 / 0.6 | 6 |
+| Sangre fría | +% daño sin ningún zombie a menos de 4 m | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Médico | Al reanimar, vida para los dos y 2 s de que os ignoren | 6.25 / 10 / 13.75 / 18.75 / 25 | 250 |
+| Maldición | Sube la **dificultad** del equipo: zombies más duros y más rondas, a cambio de más experiencia y puntos (ver Otras reglas) | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Madrugador | +% daño los primeros 30 s de cada ronda | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Cordones nuevos | +% velocidad (relleno) | 0.25 / 0.4 / 0.55 / 0.75 / 1 % | 10 % |
+| Cantimplora | +vida máxima (relleno) | 0.75 / 1.2 / 1.65 / 2.25 / 3 | 30 |
+| Calderilla | +puntos por baja (relleno) | 2.5 / 4 / 5.5 / 7.5 / 10 | 100 |
+| Pulsera de la suerte | Como Trébol, pero casi nada (relleno) | 0.25 / 0.4 / 0.55 / 0.75 / 1 % | 10 % |
 | Medalla | Subes esos niveles ahora mismo, con sus cartas. No ocupa hueco | 1 / 1 / 1 / 2 / 3 niveles | — |
 
 ### Cartas especiales
 
 | Carta | Rareza | Efecto |
 |---|---|---|
-| Monos, Claymores, Semtex, Granadas EMP | Rara | Te da el equipo lleno y cada ronda recuperas 1 por nivel de la carta (máx. 3). No ocupan hueco. Si pierdes la carta, pierdes el equipo. |
+| Monos, Claymores, Semtex, Granadas EMP | Rara | Te da el equipo lleno y cada ronda recuperas 1. **Una sola copia**: no vuelven a salir. Monos y EMP son granada táctica: al coger una se quita la otra (y puede volver a salir). No ocupan hueco, no salen en la lista y no se pierden al caer ni con Leroy. |
 | Munición máxima, Instakill, Doble puntos, Carpintero, Nuke | Común | Power-up inmediato para todo el equipo. No ocupan hueco. |
 | Pack-a-Punch | Épica | Mejora el arma de la mano (si ya lo está, la otra; si las dos, munición máxima). Única forma de mejorar un arma de caja o de pared. No ocupa hueco. |
 
 ### Míticas
 
-**5 %** de que una de las 3 cartas sea mítica. Llevas **una sola** y no ocupa hueco: si coges otra, sustituye a la tuya. La primera persona que coge una mítica es su dueña y a los demás ya no les sale.
+**5 %** de que una de las 3 cartas sea mítica (**8 %** con dificultad del 40 % o más). Llevas **una sola** y no ocupa hueco: si coges otra, sustituye a la tuya. La primera persona que coge una mítica es su dueña y a los demás ya no les sale.
 
 | Mítica | Efecto |
 |---|---|
 | **Bomberman** | Arma de ronda siempre un explosivo mejorado (RPG, War Machine, Mustang & Sally, Ray Gun). 45 % de no gastar munición, explosivos ×1.5. **Contra**: recibes ×2 de zombies y de explosiones (sin Jugg, un pepinazo cerca te tumba). |
-| **Fénix** | Una vez por ronda, un golpe mortal no te tumba: renaces con la vida llena y explotas. |
+| **Fénix** | Una vez por ronda, un golpe mortal no te tumba: renaces con la vida llena y explotas. Va **después** de Último aliento y Segundo aliento: solo se gasta si nada más te salva. |
 | **Cuerpo de cristal** | Tu daño ×3. **Contra**: recibes ×1.75. |
 | **Ira de Zeus** | Cada baja tiene un 30 % de lanzar un rayo que mata a 3 zombies cercanos. |
 | **Rey Midas** | +100 puntos por baja y un power-up cada 20 bajas. |
@@ -588,7 +668,7 @@ El precio es **de cada jugador** (×1.17 por cada tirada tuya, hasta un máximo 
 
 ### Penalización al caer
 
-Si te tumban, antes de que puedan reanimarte eliges **una carta que pierdes** entre 3 al azar de las tuyas (normales y de equipo). Pierdes ese tipo **entero**: si tenías Calibre ×3, pierdes las tres y se libera el hueco. Mientras eliges nadie puede reanimarte y no te desangras; en solitario, el Quick Revive espera a que elijas. Las míticas no se pierden.
+Si te tumban, antes de que puedan reanimarte eliges **una carta que pierdes** entre 3 al azar de las tuyas (las de equipo no se pierden). Pierdes esa carta **entera**: si tenías 3 copias de Calibre, pierdes las tres y se libera el hueco. Mientras eliges nadie puede reanimarte y no te desangras; en solitario, el Quick Revive espera a que elijas. Las míticas no se pierden.
 
 ---
 
@@ -674,6 +754,10 @@ Al construir el primer Bastón de fuego empieza un ritual de tres pasos. El prog
 | **Super sprinters** | Desde la ronda 3, un 20 % de los rápidos van en super sprint acelerado (más rápidos que tú corriendo), máximo 6 a la vez. |
 | **Vida de zombies** | Empiezan con 188 (150 de serie, +25 %), +130 por ronda hasta la 9 y ×1.13 desde la 10. Ronda 10: 1387 (de serie 1045); ronda 20: 4699 (de serie 2701); ronda 30: 15 943 (de serie 7000). Tabla completa en [ARQUETIPOS.md](ARQUETIPOS.md). |
 | **Marcador (Tab)** | La columna Headshots muestra el nivel de cartas de cada jugador. |
+| **Aguante** | Desde la **ronda 30**, los efectos de carta (rayos, fuego, Espinas, mordiscos, Ciclón, Estela, Zeus, Fénix...), las torretas, el tiro de suerte de Escopetas y las armas especiales (Sliquifier, Paralizador) hacen un **6 % menos por ronda**: 54 % en la ronda 40, 29 % en la 50, 16 % en la 60, 1 % en la 100. El Insta-Kill, Una bala basta, el Ejecutor de Rifles y los disparos normales no cambian. Así, eventualmente los zombies escalan más que tu build: con mejor build, más tarde. |
+| **Dificultad** | La sube la carta **Maldición**. La del equipo es la suma de la de todos (tope 100 %). Con D %: vida y golpe de los zombies ×(1 + D/200) (×1.5 al 100 %), +D/4 puntos de % de tanques y super sprinters, ×(1 + D/100) zombies por ronda, menos espera entre apariciones y el aguante empieza D/10 rondas antes. A cambio, para todo el equipo: cada baja cuenta ×(1 + D/100) para subir de nivel, +D/2 % de puntos por baja y desde el 40 % la mítica sale al 8 %. Compensa en rondas medias; para un récord de ronda o un Speedrun, mejor no. |
+| **Tope del golpe** | Ningún golpe de zombie, tanque o jefe te quita más del **90 % de tu vida máxima**: con la vida llena nada te tumba de un golpe (dos seguidos, sí). |
+| **HUD** | Arriba a la izquierda, nivel y bajas para la siguiente carta. La **barra de vida** va encima de los iconos de las bebidas: se llena con la vida que te queda y crece con tu vida máxima (verde, amarilla por debajo del 50 %, roja por debajo del 25 %). Clase, arquetipo, mítica y dificultad van en la lista de cartas (H). |
 
 ---
 
@@ -731,9 +815,15 @@ Se escriben en la consola antes de entrar o antes de `map_restart`.
 | `set jodas_leroy_robos 3` | Cartas que Leroy puede robar a cada jugador. |
 | `set jodas_leroy_cuenco 15` | Segundos para recoger los cuencos de Leroy. |
 | `set jodas_textos_limite 50` | Cada cuántos textos nuevos se vacía la tabla de textos del juego (arreglo del overflow; 50 por defecto). |
-| `set jodas_bonus_escopetas 7.5` | Bonus de puntos por baja de Escopetas en % de la vida del zombie (`jodas_bonus_pistolas 5.1`, `jodas_bonus_rifles 0.13`). |
+| `set jodas_bonus_escopetas 7.5` | Bonus de puntos por baja de Escopetas en % de la vida del zombie (`jodas_bonus_pistolas 2.5`, `jodas_bonus_rifles 0.13`). |
 | `set jodas_rifles_ejecutor 20` | % de vida por debajo del cual los Rifles rematan al zombie (`jodas_smr_mult 4`: daño del SMR). |
 | `set jodas_auto_racha_max 15` | Tope de la racha de Automáticas (`jodas_auto_doble 25`: % de gastar 2 balas). |
+| `set jodas_copias 10` | Copias de cada carta (10 por defecto). |
+| `set jodas_aguante 0` | Sin aguante (`jodas_aguante_ronda 30`: ronda en que empieza; `jodas_aguante_pct 6`: % menos por ronda). |
+| `set jodas_dificultad 0` | Sin dificultad (la carta Maldición no hace nada). `jodas_debug_dificultad 50` la fuerza al 50 %; `jodas_dificultad_tope 100`. |
+| `set jodas_tope_golpe_pct 90` | Tope de un golpe de zombie en % de tu vida máxima. |
+| `set jodas_vida_barra 0` | Sin barra de vida (`jodas_vida_x 10` / `jodas_vida_y -62`: dónde va). |
+| `set jodas_debug_textos 1` | En partida: avisa en pantalla de cada limpieza de la tabla de textos (para el fallo de la lista repetida). |
 | `set jodas_off 1` | Desactiva el mod. |
 
 ---

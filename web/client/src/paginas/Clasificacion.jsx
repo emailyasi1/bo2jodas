@@ -158,6 +158,7 @@ export default function Clasificacion() {
                     {k === 0 && (
                       <td className="der" rowSpan={p.jugadores.length}>
                         <Link to={`/partida/${p.id}`} className="grande num" style={c.color ? { color: colorRonda(valor) } : undefined}>{c.texto(valor)}</Link>
+                        {p.dificultad_max > 0 && <div className="peq ten" title="Dificultad más alta del equipo (carta Maldición)">Dif. {p.dificultad_max} %</div>}
                       </td>
                     )}
                     <td className="c-build"><Build cartas={j.cartas} mitica={j.mitica} max={12} /></td>

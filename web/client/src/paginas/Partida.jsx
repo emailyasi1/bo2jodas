@@ -50,6 +50,7 @@ export default function Partida() {
             <span><Clock size={15} />{duracion(p.duracion_s)}</span>
             <span><CalendarDays size={15} />{fecha(p.fecha)}</span>
             {p.version && <span><Tag size={15} />v{p.version}</span>}
+            {p.dificultad_max > 0 && <span className="tag tag-linea" title="Dificultad más alta del equipo (carta Maldición): más zombies y más duros, a cambio de más experiencia y puntos">Dificultad {p.dificultad_max} %</span>}
             {p.subido_por && <span><Upload size={15} />subida por {p.subido_por}</span>}
             {p.terminada === 0 && <span className="tag tag-linea" title="El juego se reinició o se cerró: es el último guardado (al acabar una ronda)">Sin terminar</span>}
             {p.ronda < 10 && <span className="tag tag-linea" title="Acabó antes de la ronda 10: sale en Resets y no cuenta para la clasificación">Reset</span>}
@@ -441,7 +442,7 @@ function CartaLinea({ c }) {
       <Ficha id={c.id} grande />
       <div style={{ minWidth: 0 }}>
         <div className="cn">{nombreCarta(c.id)}</div>
-        <div className="cs">{def.firma ? `firma de ${ARQUETIPOS[def.arquetipo]?.nombre}` : `cogida ${c.veces} ${c.veces === 1 ? "vez" : "veces"}`}</div>
+        <div className="cs">{def.firma ? `firma de ${ARQUETIPOS[def.arquetipo]?.nombre}` : def.copias > 1 ? `${c.veces}/${def.copias} copias` : `cogida ${c.veces} ${c.veces === 1 ? "vez" : "veces"}`}</div>
       </div>
       <span className="cv">{valorCarta(c.id, c.valor)}</span>
     </div>
@@ -468,10 +469,10 @@ function Progresion({ j }) {
           <span className="r">R{r}</span>
           <div className="prog-items">
             {porRonda.get(r).map((h, i) => h.tipo === "coge" ? (
-              <span key={i} className="prog-item" style={{ "--c": RAREZAS[h.rareza] || "#9a9aa6" }} data-tip={`${RAREZA_TXT[h.rareza] || h.rareza}${h.valor ? ` · ${valorCarta(h.id, h.valor)}` : ""}`}>
+              <span key={i} className="prog-item" style={{ "--c": RAREZAS[h.rareza] || "#9a9aa6" }} data-tip={`${RAREZA_TXT[h.rareza] || h.rareza}${(h.exacto ?? h.valor) ? ` · ${valorCarta(h.id, h.exacto ?? h.valor)}` : ""}`}>
                 <i />
                 <b>{nombreCarta(h.id)}</b>
-                {h.valor ? <small>{valorCarta(h.id, h.valor)}</small> : null}
+                {(h.exacto ?? h.valor) ? <small>{valorCarta(h.id, h.exacto ?? h.valor)}</small> : null}
               </span>
             ) : (
               <span key={i} className="prog-item perdida" data-tip={h.motivo === "leroy" ? "Robada por Leroy" : "Perdida al caer"}>

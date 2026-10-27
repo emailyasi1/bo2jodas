@@ -48,6 +48,8 @@ export function resumen(p) {
     // que comprueba los tiempos de ronda), no las aceptadas con la antigua.
     validada: p.validacion !== "antigua",
     hitos: p.hitos || {},
+    // Dificultad mas alta del equipo (1.10.10, carta Maldicion).
+    dificultad_max: p.dificultad_max || 0,
     jugadores: p.jugadores.map((j) => ({
       nombre: j.nombre,
       clase: j.clase,

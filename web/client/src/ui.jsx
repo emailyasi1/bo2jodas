@@ -103,12 +103,24 @@ function iniciales(nombre) {
   return (p[0] || nombre).slice(0, 2).toUpperCase();
 }
 
+// decimal 1 / 2: la carta guarda decimas / centesimas. Desde la 1.10.10 los
+// valores por copia llevan decimales: hasta 2, sin ceros de sobra (como
+// jodas_numero en el mod).
 function textoValor(c, valor) {
   if (valor === undefined || valor === null) return "";
-  let s = String(valor);
-  if (c.decimal === 2) s = `${Math.trunc(valor / 100)}.${String(valor % 100).padStart(2, "0")}`;
-  else if (c.decimal === 1) s = `${Math.trunc(valor / 10)}.${valor % 10}`;
+  let v = Number(valor);
+  if (c.decimal === 2) v /= 100;
+  else if (c.decimal === 1) v /= 10;
+  const s = String(Math.round(v * 100) / 100);
   return `${c.prefijo || ""}${s}${c.sufijo || ""}`;
+}
+
+// Copias de una carta: "3/10" (las de 1 copia, nada; partidas viejas, "x3").
+export function textoCopias(id, veces) {
+  const c = carta(id);
+  if (!veces) return "";
+  if (!c.copias || c.copias <= 1) return veces > 1 ? `×${veces}` : "";
+  return `${veces}/${c.copias}`;
 }
 
 export function valorCarta(id, valor) {
@@ -129,7 +141,7 @@ export function Ficha({ id, valor, veces, grande, mitica }) {
   if (c.firma) clases.push("ficha-firma");
   const tip = mitica
     ? `${nombreMitica(id)}\nMítica`
-    : `${c.nombre}${valor !== undefined && !c.firma ? `  ${textoValor(c, valor)}` : ""}${veces > 1 ? `  ×${veces}` : ""}\n${arq ? `${ARQUETIPOS[arq]?.nombre}${c.firma ? " · firma" : ""}` : "General"}`;
+    : `${c.nombre}${valor !== undefined && !c.firma ? `  ${textoValor(c, valor)}` : ""}${textoCopias(id, veces) ? `  ${textoCopias(id, veces)}` : ""}\n${arq ? `${ARQUETIPOS[arq]?.nombre}${c.firma ? " · firma" : ""}` : "General"}`;
   return (
     <span className={clases.join(" ")} style={arq ? { "--c": colorArquetipo(arq) } : undefined} data-tip={tip} tabIndex={0} aria-label={tip}>
       {Icono ? <Icono size={grande ? 18 : 15} strokeWidth={2} /> : iniciales(c.nombre)}

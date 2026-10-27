@@ -13,12 +13,12 @@
   },
   "danio": {
    "tipo": "normal",
-   "tope": 300,
+   "tope": 160,
    "arquetipo": ""
   },
   "cadencia": {
    "tipo": "normal",
-   "tope": 150,
+   "tope": 100,
    "arquetipo": "gatillo"
   },
   "municion": {
@@ -28,7 +28,7 @@
   },
   "recarga": {
    "tipo": "normal",
-   "tope": 450,
+   "tope": 360,
    "arquetipo": ""
   },
   "reserva": {
@@ -38,7 +38,7 @@
   },
   "vida": {
    "tipo": "normal",
-   "tope": 400,
+   "tope": 320,
    "arquetipo": ""
   },
   "regen": {
@@ -58,12 +58,12 @@
   },
   "explosivo": {
    "tipo": "normal",
-   "tope": 400,
+   "tope": 320,
    "arquetipo": "piromano"
   },
   "cabeza": {
    "tipo": "normal",
-   "tope": 400,
+   "tope": 320,
    "arquetipo": "francotirador"
   },
   "critico": {
@@ -73,12 +73,12 @@
   },
   "melee": {
    "tipo": "normal",
-   "tope": 3000,
+   "tope": 1600,
    "arquetipo": "tanque"
   },
   "puntos": {
    "tipo": "normal",
-   "tope": 300,
+   "tope": 200,
    "arquetipo": "banquero"
   },
   "cadena": {
@@ -93,7 +93,7 @@
   },
   "botin": {
    "tipo": "normal",
-   "tope": 50,
+   "tope": 40,
    "arquetipo": "suertudo"
   },
   "aliento": {
@@ -168,27 +168,32 @@
   },
   "oro": {
    "tipo": "normal",
-   "tope": 400,
+   "tope": 320,
    "arquetipo": "banquero"
+  },
+  "maldicion": {
+   "tipo": "normal",
+   "tope": 100,
+   "arquetipo": ""
   },
   "monos": {
    "tipo": "equipo",
-   "tope": 3,
+   "tope": 1,
    "arquetipo": ""
   },
   "claymores": {
    "tipo": "equipo",
-   "tope": 3,
+   "tope": 1,
    "arquetipo": ""
   },
   "semtex": {
    "tipo": "equipo",
-   "tope": 3,
+   "tope": 1,
    "arquetipo": ""
   },
   "emp": {
    "tipo": "equipo",
-   "tope": 3,
+   "tope": 1,
    "arquetipo": ""
   },
   "mejora": {
@@ -298,7 +303,7 @@
   },
   "unabala": {
    "tipo": "normal",
-   "tope": 100,
+   "tope": 60,
    "arquetipo": "francotirador"
   },
   "elites": {
@@ -408,7 +413,7 @@
   },
   "manada": {
    "tipo": "normal",
-   "tope": 2,
+   "tope": 100,
    "arquetipo": "domador"
   },
   "alfa": {
@@ -443,7 +448,7 @@
   },
   "montaje": {
    "tipo": "normal",
-   "tope": 2,
+   "tope": 100,
    "arquetipo": "mecanico"
   },
   "mortero": {
@@ -646,6 +651,7 @@
   "jackpot",
   "leaper",
   "madrugador",
+  "maldicion",
   "manada",
   "masa",
   "mecha",
