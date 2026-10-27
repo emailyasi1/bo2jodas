@@ -312,7 +312,22 @@ function coherencia(p) {
     if (suma(j.danio_armas) > j.danio_total + 1) fallo(`${n}: el daño por arma suma más que el daño total`);
     if (Object.keys(j.danio_cartas).length) {
       const sc = suma(j.danio_cartas);
-      if (sc < j.danio_total * 0.97 - 1000 || sc > j.danio_total * 1.01 + 1000)
+      const cuadra = (t) => sc >= t * 0.97 - 1000 && sc <= t * 1.01 + 1000;
+      // Hasta la 1.10.9, en partidas muy largas el dano total de 32 bits
+      // daba mas de una vuelta (ronda 70: tres). desenrollar() arregla una;
+      // las demas se deducen del reparto por cartas (que suma por piezas mas
+      // pequenas): se prueban hasta 8 vueltas mas y vale la que cuadre.
+      if (!cuadra(j.danio_total) && numVersion(p.version) < 1010010) {
+        for (let k = 1; k <= 8; k++) {
+          const t = j.danio_total + k * VUELTA_32;
+          if (t > MAX_GRANDE) break;
+          if (cuadra(t)) {
+            j.danio_total = t;
+            break;
+          }
+        }
+      }
+      if (!cuadra(j.danio_total))
         fallo(`${n}: el reparto del daño (${sc}) no cuadra con el daño total (${j.danio_total})`);
     }
     // Nivel: con la carta Experiencia al tope cada baja cuenta x2.5, y la
