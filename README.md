@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.12** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.13** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,12 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.13: la lista de cartas se ve entera
+
+- **Arreglado**: la lista de cartas (H) salía incompleta y "desplazada": con una build mediana solo se veía la segunda columna. El juego deja en blanco, sin avisar en ningún log, cualquier texto de HUD de 256 caracteres o más, y la primera columna (cabecera + 7 cartas con "n/10") se pasaba. Ahora la cabecera va en su línea y las cartas se reparten en dos columnas que nunca llegan al tope; si algo no cabe, sale "y N más". La dificultad del equipo pasa al final de la cabecera.
+- **Nuevo comando** `set jodas_lista_reiniciar 1` (consola): si la lista se queda mal en mitad de la partida, la vuelve a crear para todos los jugadores con las mismas cartas. Con `jodas_debug_lista 1`, cada refresco dice cuántas líneas y caracteres tiene cada bloque.
+- Preparación de la Electric Cherry sobre el script del propio juego (sin cambios de juego todavía): `set jodas_debug_cherry 1` escribe en pantalla el orden de carga del mod.
 
 ## Novedades de la 1.10.12: la lista de cartas ya no se bloquea
 
@@ -823,6 +829,7 @@ Se escriben en la consola antes de entrar o antes de `map_restart`.
 | `set jodas_leroy_robos 3` | Cartas que Leroy puede robar a cada jugador. |
 | `set jodas_leroy_cuenco 15` | Segundos para recoger los cuencos de Leroy. |
 | `set jodas_textos_limite 50` | Cada cuántos textos nuevos se vacía la tabla de textos del juego (arreglo del overflow; 50 por defecto). |
+| `set jodas_lista_reiniciar 1` | Vuelve a crear la lista de cartas (H) de todos los jugadores, con las mismas cartas, si se queda mal en mitad de la partida. |
 | `set jodas_bonus_escopetas 7.5` | Bonus de puntos por baja de Escopetas en % de la vida del zombie (`jodas_bonus_pistolas 2.5`, `jodas_bonus_rifles 0.13`). |
 | `set jodas_rifles_ejecutor 20` | % de vida por debajo del cual los Rifles rematan al zombie (`jodas_smr_mult 4`: daño del SMR). |
 | `set jodas_auto_racha_max 15` | Tope de la racha de Automáticas (`jodas_auto_doble 25`: % de gastar 2 balas). |

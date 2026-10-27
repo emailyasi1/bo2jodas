@@ -1,5 +1,27 @@
 [
   {
+    "version": "1.10.13",
+    "fecha": "2026-10-27",
+    "titulo": "La lista de cartas se ve entera",
+    "cambios": [
+      {
+        "tipo": "arreglo",
+        "que": "Lista de cartas (H)",
+        "texto": "Con una build mediana solo salía la segunda columna, desplazada: el juego deja en blanco, sin avisar, cualquier texto de HUD de 256 caracteres o más, y la cabecera más 7 cartas con \"n/10\" se pasaba. Ahora la cabecera va en su línea y las cartas se reparten en dos columnas que nunca llegan al tope; si no cabe algo, sale \"y N más\". La dificultad del equipo pasa al final de la cabecera."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Comando: set jodas_lista_reiniciar 1",
+        "texto": "Si la lista de cartas se queda mal en mitad de la partida, escribe en la consola (tecla º / ~) set jodas_lista_reiniciar 1: la vuelve a crear para todos los jugadores, con las mismas cartas. Con jodas_debug_lista 1 cada refresco dice cuántas líneas y caracteres tiene cada bloque."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Electric Cherry (preparación)",
+        "texto": "Sin cambios de juego todavía: set jodas_debug_cherry 1 enseña el orden de carga del mod, para pasar la Cherry al script del propio juego en un parche próximo."
+      }
+    ]
+  },
+  {
     "version": "1.10.12",
     "fecha": "2026-10-27",
     "titulo": "La lista de cartas ya no se bloquea",
