@@ -1,5 +1,17 @@
 [
   {
+    "version": "1.10.11",
+    "fecha": "2026-10-27",
+    "titulo": "Torreta colgada",
+    "cambios": [
+      {
+        "tipo": "arreglo",
+        "que": "Torreta del Mecánico",
+        "texto": "Podía quedarse colgada a mitad de partida: apuntaba pero no disparaba, no se podía recoger ni reparar y no te devolvía el kit. Ahora no recibe daño y, si se para, se vuelve a arrancar sola; a la tercera vez te devuelve el kit con su desgaste."
+      }
+    ]
+  },
+  {
     "version": "Web",
     "fecha": "2026-10-27",
     "titulo": "Descargar el mod desde la web",
