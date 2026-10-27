@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.11** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.12** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,10 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.12: la lista de cartas ya no se bloquea
+
+- **Arreglado**: la lista de cartas (H / cruceta abajo) a veces no se mostraba o no se quitaba al pulsar. Pasaban dos cosas: la tecla tardaba hasta un cuarto de segundo en hacer efecto (y no hacía nada mientras estabas en el suelo), así que se pulsaba otra vez y la segunda pulsación deshacía la primera; y el menú "TE HAN TUMBADO" podía quedarse abierto por dentro si su hilo moría a medias, lo que dejaba la lista forzada, sin más menús de carta, las armas bloqueadas y sin que nadie pudiera reanimarte. Ahora la tecla responde al momento y un vigilante cierra cualquier menú que se quede colgado. Con `jodas_debug_lista 1` se ve el estado en cada pulsación.
 
 ## Novedades de la 1.10.11: torreta colgada
 

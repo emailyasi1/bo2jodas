@@ -1,5 +1,17 @@
 [
   {
+    "version": "1.10.12",
+    "fecha": "2026-10-27",
+    "titulo": "La lista de cartas ya no se bloquea",
+    "cambios": [
+      {
+        "tipo": "arreglo",
+        "que": "Lista de cartas (H)",
+        "texto": "A veces no se mostraba o no se quitaba al pulsar. La tecla tardaba hasta un cuarto de segundo en hacer efecto (y nada mientras estabas en el suelo), así que la segunda pulsación deshacía la primera; y el menú \"TE HAN TUMBADO\" podía quedarse abierto por dentro, dejando la lista forzada, sin más menús de carta, las armas bloqueadas y sin poder ser reanimado. Ahora la tecla responde al momento y un vigilante cierra cualquier menú colgado. Con jodas_debug_lista 1 se ve el estado en cada pulsación."
+      }
+    ]
+  },
+  {
     "version": "1.10.11",
     "fecha": "2026-10-27",
     "titulo": "Torreta colgada",
