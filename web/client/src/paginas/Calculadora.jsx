@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Minus, Plus, X } from "lucide-react";
 import {
   DATOS, CARTAS, RAREZAS, vidaDeSerie, zombiesPorRonda, enemigos, simularArma, probEscopeta,
-  efectos, baston, BASTON, explosivo, goo, modDeArma, firmaActiva, esFranco,
+  efectos, baston, BASTON, explosivo, goo, armaBo1, modDeArma, firmaActiva, esFranco,
 } from "../calc/motor.js";
 import { ARQUETIPOS, RAREZAS as COLOR_RAREZA, fmt } from "../nombres.js";
 import { Ficha, Seccion, colorRonda } from "../ui.jsx";
@@ -146,6 +146,7 @@ export default function Calculadora() {
 
   const resultados = useMemo(() => en.map((e) => {
     if (esBaston) return { e, tipo: "baston", r: baston(idBaston, e, build, op) };
+    if (arma.bo1) return { e, tipo: "bo1", r: armaBo1(arma, ronda, e, build, op) };
     if (arma.id.startsWith("slipgun")) return { e, tipo: "goo" };
     if (arma.id.startsWith("slowgun")) return { e, tipo: "paralizador" };
     if (arma.tipo === "projectile" || arma.tipo === "grenade") return { e, tipo: "explosivo", r: explosivo(arma, ronda, e, build, op) };
@@ -291,7 +292,7 @@ export default function Calculadora() {
                   <div className="enemigo" key={e.id}>
                     <span className="en">{e.nombre}</span>
                     <span className="ed">
-                      {tipo === "arma" ? n(r.disparos) : tipo === "explosivo" || tipo === "baston" ? n(r.golpes) : tipo === "goo" ? (e.jefe ? 7 : 1) : "?"}
+                      {tipo === "arma" ? n(r.disparos) : tipo === "explosivo" || tipo === "baston" || tipo === "bo1" ? n(r.golpes) : tipo === "goo" ? (e.jefe ? 7 : 1) : "?"}
                       <small>disparos</small>
                     </span>
                     <span className="ev">{fmt(e.vida)} de vida{e.jefe ? ` · tope ${fmt(Math.trunc(e.vida * 0.15))}/golpe` : ""}</span>
@@ -303,6 +304,7 @@ export default function Calculadora() {
                     )}
                     {tipo === "explosivo" && <span className="ex">{r.partes.map((p) => `${p.que.split(" (")[0]} ${fmt(p.final)}`).join(" + ")}{r.extra ? ` + extra ${fmt(r.extra.final)}` : ""}</span>}
                     {tipo === "baston" && <span className="ex">Impacto {fmt(r.imp.final)} + 8 × {fmt(r.seg.final)}/s{r.remate ? " · puede rematar al impactar" : ""}</span>}
+                    {tipo === "bo1" && <span className="ex">{r.nota}</span>}
                     {tipo === "goo" && <span className="ex">{e.jefe ? "El goo le quita el 15 % por golpe." : `El goo hace ${fmt(goo())}: lo mata.`}</span>}
                     {tipo === "paralizador" && <span className="ex">Daña al frenarlo por debajo del 10 % de velocidad; depende del tiempo, no se simula.</span>}
                   </div>

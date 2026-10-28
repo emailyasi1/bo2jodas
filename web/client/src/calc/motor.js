@@ -390,6 +390,35 @@ function porFormulaZona(danio, mod, cabeza, enemigo, build, op) {
   return { bruto: danio, final: danioRecibido(r.danio, z), mult: r.mult, sumandos: r.sumandos };
 }
 
+// Armas de Black Ops 1: el dano lo pone el script, no el archivo del arma.
+//   zap (bo2jodas_wavegun::jodas_wg_zap): cada impacto de las Zap Guns mata (vida + 666);
+//   wave (jodas_wg_cocinar): la Wave Gun mata a todo lo que pilla en su cilindro (180 de radio, 480 de alcance);
+//   al jefe y a Brutus, las dos: jodas_wg_golpe_jefe = vida de un zombie de la ronda x dificultad x
+//   jodas_wavegun_jefe % (100), por las cartas (MOD_UNKNOWN) y con su tope del 15 %;
+//   thundergun (bo2jodas_thundergun::jodas_tg_lanzar): de cerca (480 de alcance, 180 de radio) lanza y mata;
+//   al jefe, vida + 666 con su tope del 15 % (7 golpes). De lejos (hasta 1200) derriba: 15 + 15.
+export const WAVEGUN_JEFE_PCT = 100;
+export function armaBo1(arma, ronda, enemigo, build, op) {
+  const tipo = arma.bo1;
+  // Baby Gun (encargos_mod/babygun): al zombi no le hace daño, lo encoge (vida 1) y muere al
+  // pisarlo o de una patada. Al jefe no lo encoge: golpe pequeño como la Wave Gun (decisión del
+  // usuario, 2026-10-28; script en el encargo babygun/02).
+  if (tipo === "babygun" && !enemigo.jefe)
+    return { golpes: 1, porGolpe: 0, nota: "No hace daño: lo encoge (vida 1) y muere al pisarlo o de una patada." };
+  if (!enemigo.jefe) {
+    const nota = tipo === "zap" ? "Cada impacto mata (vida + 666), da igual la ronda." : tipo === "wave" ? "Mata a todos los zombies de su cilindro (180 de radio, 480 de alcance): los revienta." : "De cerca (hasta 480) los lanza por los aires y mueren; de lejos (hasta 1200) los derriba: 15 + 15 de daño.";
+    return { golpes: 1, porGolpe: enemigo.vida + 666, nota };
+  }
+  if (tipo === "thundergun") {
+    const r = porFormula(enemigo.vida + 666, "MOD_UNKNOWN", enemigo, build, op);
+    return { golpes: Math.ceil(enemigo.vida / Math.max(1, r.final)), porGolpe: r.final, nota: "Al jefe no lo lanza: cada disparo le quita el 15 % (su tope)." };
+  }
+  const base = trunc(vidaPorRonda(ronda) * WAVEGUN_JEFE_PCT / 100);
+  const r = porFormula(base, "MOD_UNKNOWN", enemigo, build, op);
+  return { golpes: Math.ceil(enemigo.vida / Math.max(1, r.final)), porGolpe: r.final,
+    nota: `Al jefe, cada golpe es la vida de un zombie de la ronda (${fmtN(base)}) por tus cartas, con su tope del 15 %.` };
+}
+
 // Sliquifier: el goo hace ai_zombie_health(slipgun_max_kill_round = 100).
 export function goo() {
   return vidaPorRonda(100);

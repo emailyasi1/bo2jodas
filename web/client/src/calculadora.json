@@ -115,7 +115,7 @@
    "id": "escopetas",
    "nombre": "Escopetas",
    "desc": "Puede matar de un tiro Speed Cola, -5% velocidad",
-   "especial": "Blundergat",
+   "especial": "Acid Gat",
    "armas": [
     "870mcs_zm",
     "rottweil72_zm",
@@ -125,10 +125,11 @@
     "dsr50_zm",
     "barretm82_zm",
     "svu_zm",
-    "ballista_zm"
+    "ballista_zm",
+    "blundergat_zm"
    ],
    "especiales": [
-    "blundergat_zm"
+    "blundersplat_zm"
    ],
    "color": "#ff8c19"
   },
@@ -187,7 +188,7 @@
    "id": "pistolas",
    "nombre": "Pistolas",
    "desc": "+40% dano, +30% vel, Trebol epico al empezar",
-   "especial": "Ray Gun",
+   "especial": "Ray Gun / Zap Guns",
    "armas": [
     "m1911_zm",
     "fiveseven_zm",
@@ -202,7 +203,8 @@
    ],
    "especiales": [
     "ray_gun_zm",
-    "raygun_mark2_zm"
+    "raygun_mark2_zm",
+    "microwavegundw_zm"
    ],
    "color": "#ffd826"
   }
@@ -1125,6 +1127,48 @@
    "id": "mejora",
    "nombre": "Pack-a-Punch",
    "desc": "Mejora el arma que llevas en la mano",
+   "arquetipo": "",
+   "tipo": "instantanea",
+   "firma": false,
+   "requiere": [],
+   "valores": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "tope": 1,
+   "copias": 1,
+   "decimal": 0,
+   "prefijo": "",
+   "sufijo": ""
+  },
+  {
+   "id": "thundergun",
+   "nombre": "Thundergun",
+   "desc": "Te da la Thundergun de Black Ops 1",
+   "arquetipo": "",
+   "tipo": "instantanea",
+   "firma": false,
+   "requiere": [],
+   "valores": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "tope": 1,
+   "copias": 1,
+   "decimal": 0,
+   "prefijo": "",
+   "sufijo": ""
+  },
+  {
+   "id": "babygun",
+   "nombre": "Baby Gun",
+   "desc": "Te da la Baby Gun de Black Ops 1",
    "arquetipo": "",
    "tipo": "instantanea",
    "firma": false,
@@ -3172,6 +3216,67 @@
       }
      },
      "coste": 500
+    },
+    {
+     "id": "blundersplat_zm",
+     "nombre": "Acid Gat",
+     "archivo": "zm_prison",
+     "tipo": "bullet",
+     "disparo": "3-Round Burst",
+     "danio": 0,
+     "danio_min": 0,
+     "alcance_max": 1,
+     "alcance_min": 1,
+     "cuchillo": 25,
+     "perdigones": 1,
+     "cargador": 3,
+     "cadencia": 0.1,
+     "zonas": {
+      "cabeza": 1.0,
+      "casco": 1.0,
+      "cuello": 1.0,
+      "pecho": 1.0,
+      "tripa": 1.0,
+      "brazo": 1.0,
+      "pierna": 1.0
+     },
+     "explosion": {
+      "centro": 0,
+      "borde": 0,
+      "radio": 0,
+      "al_impacto": 0
+     },
+     "mejorada": {
+      "id": "blundersplat_upgraded_zm",
+      "nombre": "Vitriolic Withering",
+      "archivo": "zm_prison",
+      "tipo": "bullet",
+      "disparo": "3-Round Burst",
+      "danio": 0,
+      "danio_min": 0,
+      "alcance_max": 1,
+      "alcance_min": 1,
+      "cuchillo": 25,
+      "perdigones": 1,
+      "cargador": 3,
+      "cadencia": 0.1,
+      "zonas": {
+       "cabeza": 1.0,
+       "casco": 1.0,
+       "cuello": 1.0,
+       "pecho": 1.0,
+       "tripa": 1.0,
+       "brazo": 1.0,
+       "pierna": 1.0
+      },
+      "explosion": {
+       "centro": 0,
+       "borde": 0,
+       "radio": 0,
+       "al_impacto": 0
+      }
+     },
+     "coste": 10
     }
    ]
   },
@@ -5949,6 +6054,263 @@
       "al_impacto": 1
      },
      "mejorada": null,
+     "coste": 0
+    }
+   ]
+  },
+  {
+   "nombre": "Armas de Black Ops 1",
+   "armas": [
+    {
+     "id": "thundergun_zm",
+     "nombre": "Thundergun",
+     "archivo": "bo1",
+     "tipo": "projectile",
+     "disparo": "Single Shot",
+     "danio": 0,
+     "danio_min": 0,
+     "alcance_max": 999999,
+     "alcance_min": 999999,
+     "cuchillo": 25,
+     "perdigones": 0,
+     "cargador": 2,
+     "cadencia": 0.95,
+     "zonas": {
+      "cabeza": 4.0,
+      "casco": 4.0,
+      "cuello": 5.0,
+      "pecho": 1.0,
+      "tripa": 0.9,
+      "brazo": 0.8,
+      "pierna": 0.8
+     },
+     "explosion": {
+      "centro": 0,
+      "borde": 0,
+      "radio": 0,
+      "al_impacto": 0
+     },
+     "bo1": "thundergun",
+     "mejorada": {
+      "id": "thundergun_upgraded_zm",
+      "nombre": "Zeus Cannon",
+      "archivo": "bo1",
+      "tipo": "projectile",
+      "disparo": "Single Shot",
+      "danio": 0,
+      "danio_min": 0,
+      "alcance_max": 999999,
+      "alcance_min": 999999,
+      "cuchillo": 25,
+      "perdigones": 0,
+      "cargador": 4,
+      "cadencia": 0.95,
+      "zonas": {
+       "cabeza": 4.0,
+       "casco": 4.0,
+       "cuello": 5.0,
+       "pecho": 1.0,
+       "tripa": 0.9,
+       "brazo": 0.8,
+       "pierna": 0.8
+      },
+      "explosion": {
+       "centro": 0,
+       "borde": 0,
+       "radio": 0,
+       "al_impacto": 0
+      },
+      "bo1": "thundergun"
+     },
+     "coste": 0
+    },
+    {
+     "id": "shrink_ray_zm",
+     "nombre": "Baby Gun",
+     "archivo": "bo1",
+     "tipo": "projectile",
+     "disparo": "Single Shot",
+     "danio": 0,
+     "danio_min": 0,
+     "alcance_max": 999999,
+     "alcance_min": 999999,
+     "cuchillo": 25,
+     "perdigones": 0,
+     "cargador": 5,
+     "cadencia": 0.33,
+     "zonas": {
+      "cabeza": 4.0,
+      "casco": 4.0,
+      "cuello": 5.0,
+      "pecho": 1.0,
+      "tripa": 0.9,
+      "brazo": 0.8,
+      "pierna": 0.8
+     },
+     "explosion": {
+      "centro": 0,
+      "borde": 0,
+      "radio": 0,
+      "al_impacto": 1
+     },
+     "bo1": "babygun",
+     "mejorada": {
+      "id": "shrink_ray_upgraded_zm",
+      "nombre": "The Fractalizer",
+      "archivo": "bo1",
+      "tipo": "projectile",
+      "disparo": "Single Shot",
+      "danio": 0,
+      "danio_min": 0,
+      "alcance_max": 999999,
+      "alcance_min": 999999,
+      "cuchillo": 25,
+      "perdigones": 0,
+      "cargador": 8,
+      "cadencia": 0.33,
+      "zonas": {
+       "cabeza": 4.0,
+       "casco": 4.0,
+       "cuello": 5.0,
+       "pecho": 1.0,
+       "tripa": 0.9,
+       "brazo": 0.8,
+       "pierna": 0.8
+      },
+      "explosion": {
+       "centro": 0,
+       "borde": 0,
+       "radio": 0,
+       "al_impacto": 1
+      },
+      "bo1": "babygun"
+     },
+     "coste": 0
+    },
+    {
+     "id": "microwavegundw_zm",
+     "nombre": "Zap Guns",
+     "archivo": "bo1",
+     "tipo": "projectile",
+     "disparo": "Single Shot",
+     "danio": 1,
+     "danio_min": 0,
+     "alcance_max": 999999,
+     "alcance_min": 999999,
+     "cuchillo": 25,
+     "perdigones": 0,
+     "cargador": 8,
+     "cadencia": 0.32,
+     "zonas": {
+      "cabeza": 1.0,
+      "casco": 1.0,
+      "cuello": 1.0,
+      "pecho": 1.0,
+      "tripa": 1.0,
+      "brazo": 1.0,
+      "pierna": 1.0
+     },
+     "explosion": {
+      "centro": 0,
+      "borde": 0,
+      "radio": 64,
+      "al_impacto": 0
+     },
+     "bo1": "zap",
+     "mejorada": {
+      "id": "microwavegundw_upgraded_zm",
+      "nombre": "Porter's X2 Zap Guns",
+      "archivo": "bo1",
+      "tipo": "projectile",
+      "disparo": "Single Shot",
+      "danio": 1,
+      "danio_min": 0,
+      "alcance_max": 999999,
+      "alcance_min": 999999,
+      "cuchillo": 25,
+      "perdigones": 0,
+      "cargador": 12,
+      "cadencia": 0.32,
+      "zonas": {
+       "cabeza": 1.0,
+       "casco": 1.0,
+       "cuello": 1.0,
+       "pecho": 1.0,
+       "tripa": 1.0,
+       "brazo": 1.0,
+       "pierna": 1.0
+      },
+      "explosion": {
+       "centro": 0,
+       "borde": 0,
+       "radio": 64,
+       "al_impacto": 0
+      },
+      "bo1": "zap"
+     },
+     "coste": 0
+    },
+    {
+     "id": "microwavegun_zm",
+     "nombre": "Wave Gun",
+     "archivo": "bo1",
+     "tipo": "projectile",
+     "disparo": "Single Shot",
+     "danio": 0,
+     "danio_min": 0,
+     "alcance_max": 999999,
+     "alcance_min": 999999,
+     "cuchillo": 25,
+     "perdigones": 0,
+     "cargador": 2,
+     "cadencia": 0.95,
+     "zonas": {
+      "cabeza": 4.0,
+      "casco": 4.0,
+      "cuello": 5.0,
+      "pecho": 1.0,
+      "tripa": 0.9,
+      "brazo": 0.8,
+      "pierna": 0.8
+     },
+     "explosion": {
+      "centro": 0,
+      "borde": 0,
+      "radio": 0,
+      "al_impacto": 0
+     },
+     "bo1": "wave",
+     "mejorada": {
+      "id": "microwavegun_upgraded_zm",
+      "nombre": "Max Wave Gun",
+      "archivo": "bo1",
+      "tipo": "projectile",
+      "disparo": "Single Shot",
+      "danio": 0,
+      "danio_min": 0,
+      "alcance_max": 999999,
+      "alcance_min": 999999,
+      "cuchillo": 25,
+      "perdigones": 0,
+      "cargador": 4,
+      "cadencia": 0.95,
+      "zonas": {
+       "cabeza": 4.0,
+       "casco": 4.0,
+       "cuello": 5.0,
+       "pecho": 1.0,
+       "tripa": 0.9,
+       "brazo": 0.8,
+       "pierna": 0.8
+      },
+      "explosion": {
+       "centro": 0,
+       "borde": 0,
+       "radio": 0,
+       "al_impacto": 0
+      },
+      "bo1": "wave"
+     },
      "coste": 0
     }
    ]

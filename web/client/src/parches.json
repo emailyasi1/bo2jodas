@@ -18,6 +18,77 @@
     ]
   },
   {
+    "version": "1.10.15",
+    "fecha": "2026-10-28",
+    "titulo": "Brutus de verdad",
+    "pruebas": true,
+    "cambios": [
+      {
+        "tipo": "nuevo",
+        "que": "Las partidas se suben solas",
+        "texto": "Ya no hace falta arrastrar el JSON ni el .bat: al acabar cada ronda y la partida, el juego del anfitrión la sube solo a la web (si hay internet). La primera vez tu nombre queda ligado a tu PC, así nadie puede subir partidas con tu nombre. Para verlo: set jodas_debug_subida 1."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Zombies que tardaban minutos en llegar",
+        "texto": "Si todos estabais en el extremo oeste de Pueblo, el juego creía que no había nadie y sacaba los zombies en la estación de autobuses, a minutos de camino. Ahora solo salen en Pueblo, cerca de vosotros. Y un zombie que se pierde lejos y nadie ve, o que se queda atascado, vuelve a salir por una ventana o del suelo con la vida que tenía (ya no aparece detrás de un jugador ni fuera de la valla del banco). No cuenta como baja."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Brutus",
+        "texto": "El jefe Brutus ya es el de Mob of the Dead, con sus animaciones de andar, correr, pegar, burlarse y morir, sus pasos que hacen temblar la pantalla y sus sonidos. Hace lo mismo que antes: misma vida, fases, rugido, pisotón, escolta y pieza del bastón de fuego."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Zombies de Pueblo",
+        "texto": "Para hacerle hueco a Brutus, en las rondas ya no salen las zombis mujeres (una de las tres variantes de aspecto). Se mueven y pegan igual que antes."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Paralizador",
+        "texto": "El juego se cerraba cuando el Paralizador llegaba al 100 % de calor y empezaba a enfriarse: un fallo del contador de munición del propio juego (que en Pueblo nunca se usaba con un arma que se enfría). El mod lleva una copia corregida."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Escopetas: Acid Gat",
+        "texto": "El arma especial de Escopetas pasa a ser el Acid Gat de Mob of the Dead (sin el kit): dispara ráfagas de dardos que se pegan y explotan. Su mejora es el Vitriolic Withering. El Blundergat pasa a ser un arma más de la clase (con su mejora The Sweeper)."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Thundergun (carta legendaria)",
+        "texto": "La Thundergun de Black Ops 1 llega con una carta LEGENDARIA: lanza por los aires a los zombies cercanos y derriba a los lejanos (al jefe y a Brutus solo les hace daño). No se cambia por el arma de ronda; con Pack-a-Punch pasa a ser la Zeus Cannon. Suena como en Kino der Toten: sus disparos, su recarga y el golpe a los zombies, sacados del Black Ops 1 de quien compila el mod."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Zap Guns / Wave Gun",
+        "texto": "Las Zap Guns de Moon son la nueva arma especial de Pistolas (junto al Ray Gun). Con la tecla de modo alternativo (5) se juntan en la Wave Gun, que revienta a los zombies de un disparo. Lo que matan no suelta powerups. Suenan como en Black Ops 1: el disparo de cada mano por su lado, la recarga, el chasquido eléctrico al matar y el ding del microondas al reventar. En Pueblo los zombies mueren con las animaciones de Black Ops 1: con la Wave Gun se retuercen y revientan, y con las Zap Guns caen electrocutados. El tubo de la Wave Gun brilla y se mueve como en Moon, y la mejorada se ve igual que la normal."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Baby Gun (carta legendaria)",
+        "texto": "La Baby Gun de Shangri-La llega con una carta LEGENDARIA: encoge a los zombies que pilla durante unos segundos (el doble con The Fractalizer, su mejora). Encogidos tienen 1 de vida y casi no pegan: si andas hacia uno mirándolo, le das una patada y sale volando; si no, lo pisas. Al jefe y a Brutus no los encoge, solo les hace un poco de daño. No se cambia por el arma de ronda. Suena como en Black Ops 1."
+      }
+    ]
+  },
+  {
+    "version": "1.10.14",
+    "fecha": "2026-10-27",
+    "titulo": "Who's Who llega a Pueblo",
+    "pruebas": true,
+    "cambios": [
+      {
+        "tipo": "nuevo",
+        "que": "Who's Who",
+        "texto": "La Bruja también puede regalar Who's Who (Pueblo y Nuketown), con el script original de Die Rise: al recibir un golpe mortal no caes; apareces lejos con la pistola y dejas un clon tumbado. Si tú u otro jugador revivís el clon, vuelves a su sitio con armas, bebidas, equipo y los puntos que tenías al morir. Si se desangra, lo guardado se pierde."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Who's Who y las cartas",
+        "texto": "Cuenta siempre como caída. Solo pierdes carta si nadie revive el clon (la Tombstone no la salva). En ese caso recuperas el equipo de tus cartas y un arma de tu clase, y el bastón de fuego se queda en la mesa (USAR para cogerlo). Revivir el clon de otro cuenta para el Médico."
+      }
+    ]
+  },
+  {
     "version": "1.10.13",
     "fecha": "2026-10-27",
     "titulo": "La lista de cartas se ve entera",
