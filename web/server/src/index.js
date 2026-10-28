@@ -401,7 +401,7 @@ async function procesarTrozo(q) {
   const v = Number(q.v), n = Number(q.n), t = Number(q.t);
   const entero = (x, min, max) => Number.isInteger(x) && x >= min && x <= max;
   if (!RE_CLAVE.test(k) || !nom || nom.length > 40 || !RE_ID.test(id) || !RE_B64.test(datos)
-      || !entero(v, 0, 1e6) || !entero(t, 1, 64) || !entero(n, 0, t - 1)) {
+      || !entero(v, 0, 1e6) || !entero(t, 1, 128) || !entero(n, 0, t - 1)) {
     return nota("trozo mal formado", { nom: nom.slice(0, 40), id: id.slice(0, 40), v: q.v, n: q.n, t: q.t,
       largo_d: datos.length, k_ok: RE_CLAVE.test(k), d_ok: RE_B64.test(datos) });
   }
