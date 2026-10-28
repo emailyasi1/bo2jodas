@@ -17,6 +17,9 @@
 //   GET  /api/descarga/info       ultima version del mod en GitHub (con sesion)
 //   GET  /api/descarga            redirige al zip de la ultima version (con sesion; ver descarga.js)
 //   GET  /api/salud               para el health check del hosting
+//   GET  /api/subida, /api/subida/ping   subida automatica desde el juego, en trozos (ver abajo)
+//   GET/DELETE /api/claves-juego  nombres ligados a una clave del juego (administradores)
+//   GET  /api/eco/prueba, /api/eco/ver   prueba de peticiones desde el juego
 //   /                             la web (client/dist)
 //
 // Partidas y cuentas van al almacen (almacen.js): Postgres si hay DATABASE_URL,
@@ -141,11 +144,19 @@ app.use(express.json({ limit: "1mb" }));
 app.post("/api/runs", asinc(async (req, res) => {
   const auth = autorizarSubida(req);
   if (!auth.ok) return res.status(401).json({ error: "token incorrecto: registrate en la web y copia el token de tu perfil" });
+  const r = await recibirPartida(req.body, auth.nombre, req.claveSubida);
+  res.status(r.estado).json(r.json);
+}));
+
+// Guarda una partida que llega del mod (POST /api/runs o la subida desde el juego,
+// GET /api/subida). subidoPor: quien la subio (cuenta, o el nombre del anfitrion).
+// Devuelve { estado, json } con la respuesta HTTP.
+async function recibirPartida(cuerpo, subidoPor, claveSubida) {
   // Solo los campos que escribe el mod, con su tipo y rango, y que cuadren.
   // 422 y no 400: el rechazo es por los datos, que no van a cambiar, y el
   // script de subida apunta los 422 para no reintentarlos.
-  const { partida: p, error } = limpiar(req.body);
-  if (error) return res.status(422).json({ error, rechazada: true });
+  const { partida: p, error } = limpiar(cuerpo);
+  if (error) return { estado: 422, json: { error, rechazada: true } };
   // Resets (ronda < 10) y partidas de prueba (dvars cambiados) se guardan
   // marcadas: salen aparte y no cuentan para clasificaciones ni totales.
   p.categoria = categoria(p);
@@ -153,13 +164,13 @@ app.post("/api/runs", asinc(async (req, res) => {
   if (p.terminada === undefined) p.terminada = 1;
   p.id_mod = p.id;
   const r = buscarRepetida(p);
-  if (r.repetida) return res.json({ ok: true, id: r.id, repetida: true });
+  if (r.repetida) return { estado: 200, json: { ok: true, id: r.id, repetida: true } };
   // Puntos de control: el mod guarda la partida al acabar cada ronda con
   // terminada = 0. La version que llega despues sustituye a la sin terminar;
   // una sin terminar de una partida que ya esta (terminada o mas avanzada) se ignora.
   const mismas = [...partidas.values()].filter((x) => (x.id_mod || x.id) === p.id_mod);
   const masAvanzada = mismas.find((x) => x.terminada !== 0 || x.ronda > p.ronda || (x.ronda === p.ronda && x.duracion_s >= p.duracion_s));
-  if (p.terminada === 0 && masAvanzada) return res.json({ ok: true, id: masAvanzada.id, repetida: true });
+  if (p.terminada === 0 && masAvanzada) return { estado: 200, json: { ok: true, id: masAvanzada.id, repetida: true } };
   for (const x of mismas.filter((x) => x.terminada === 0)) {
     await almacen.borrar("run", x.id);
     partidas.delete(x.id);
@@ -168,13 +179,14 @@ app.post("/api/runs", asinc(async (req, res) => {
   p.id = r.id;
   p.recibido = new Date().toISOString();
   if (!p.fecha) p.fecha = p.recibido;
-  // Quien la subio: la cuenta del token o de la sesion (lo que diga el JSON no cuenta).
-  if (auth.nombre) p.subido_por = auth.nombre;
+  // Quien la subio: la cuenta del token o de la sesion, o el anfitrion en la subida
+  // desde el juego (lo que diga el JSON no cuenta).
+  if (subidoPor) p.subido_por = subidoPor;
   await guardar(p);
-  if (req.claveSubida) recientes(ventanas.nuevas, req.claveSubida).push(Date.now());
+  if (claveSubida) recientes(ventanas.nuevas, claveSubida).push(Date.now());
   console.log(`partida ${p.id}: ronda ${p.ronda}, ${p.jugadores.length} jugadores, ${p.mapa}, subida por ${p.subido_por || "?"}`);
-  res.status(201).json({ ok: true, id: p.id });
-}));
+  return { estado: 201, json: { ok: true, id: p.id } };
+}
 
 app.get("/api/runs", (req, res) => {
   const limite = Math.min(Number(req.query.limit) || 100, 1000);
@@ -346,6 +358,99 @@ app.get("/api/eco/prueba", (req, res) => {
   res.set("Cache-Control", "no-store").type("image/jpeg").send(JPEG_1X1);
 });
 app.get("/api/eco/ver", (_req, res) => res.set("Cache-Control", "no-store").json(ecos));
+
+// ---------------------------------------------------------------- subida desde el juego
+// encargos_mod/json_upload_test/03, Paso B. El Lua del mod (anfitrion) manda el JSON de la
+// partida en trozos con GETs (Url_Load_Jpeg, la unica red que deja el juego en Plutonium):
+//   /api/subida/ping                                       despierta la web (Render dormido)
+//   /api/subida?k=clave&nom=anfitrion&id=&v=&n=&t=&d=      trozo n de t (base64url) de la version v
+// Al juntar los t trozos de una version, pasa por recibirPartida como POST /api/runs.
+// Identidad sin cuentas: la clave (24 caracteres, la genera el mod la primera vez y la guarda
+// en el PC) se liga al nombre del anfitrion la primera vez que sube; despues ese nombre solo
+// sube con esa clave. Se guarda el hash, no la clave. El anfitrion tiene que ser un jugador
+// de la partida. Siempre se contesta un JPEG de 1x1 (el juego no lee la respuesta).
+const clavesJuego = new Map(); // nombre en minusculas -> { nombre, hash, desde }
+for (const [k, v] of await almacen.todos("clave_juego")) if (v && v.hash) clavesJuego.set(k, v);
+const ensambles = new Map(); // `${hash}|${id}|${v}` -> { total, piezas, hora }
+const RE_CLAVE = /^[a-z0-9]{24}$/;
+const RE_ID = /^[A-Za-z0-9_.-]{1,64}$/;
+const RE_B64 = /^[A-Za-z0-9_-]{0,1200}$/;
+const PIEZAS_HORA = 3000;
+const hashClave = (k) => createHash("sha256").update(k).digest("hex");
+const enviarJpeg = (res) => res.set("Cache-Control", "no-store").type("image/jpeg").send(JPEG_1X1);
+
+app.get("/api/subida/ping", (_req, res) => enviarJpeg(res));
+
+app.get("/api/subida", (req, res) => {
+  enviarJpeg(res);
+  procesarTrozo(req.query).catch((e) => console.error("subida:", e));
+});
+
+async function procesarTrozo(q) {
+  const k = String(q.k || ""), nom = String(q.nom || "").trim(), id = String(q.id || ""), datos = String(q.d || "");
+  const v = Number(q.v), n = Number(q.n), t = Number(q.t);
+  const entero = (x, min, max) => Number.isInteger(x) && x >= min && x <= max;
+  if (!RE_CLAVE.test(k) || !nom || nom.length > 40 || !RE_ID.test(id) || !RE_B64.test(datos)
+      || !entero(v, 0, 1e6) || !entero(t, 1, 64) || !entero(n, 0, t - 1)) {
+    return console.log("subida: trozo mal formado");
+  }
+  const h = hashClave(k);
+  const quien = `juego:${h.slice(0, 16)}`;
+  const intentos = recientes(ventanas.intentos, quien);
+  if (intentos.length >= PIEZAS_HORA) return console.log(`subida: ${nom} pasa de ${PIEZAS_HORA} trozos por hora`);
+  intentos.push(Date.now());
+
+  const clave = `${h}|${id}|${v}`;
+  let e = ensambles.get(clave);
+  if (!e) {
+    for (const [c, x] of ensambles) if (Date.now() - x.hora > 3600_000) ensambles.delete(c);
+    if (ensambles.size > 500) ensambles.clear();
+    e = { total: t, piezas: new Array(t).fill(null), hora: Date.now() };
+    ensambles.set(clave, e);
+  }
+  if (e.total !== t) return;
+  e.piezas[n] = Buffer.from(datos, "base64url");
+  if (e.piezas.some((x) => x === null)) return;
+  ensambles.delete(clave);
+
+  let cuerpo;
+  try {
+    cuerpo = JSON.parse(Buffer.concat(e.piezas).toString("utf8"));
+  } catch {
+    return console.log(`subida: ${nom} ${id} v${v}: el JSON juntado no es valido`);
+  }
+  const nombre = nom.toLowerCase();
+  const ligada = clavesJuego.get(nombre);
+  if (ligada && ligada.hash !== h) return console.log(`subida: "${nom}" esta ligado a otra clave (otro PC): rechazada`);
+  const jugadores = Array.isArray(cuerpo && cuerpo.jugadores) ? cuerpo.jugadores : [];
+  if (!jugadores.some((j) => String((j && j.nombre) || "").toLowerCase() === nombre)) {
+    return console.log(`subida: ${nom} no es jugador de la partida ${id}: rechazada`);
+  }
+  const r = await recibirPartida(cuerpo, nom, quien);
+  console.log(`subida desde el juego: ${nom}, ${id} v${v} (${t} trozos) -> ${r.estado} ${JSON.stringify(r.json)}`);
+  if (r.estado < 300 && !ligada) {
+    const reg = { nombre: nom, hash: h, desde: new Date().toISOString() };
+    await almacen.guardar("clave_juego", nombre, reg);
+    clavesJuego.set(nombre, reg);
+    console.log(`subida: "${nom}" ligado a su clave`);
+  }
+}
+
+// Nombres ligados a una clave del juego (administradores): ver y soltar (cambio de PC).
+app.get("/api/claves-juego", (req, res) => {
+  if (!usuarios.esAdmin(usuarios.deCookie(req))) return res.status(403).json({ error: "solo administradores" });
+  res.json([...clavesJuego.values()].map(({ nombre, desde }) => ({ nombre, desde })));
+});
+app.delete("/api/claves-juego/:nombre", asinc(async (req, res) => {
+  const quien = usuarios.deCookie(req);
+  if (!usuarios.esAdmin(quien)) return res.status(403).json({ error: "solo administradores" });
+  const nombre = String(req.params.nombre).toLowerCase();
+  if (!clavesJuego.has(nombre)) return res.status(404).json({ error: "no esta ligado" });
+  await almacen.borrar("clave_juego", nombre);
+  clavesJuego.delete(nombre);
+  console.log(`subida: "${nombre}" soltado por ${usuarios.publico(quien).usuario}`);
+  res.json({ ok: true });
+}));
 
 // JSON mal formado o fallo al guardar: respuesta JSON en vez de la pagina de error de express.
 app.use("/api", (err, _req, res, _siguiente) => {
