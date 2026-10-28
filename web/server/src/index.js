@@ -18,6 +18,7 @@
 //   GET  /api/descarga            redirige al zip de la ultima version (con sesion; ver descarga.js)
 //   GET  /api/salud               para el health check del hosting
 //   GET  /api/subida, /api/subida/ping   subida automatica desde el juego, en trozos (ver abajo)
+//   GET  /api/subida/ver          ultimas notas de la subida (por que se guarda o no)
 //   GET/DELETE /api/claves-juego  nombres ligados a una clave del juego (administradores)
 //   GET  /api/eco/prueba, /api/eco/ver   prueba de peticiones desde el juego
 //   /                             la web (client/dist)
@@ -377,9 +378,18 @@ const RE_ID = /^[A-Za-z0-9_.-]{1,64}$/;
 const RE_B64 = /^[A-Za-z0-9_-]{0,1200}$/;
 const PIEZAS_HORA = 3000;
 const hashClave = (k) => createHash("sha256").update(k).digest("hex");
+// Ultimas 60 notas de la subida (sin clave ni IP), en /api/subida/ver: para ver por que
+// no se guarda una partida sin tener que mirar los logs de Render.
+const notasSubida = [];
+function nota(texto, datos) {
+  console.log(`subida: ${texto}`);
+  notasSubida.unshift({ hora: new Date().toISOString(), texto, ...(datos ? { datos } : {}) });
+  notasSubida.length = Math.min(notasSubida.length, 60);
+}
 const enviarJpeg = (res) => res.set("Cache-Control", "no-store").type("image/jpeg").send(JPEG_1X1);
 
 app.get("/api/subida/ping", (_req, res) => enviarJpeg(res));
+app.get("/api/subida/ver", (_req, res) => res.set("Cache-Control", "no-store").json(notasSubida));
 
 app.get("/api/subida", (req, res) => {
   enviarJpeg(res);
@@ -392,12 +402,13 @@ async function procesarTrozo(q) {
   const entero = (x, min, max) => Number.isInteger(x) && x >= min && x <= max;
   if (!RE_CLAVE.test(k) || !nom || nom.length > 40 || !RE_ID.test(id) || !RE_B64.test(datos)
       || !entero(v, 0, 1e6) || !entero(t, 1, 64) || !entero(n, 0, t - 1)) {
-    return console.log("subida: trozo mal formado");
+    return nota("trozo mal formado", { nom: nom.slice(0, 40), id: id.slice(0, 40), v: q.v, n: q.n, t: q.t,
+      largo_d: datos.length, k_ok: RE_CLAVE.test(k), d_ok: RE_B64.test(datos) });
   }
   const h = hashClave(k);
   const quien = `juego:${h.slice(0, 16)}`;
   const intentos = recientes(ventanas.intentos, quien);
-  if (intentos.length >= PIEZAS_HORA) return console.log(`subida: ${nom} pasa de ${PIEZAS_HORA} trozos por hora`);
+  if (intentos.length >= PIEZAS_HORA) return nota(`${nom} pasa de ${PIEZAS_HORA} trozos por hora`);
   intentos.push(Date.now());
 
   const clave = `${h}|${id}|${v}`;
@@ -410,6 +421,7 @@ async function procesarTrozo(q) {
   }
   if (e.total !== t) return;
   e.piezas[n] = Buffer.from(datos, "base64url");
+  nota(`trozo ${n + 1}/${t}`, { nom, id, v, largo_d: datos.length, bytes: e.piezas[n].length });
   if (e.piezas.some((x) => x === null)) return;
   ensambles.delete(clave);
 
@@ -417,22 +429,24 @@ async function procesarTrozo(q) {
   try {
     cuerpo = JSON.parse(Buffer.concat(e.piezas).toString("utf8"));
   } catch {
-    return console.log(`subida: ${nom} ${id} v${v}: el JSON juntado no es valido`);
+    const texto = Buffer.concat(e.piezas).toString("latin1");
+    return nota(`${nom} ${id} v${v}: el JSON juntado no es valido`, { bytes: texto.length,
+      principio: texto.slice(0, 300), final: texto.slice(-200) });
   }
   const nombre = nom.toLowerCase();
   const ligada = clavesJuego.get(nombre);
-  if (ligada && ligada.hash !== h) return console.log(`subida: "${nom}" esta ligado a otra clave (otro PC): rechazada`);
+  if (ligada && ligada.hash !== h) return nota(`"${nom}" esta ligado a otra clave (otro PC): rechazada`);
   const jugadores = Array.isArray(cuerpo && cuerpo.jugadores) ? cuerpo.jugadores : [];
   if (!jugadores.some((j) => String((j && j.nombre) || "").toLowerCase() === nombre)) {
-    return console.log(`subida: ${nom} no es jugador de la partida ${id}: rechazada`);
+    return nota(`${nom} no es jugador de la partida ${id}: rechazada`, { jugadores: jugadores.map((x) => x && x.nombre) });
   }
   const r = await recibirPartida(cuerpo, nom, quien);
-  console.log(`subida desde el juego: ${nom}, ${id} v${v} (${t} trozos) -> ${r.estado} ${JSON.stringify(r.json)}`);
+  nota(`${nom}, ${id} v${v} (${t} trozos) -> ${r.estado}`, r.json);
   if (r.estado < 300 && !ligada) {
     const reg = { nombre: nom, hash: h, desde: new Date().toISOString() };
     await almacen.guardar("clave_juego", nombre, reg);
     clavesJuego.set(nombre, reg);
-    console.log(`subida: "${nom}" ligado a su clave`);
+    nota(`"${nom}" ligado a su clave`);
   }
 }
 
