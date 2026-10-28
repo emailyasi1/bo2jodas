@@ -52,6 +52,7 @@ function ranking(partidas, c, filtro) {
   const mejor = new Map();
   for (const p of partidas) {
     if (p.prueba) continue;
+    if (p.revision && p.revision !== "validada") continue; // en revision o rechazada
     const n = p.jugadores.length;
     if (filtro.tam === "5" ? n < 5 : n !== Number(filtro.tam)) continue;
     const cumple = p.jugadores.some((j) => (!filtro.clase || j.clase === filtro.clase) && (!filtro.arq || j.arquetipo === filtro.arq) && (!filtro.mitica || j.mitica === filtro.mitica));

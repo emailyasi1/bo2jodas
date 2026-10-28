@@ -2,7 +2,7 @@
 // nombre original va en el comentario para poder comprobarlo. Los datos
 // (configuracion, cartas, armas) salen de calculadora.json, que genera
 // tools/generar_calculadora.py a partir de los scripts y archivos del juego.
-import DATOS from "../calculadora.json";
+import DATOS from "../calculadora.json" with { type: "json" };
 
 export { DATOS };
 const CFG = DATOS.cfg;

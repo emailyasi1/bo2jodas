@@ -1,5 +1,23 @@
 [
   {
+    "version": "Web",
+    "fecha": "2026-10-28",
+    "titulo": "Partidas en revisión",
+    "pruebas": true,
+    "cambios": [
+      {
+        "tipo": "nuevo",
+        "que": "Revisión automática",
+        "texto": "Cada partida que cuenta (ronda 10 o más, sin dvars cambiados) se revisa al subirla con las fórmulas de la calculadora: bajas de cada ronda frente a los zombies que salen, daño frente a la vida de todos los zombies y jefes (en total y ronda a ronda), nivel con las bajas que llevabas, puntos con tus bajas e impactos y el daño de cada carta con su valor. Si todo cuadra, entra sola en la clasificación; si no, sale con la etiqueta «En revisión» hasta que la mire un administrador."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Administradores",
+        "texto": "En la página de la partida, los administradores ven cada comprobación (lo real y el tope) y pueden aprobarla, rechazarla (se ve marcada y no cuenta nunca) o volver a revisarla. Las partidas que ya estaban en la web cuentan como validadas."
+      }
+    ]
+  },
+  {
     "version": "1.10.13",
     "fecha": "2026-10-27",
     "titulo": "La lista de cartas se ve entera",

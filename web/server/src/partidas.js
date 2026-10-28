@@ -20,8 +20,13 @@ export function esPrueba(p) {
   return Object.keys(p.dvars || {}).some((k) => !DVARS_DE_PANTALLA.has(k));
 }
 
-// Lo que cuenta para clasificaciones, records, totales y perfiles.
-export const cuenta = (p) => (p.categoria || categoria(p)) !== "reset" && !p.prueba;
+// Estado de la revision (revision.js): las subidas antes de que existiera no la llevan y
+// cuentan como validadas (decision del usuario, 2026-10-28).
+export const estadoRevision = (p) => (p.revision ? p.revision.estado : "validada");
+
+// Lo que cuenta para clasificaciones, records, totales y perfiles: ni resets, ni pruebas,
+// ni partidas en revision o rechazadas.
+export const cuenta = (p) => (p.categoria || categoria(p)) !== "reset" && !p.prueba && estadoRevision(p) === "validada";
 
 // Ronda alcanzada sin que nadie cayera: la de la primera caida o, si nadie
 // cayo, la ultima (solo partidas que traen el dato, desde la 1.10.3).
@@ -42,6 +47,8 @@ export function resumen(p) {
     subido_por: p.subido_por,
     categoria: p.categoria || categoria(p),
     prueba: !!p.prueba,
+    // "validada", "en_revision" o "rechazada" (revision.js); null en resets y pruebas.
+    revision: p.revision ? p.revision.estado : null,
     terminada: p.terminada === undefined ? 1 : p.terminada,
     sin_caer: rondaSinCaer(p),
     // Flawless y speedrun solo con partidas que pasaron la validacion nueva (la

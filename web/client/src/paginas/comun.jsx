@@ -14,6 +14,8 @@ export function FilaPartida({ p, resaltar }) {
           <span className="pf-meta">{hace(p.fecha)} · {duracion(p.duracion_s)}</span>
           {p.terminada === 0 && <span className="tag tag-linea">Sin terminar</span>}
           {p.prueba && <span className="tag tag-linea">Prueba</span>}
+          {p.revision === "en_revision" && <span className="tag tag-linea" style={{ "--c": "var(--lava)" }} title="Pendiente de validar: no cuenta para la clasificación todavía">En revisión</span>}
+          {p.revision === "rechazada" && <span className="tag tag-linea" style={{ "--c": "var(--sangre)" }} title="Un administrador la rechazó: no cuenta para la clasificación">Rechazada</span>}
         </div>
         <div className="pf-jugadores">
           {p.jugadores.map((j) => (

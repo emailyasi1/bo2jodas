@@ -36,6 +36,9 @@ export async function borrarPartida(id) {
   return datos;
 }
 
+// Administradores: aprobar, rechazar o volver a revisar una partida (revision.js del servidor).
+export const revisarPartida = (id, accion, motivo) => post(`/runs/${encodeURIComponent(id)}/revision`, { accion, motivo });
+
 export function subirPartida(json, token) {
   return post("/runs", json, token ? { "x-token": token } : {});
 }

@@ -36,7 +36,7 @@ const ANTES_11010 = {
     botin: 50, oro: 400, unabala: 100, monos: 3, claymores: 3, semtex: 3, emp: 3,
   },
 };
-const numVersion = (v) => {
+export const numVersion = (v) => {
   const [a, b, c = 0] = String(v).split(".").map(Number);
   return a * 1e6 + b * 1e3 + c;
 };
@@ -171,7 +171,7 @@ function opcional(out, entrada, clave, fn) {
 
 // Zombies que salen en una ronda (_zm::round_spawning + default_max_zombie_func
 // del juego, x jodas_zombies_mult y +20 % por jugador por encima de 4).
-function zombiesRonda(r, n) {
+export function zombiesRonda(r, n) {
   let mult = Math.max(1, r / 5);
   if (r >= 10) mult *= r * 0.15;
   let max = 24 + (n === 1 ? Math.trunc(0.5 * 6 * mult) : Math.trunc((n - 1) * 6 * mult));
@@ -193,7 +193,7 @@ function zombiesHasta(ronda, n) {
 
 // Nivel mas alto posible con estas bajas: el nivel L cuesta en total
 // base*L + paso*L*(L-1)/2 bajas (jodas_al_matar).
-function nivelMaximo(bajas) {
+export function nivelMaximo(bajas) {
   const b = CFG.cartas_base;
   const p = CFG.cartas_paso;
   let L = 0;

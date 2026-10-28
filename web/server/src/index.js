@@ -5,6 +5,8 @@
 //   GET  /api/runs                lista de partidas (resumen), las mas recientes primero
 //   GET  /api/runs/:id            una partida entera
 //   DELETE /api/runs/:id          borra una partida (solo administradores)
+//   GET  /api/revision            partidas en revision o rechazadas, con lo que fallo (administradores)
+//   POST /api/runs/:id/revision   { accion: aprobar | rechazar | revisar, motivo } (administradores)
 //   GET  /api/leaderboards        mejores rondas por jugador, clase y arquetipo, records y su historia
 //   GET  /api/stats               totales del grupo
 //   GET  /api/jugadores/:nombre   perfil de un jugador: totales, cartas favoritas y sus partidas
@@ -33,6 +35,7 @@ import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { resumen, leaderboards, totales, categoria, esPrueba, jugador } from "./partidas.js";
+import { revisar } from "./revision.js";
 import { limpiar } from "./validar.js";
 import { cargarTokens, comprobarToken } from "./tokens.js";
 import { Usuarios } from "./usuarios.js";
@@ -152,6 +155,17 @@ app.post("/api/runs", asinc(async (req, res) => {
 // Guarda una partida que llega del mod (POST /api/runs o la subida desde el juego,
 // GET /api/subida). subidoPor: quien la subio (cuenta, o el nombre del anfitrion).
 // Devuelve { estado, json } con la respuesta HTTP.
+// El verificador no puede tumbar una subida: si falla, la partida queda en revision con el error.
+function revisarSeguro(p) {
+  try {
+    return revisar(p);
+  } catch (e) {
+    console.error("revision:", e);
+    return { estado: "en_revision", fecha: new Date().toISOString(),
+      comprobaciones: [{ id: "error", ok: false, texto: `el verificador falló: ${String(e.message || e).slice(0, 200)}` }] };
+  }
+}
+
 async function recibirPartida(cuerpo, subidoPor, claveSubida) {
   // Solo los campos que escribe el mod, con su tipo y rango, y que cuadren.
   // 422 y no 400: el rechazo es por los datos, que no van a cambiar, y el
@@ -163,6 +177,9 @@ async function recibirPartida(cuerpo, subidoPor, claveSubida) {
   p.categoria = categoria(p);
   p.prueba = esPrueba(p);
   if (p.terminada === undefined) p.terminada = 1;
+  // Las que cuentan (ni reset ni prueba) se revisan con la calculadora (revision.js): si todo
+  // cuadra quedan validadas; si no, "en revision" hasta que las mire un administrador.
+  if (p.categoria !== "reset" && !p.prueba) p.revision = revisarSeguro(p);
   p.id_mod = p.id;
   const r = buscarRepetida(p);
   if (r.repetida) return { estado: 200, json: { ok: true, id: r.id, repetida: true } };
@@ -210,6 +227,35 @@ app.get("/api/runs/:id", (req, res) => {
 // Borrar una partida mal subida: desaparece de la lista, la clasificacion, los
 // records y los perfiles (todo se calcula a partir de las partidas). Queda una
 // linea en el almacen (tipo "borrado") con que se borro, quien y cuando.
+// Revision de partidas (administradores). Lista de las que no estan validadas, con lo que fallo.
+app.get("/api/revision", (req, res) => {
+  if (!usuarios.esAdmin(usuarios.deCookie(req))) return res.status(403).json({ error: "solo administradores" });
+  const lista = [...partidas.values()].filter((p) => p.revision && p.revision.estado !== "validada")
+    .sort((a, b) => String(b.recibido || b.fecha).localeCompare(String(a.recibido || a.fecha)))
+    .map((p) => ({ ...resumen(p), detalle: p.revision }));
+  res.json(lista);
+});
+
+// { accion: "aprobar" | "rechazar" | "revisar", motivo }: aprobar la valida a mano, rechazar
+// la deja visible y marcada (no cuenta nunca), revisar vuelve a pasar el verificador.
+app.post("/api/runs/:id/revision", asinc(async (req, res) => {
+  const clave = usuarios.deCookie(req);
+  if (!usuarios.esAdmin(clave)) return res.status(403).json({ error: "solo un administrador puede revisar partidas" });
+  const p = partidas.get(req.params.id);
+  if (!p) return res.status(404).json({ error: "no existe" });
+  const accion = String((req.body && req.body.accion) || "");
+  const motivo = String((req.body && req.body.motivo) || "").slice(0, 300);
+  const quien = usuarios.publico(clave).usuario;
+  if (accion === "revisar") p.revision = revisarSeguro(p);
+  else if (accion === "aprobar" || accion === "rechazar") {
+    p.revision = { ...(p.revision || { comprobaciones: [] }), estado: accion === "aprobar" ? "validada" : "rechazada",
+      manual: { por: quien, fecha: new Date().toISOString(), motivo } };
+  } else return res.status(400).json({ error: "accion: aprobar, rechazar o revisar" });
+  await guardar(p);
+  console.log(`partida ${p.id}: revision ${accion} por ${quien} -> ${p.revision.estado}`);
+  res.json({ ok: true, revision: p.revision });
+}));
+
 app.delete("/api/runs/:id", asinc(async (req, res) => {
   const clave = usuarios.deCookie(req);
   if (!usuarios.esAdmin(clave)) return res.status(403).json({ error: "solo un administrador puede borrar partidas" });

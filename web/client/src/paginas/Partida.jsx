@@ -4,7 +4,7 @@ import { CalendarDays, ChevronRight, Clock, Tag, Trash2, Upload, Users } from "l
 import {
   Cargando, Fallo, Ficha, FilaBarra, Ronda, Seccion, TagArquetipo, TagClase, TagMitica, grupo, useDatos, valorCarta, vaciarCache,
 } from "../ui.jsx";
-import { borrarPartida } from "../api.js";
+import { borrarPartida, revisarPartida } from "../api.js";
 import { COLORES_JUGADOR, ColumnasRondas, GraficaRondas } from "../graficas.jsx";
 import { Segmentos } from "../controles.jsx";
 import { useSesion } from "../sesion.jsx";
@@ -55,6 +55,8 @@ export default function Partida() {
             {p.terminada === 0 && <span className="tag tag-linea" title="El juego se reinició o se cerró: es el último guardado (al acabar una ronda)">Sin terminar</span>}
             {p.ronda < 10 && <span className="tag tag-linea" title="Acabó antes de la ronda 10: sale en Resets y no cuenta para la clasificación">Reset</span>}
             {p.prueba && <span className="tag tag-linea" title="Tenía dvars del mod cambiados: no cuenta para la clasificación">Prueba</span>}
+            {p.revision?.estado === "en_revision" && <span className="tag tag-linea" style={{ "--c": "var(--lava)" }} title="Las cuentas de la calculadora no cuadran del todo: no cuenta para la clasificación hasta que la valide un administrador">En revisión</span>}
+            {p.revision?.estado === "rechazada" && <span className="tag tag-linea" style={{ "--c": "var(--sangre)" }} title="Un administrador la rechazó: no cuenta para la clasificación">Rechazada</span>}
           </div>
         </div>
         {jefes.length > 0 && (
@@ -70,6 +72,7 @@ export default function Partida() {
         )}
       </header>
 
+      <RevisionPartida p={p} />
       <BorrarPartida p={p} />
       <ResumenPartida p={p} />
 
@@ -157,6 +160,72 @@ function ResumenPartida({ p }) {
         </Seccion>
       )}
     </>
+  );
+}
+
+// Revision (servidor: revision.js). Todos ven si esta en revision o rechazada; los
+// administradores ven cada comprobacion (lo esperado y lo real) y pueden aprobarla,
+// rechazarla o volver a pasarle el verificador.
+const TEXTO_REVISION = {
+  en_revision: "Las cuentas de la calculadora no cuadran del todo con esta partida: no cuenta para la clasificación ni los récords hasta que la valide un administrador.",
+  rechazada: "Un administrador ha rechazado esta partida: se ve, pero no cuenta para la clasificación ni los récords.",
+};
+
+function RevisionPartida({ p }) {
+  const { yo } = useSesion();
+  const [rev, setRev] = useState(p.revision || null);
+  const [motivo, setMotivo] = useState("");
+  const [ocupado, setOcupado] = useState(false);
+  const [error, setError] = useState("");
+  if (!rev) return null;
+  const admin = yo && yo.admin;
+  if (!admin && rev.estado === "validada") return null;
+
+  async function hacer(accion) {
+    setOcupado(true);
+    setError("");
+    try {
+      const r = await revisarPartida(p.id, accion, motivo);
+      setRev(r.revision);
+      vaciarCache();
+    } catch (e) {
+      setError(e.message);
+    }
+    setOcupado(false);
+  }
+
+  const comprobaciones = [...(rev.comprobaciones || [])].sort((a, b) => Number(a.ok) - Number(b.ok));
+  return (
+    <div className="admin-barra" style={{ display: "block" }}>
+      {TEXTO_REVISION[rev.estado] && <p className="peq" style={{ margin: 0 }}>{TEXTO_REVISION[rev.estado]}</p>}
+      {rev.manual && (
+        <p className="peq ten" style={{ margin: "6px 0 0" }}>
+          {rev.estado === "validada" ? "Aprobada" : "Rechazada"} a mano por {rev.manual.por} ({fecha(rev.manual.fecha)}){rev.manual.motivo ? `: ${rev.manual.motivo}` : ""}
+        </p>
+      )}
+      {admin && (
+        <>
+          <div className="mayus ten" style={{ margin: "10px 0 4px" }}>Revisión · {rev.estado === "validada" ? "validada" : rev.estado === "rechazada" ? "rechazada" : "en revisión"}</div>
+          <ul className="peq" style={{ margin: 0, paddingLeft: 18 }}>
+            {comprobaciones.map((c) => (
+              <li key={c.id} style={{ color: c.ok ? undefined : "var(--lava)" }}>
+                {c.ok ? "✓" : "✗"} {c.texto}
+                {c.esperado !== undefined && <span className="ten"> (real {fmt(c.real)} / tope {fmt(c.esperado)})</span>}
+              </li>
+            ))}
+          </ul>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10, alignItems: "center" }}>
+            <label className="campo" style={{ minWidth: 200, flex: 1 }}>
+              <input placeholder="Motivo (opcional)" value={motivo} maxLength={300} onChange={(e) => setMotivo(e.target.value)} />
+            </label>
+            {rev.estado !== "validada" && <button type="button" className="boton peq" disabled={ocupado} onClick={() => hacer("aprobar")}>Aprobar</button>}
+            {rev.estado !== "rechazada" && <button type="button" className="boton sec peq peligro" disabled={ocupado} onClick={() => hacer("rechazar")}>Rechazar</button>}
+            <button type="button" className="boton texto peq" disabled={ocupado} onClick={() => hacer("revisar")}>Volver a revisar</button>
+          </div>
+          {error && <span className="error">{error}</span>}
+        </>
+      )}
+    </div>
   );
 }
 
