@@ -85,15 +85,21 @@ const abrir = (ir, id) => (e) => {
 
 export default function Clasificacion() {
   const ir = useNavigate();
-  const runs = useDatos("/runs?limit=1000");
-  const lb = useDatos("/leaderboards");
-  // Categoria y jugadores en la URL (?c=flawless&j=2) para poder pasar el enlace.
+  // Categoria, jugadores y version en la URL (?c=flawless&j=2&v=1.10.12) para poder pasar el enlace.
   const [params, setParams] = useSearchParams();
+  // Clasificacion por parche: sin ?v=, la version de portada (la ultima publicada, la que tiene la gente).
+  const vs = useDatos("/versiones");
+  const version = params.get("v") || vs.datos?.actual || "";
+  const q = version ? `version=${encodeURIComponent(version)}` : "";
+  const listo = vs.datos || vs.error;
+  const runs = useDatos(listo ? `/runs?limit=1000&${q}` : null);
+  const lb = useDatos(listo ? `/leaderboards?${q}` : null);
   const cat = CATEGORIAS[params.get("c")] ? params.get("c") : "high";
   const tam = JUGADORES.some(([v]) => v === params.get("j")) ? params.get("j") : "1";
   const cambiar = (clave, v) => {
     const n = new URLSearchParams(params);
-    n.set(clave, v);
+    if (clave === "v" && v === vs.datos?.actual) n.delete("v");
+    else n.set(clave, v);
     setParams(n, { replace: true });
   };
   const [clase, setClase] = useState("");
@@ -108,10 +114,14 @@ export default function Clasificacion() {
     <>
       <div className="pagina-cab">
         <div>
-          <span className="mayus ten">Town · mejores partidas por número de jugadores</span>
+          <span className="mayus ten">Town{version ? ` · versión ${version}` : ""} · mejores partidas por número de jugadores</span>
           <h1>Clasificación</h1>
-          <p className="mut">Una entrada por jugador o grupo con su mejor partida en cada categoría. Con el mismo resultado comparten puesto y va primero quien lo consiguió antes.</p>
+          <p className="mut">Una entrada por jugador o grupo con su mejor partida en cada categoría. Con el mismo resultado comparten puesto y va primero quien lo consiguió antes. Cada versión del mod tiene su clasificación: aquí sale la última publicada y las demás se eligen en el desplegable.</p>
         </div>
+        {vs.datos && vs.datos.versiones.length > 0 && (
+          <Desplegable valor={version} onCambio={(v) => cambiar("v", v)} ariaLabel="Versión del mod"
+            opciones={vs.datos.versiones.map((x) => ({ v: x.version, t: `Versión ${x.version}${x.version === vs.datos.actual ? " (actual)" : ""} · ${x.partidas} ${x.partidas === 1 ? "partida" : "partidas"}` }))} />
+        )}
       </div>
 
       <div className="filtros">
@@ -125,7 +135,7 @@ export default function Clasificacion() {
       </div>
       <p className="mut peq" style={{ margin: "-4px 0 14px" }}>{c.explica}</p>
 
-      {runs.cargando && <Cargando filas={5} />}
+      {(runs.cargando || !listo) && <Cargando filas={5} />}
       {runs.error && <Fallo error={runs.error} />}
       {runs.datos && (filas.length ? (
         <div className="tabla-env">

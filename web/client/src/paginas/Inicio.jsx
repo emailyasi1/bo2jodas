@@ -28,7 +28,7 @@ export default function Inicio() {
                 <TagClase id={mejor.clase} />
                 <TagArquetipo id={mejor.arquetipo} />
                 <TagMitica id={mejor.mitica} />
-                <span className="ten">{hace(mejor.fecha)}</span>
+                <span className="ten">{hace(mejor.fecha)}{lb.datos.version ? ` · versión ${lb.datos.version}` : ""}</span>
               </div>
               <div className="acciones">
                 <Link className="boton" to={`/partida/${mejor.partida}`}>Ver la partida <ArrowUpRight size={16} /></Link>

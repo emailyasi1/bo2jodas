@@ -2,12 +2,14 @@
 //
 //   POST /api/runs                sube el JSON de una partida (cabecera x-token con el token de tu cuenta);
 //                                 422 si nadie paso del nivel 10 (filtro de resets)
-//   GET  /api/runs                lista de partidas (resumen), las mas recientes primero
+//   GET  /api/runs                lista de partidas (resumen), las mas recientes primero (?version= para una sola)
 //   GET  /api/runs/:id            una partida entera
 //   DELETE /api/runs/:id          borra una partida (solo administradores)
 //   GET  /api/revision            partidas en revision o rechazadas, con lo que fallo (administradores)
 //   POST /api/runs/:id/revision   { accion: aprobar | rechazar | revisar, motivo } (administradores)
 //   GET  /api/leaderboards        mejores rondas por jugador, clase y arquetipo, records y su historia
+//                                 (?version=1.10.13; sin ella, la version de portada: ver versionPortada)
+//   GET  /api/versiones           version de portada y versiones con partidas (desplegable de la clasificacion)
 //   GET  /api/stats               totales del grupo
 //   GET  /api/jugadores/:nombre   perfil de un jugador: totales, cartas favoritas y sus partidas
 //   POST /api/auth/registro       { usuario, contrasena } -> crea la cuenta y entra
@@ -34,9 +36,9 @@ import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { resumen, leaderboards, totales, categoria, esPrueba, jugador } from "./partidas.js";
+import { resumen, leaderboards, totales, categoria, esPrueba, jugador, cuenta } from "./partidas.js";
 import { revisar } from "./revision.js";
-import { limpiar } from "./validar.js";
+import { limpiar, numVersion } from "./validar.js";
 import { cargarTokens, comprobarToken } from "./tokens.js";
 import { Usuarios } from "./usuarios.js";
 import { crearAlmacen } from "./almacen.js";
@@ -213,6 +215,7 @@ app.get("/api/runs", (req, res) => {
   const lista = [...partidas.values()]
     .map(resumen)
     .filter((p) => (p.categoria === "reset") === resets)
+    .filter((p) => !req.query.version || String(p.version || "") === String(req.query.version))
     .sort((a, b) => (b.fecha > a.fecha ? 1 : b.fecha < a.fecha ? -1 : 0))
     .slice(0, limite);
   res.json(lista);
@@ -272,9 +275,52 @@ app.delete("/api/runs/:id", asinc(async (req, res) => {
   res.json({ ok: true });
 }));
 
-app.get("/api/leaderboards", (_req, res) => {
-  res.json(leaderboards([...partidas.values()]));
-});
+// Clasificacion por parche: cada version tiene la suya. En portada va la ultima release
+// publicada en GitHub (la que se descarga la gente), asi que cambia sola al publicar
+// otra; VERSION_PORTADA la fija a mano. Sin las dos, la mas alta con partidas.
+// Las demas versiones salen en el desplegable (/api/versiones).
+let portadaFallo = 0;
+async function versionPortada() {
+  if (process.env.VERSION_PORTADA) return process.env.VERSION_PORTADA;
+  // Si GitHub falla, 5 minutos sin volver a preguntar (ultimaVersion solo guarda lo que sale bien).
+  if (descargaConfigurada() && Date.now() - portadaFallo > 5 * 60 * 1000) {
+    try {
+      return (await ultimaVersion()).version;
+    } catch (e) {
+      portadaFallo = Date.now();
+      console.error("versionPortada:", e.message);
+    }
+  }
+  const vs = versionesConPartidas();
+  return vs.length ? vs[0].version : null;
+}
+
+// Versiones con partidas que cuentan para la clasificacion, de la mas nueva a la mas vieja.
+function versionesConPartidas() {
+  const n = new Map();
+  for (const p of partidas.values()) {
+    if (!cuenta(p) || !p.version) continue;
+    const v = String(p.version);
+    n.set(v, (n.get(v) || 0) + 1);
+  }
+  return [...n].map(([version, total]) => ({ version, partidas: total })).sort((a, b) => numVersion(b.version) - numVersion(a.version));
+}
+
+app.get("/api/versiones", asinc(async (_req, res) => {
+  const actual = await versionPortada();
+  const versiones = versionesConPartidas();
+  if (actual && !versiones.some((x) => x.version === actual)) {
+    versiones.push({ version: actual, partidas: 0 });
+    versiones.sort((a, b) => numVersion(b.version) - numVersion(a.version));
+  }
+  res.json({ actual, versiones });
+}));
+
+app.get("/api/leaderboards", asinc(async (req, res) => {
+  const version = String(req.query.version || (await versionPortada()) || "");
+  const lista = [...partidas.values()].filter((p) => !version || String(p.version || "") === version);
+  res.json({ version: version || null, ...leaderboards(lista) });
+}));
 
 app.get("/api/stats", (_req, res) => {
   res.json(totales([...partidas.values()]));
