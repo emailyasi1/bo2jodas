@@ -324,6 +324,29 @@ app.get("/api/descarga", conSesion, async (_req, res) => {
 
 app.get("/api/salud", (_req, res) => res.json({ ok: true, partidas: partidas.size, cuentas: usuarios.total }));
 
+// Prueba de la subida desde el juego (encargos_mod/json_upload_test/03): el mod pide
+// /api/eco/prueba?... con Engine.Url_Load_Jpeg (WinINet del juego, agente "codpcexe").
+// Se guardan en memoria las ultimas 20 (sin IP, solo el principio de la ruta) y se
+// ven en /api/eco/ver. Contesta un JPEG de 1x1, que es lo que espera el juego.
+const JPEG_1X1 = Buffer.from(
+  "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxl" +
+  "Z2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAABAAEDASIAAhEB" +
+  "AxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS" +
+  "0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKz" +
+  "tLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgEC" +
+  "BAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpj" +
+  "ZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6" +
+  "/9oADAMBAAIRAxEAPwDz+iiigD//2Q==", "base64");
+const ecos = [];
+app.get("/api/eco/prueba", (req, res) => {
+  const agente = String(req.get("user-agent") || "").slice(0, 60);
+  ecos.unshift({ hora: new Date().toISOString(), largo: req.originalUrl.length, agente, inicio: req.originalUrl.slice(0, 120) });
+  ecos.length = Math.min(ecos.length, 20);
+  console.log(`eco: ${req.originalUrl.length} caracteres, agente "${agente}"`);
+  res.set("Cache-Control", "no-store").type("image/jpeg").send(JPEG_1X1);
+});
+app.get("/api/eco/ver", (_req, res) => res.set("Cache-Control", "no-store").json(ecos));
+
 // JSON mal formado o fallo al guardar: respuesta JSON en vez de la pagina de error de express.
 app.use("/api", (err, _req, res, _siguiente) => {
   if (err.type === "entity.parse.failed") return res.status(400).json({ error: "JSON mal formado" });
