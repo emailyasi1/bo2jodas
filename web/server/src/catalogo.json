@@ -206,6 +206,11 @@
    "tope": 1,
    "arquetipo": ""
   },
+  "wavegun": {
+   "tipo": "instantanea",
+   "tope": 1,
+   "arquetipo": ""
+  },
   "babygun": {
    "tipo": "instantanea",
    "tope": 1,
@@ -721,6 +726,7 @@
   "vampiro",
   "velocidad",
   "vida",
+  "wavegun",
   "zancada",
   "zeus"
  ],

@@ -3,7 +3,6 @@
     "version": "Web",
     "fecha": "2026-10-28",
     "titulo": "Partidas en revisión",
-    "pruebas": true,
     "cambios": [
       {
         "tipo": "nuevo",
@@ -19,9 +18,8 @@
   },
   {
     "version": "1.10.15",
-    "fecha": "2026-10-28",
-    "titulo": "Brutus de verdad",
-    "pruebas": true,
+    "fecha": "2026-10-29",
+    "titulo": "Brutus, la Bruja y Leroy de verdad",
     "cambios": [
       {
         "tipo": "nuevo",
@@ -67,6 +65,56 @@
         "tipo": "nuevo",
         "que": "Baby Gun (carta legendaria)",
         "texto": "La Baby Gun de Shangri-La llega con una carta LEGENDARIA: encoge a los zombies que pilla durante unos segundos (el doble con The Fractalizer, su mejora). Encogidos tienen 1 de vida y casi no pegan: si andas hacia uno mirándolo, le das una patada y sale volando; si no, lo pisas. Al jefe y a Brutus no los encoge, solo les hace un poco de daño. No se cambia por el arma de ronda. Suena como en Black Ops 1."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Menú de cartas",
+        "texto": "El menú de elegir carta (y los de clase, arquetipo y perder carta) tiene nuevo aspecto: marcos con brillo del color de la rareza, fondo con degradado, el nombre de la carta brillando y un halo detrás de la que tienes marcada, que además sube un poco. Para volver al de antes: set jodas_menu_clasico 1."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Mini jefes: Shrieker y Ladrón de Five",
+        "texto": "Cada 15 minutos sale un mini jefe, aparte de los jefes: el Shrieker de Shangri-La o el Ladrón de Five, al azar. El Shrieker esprinta y, si lo tienes delante, chilla y te deja la vista borrosa unos segundos; al morir explota, revienta la cabeza de los zombies cercanos y el que lo mata elige una carta (con la Baby Gun se encoge y no chilla). El Ladrón va a por el jugador más cercano, le quita el arma de la mano, lo teletransporta a otra parte de Pueblo y huye de él (si lo arrinconas, se defiende); si te acercas sin haber sido robado, te roba también. Al matarlo devuelve las armas, suelta un Max Ammo y cada robado elige una carta. Ninguno hace falta matarlo para pasar de ronda."
+      },
+      {
+        "tipo": "nuevo",
+        "que": "Estadísticas en el TAB",
+        "texto": "Al mantener TAB, debajo del marcador ves tus números reales: vida (con la base sin cartas al lado), regeneración, daño fijo, crítico, daño a la cabeza y cuerpo a cuerpo, suerte, dificultad, velocidad y esprint. Si marcas la fila de un compañero, ves los suyos. Cada uno lo ve solo cuando abre su TAB."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Mesa del Bastón de fuego",
+        "texto": "El Bastón de fuego se construye en la mesa del bar de Pueblo (la que el modo Supervivencia tapaba con una lona), ya no en una mesa junto al Juggernog. Las piezas que recogéis se ven encima. Para construirlo, mantén F unos segundos: martillazos, barra y polvo, como en TranZit. Al acabar, el bastón aparece girando sobre la mesa y se coge con F."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Palanca del ritual del fuego",
+        "texto": "El ritual del Bastón de fuego (los charcos que se encienden en orden) ya no empieza solo al coger el bastón: aparece una palanca como la de la corriente de TranZit. Quien lleve el bastón mantiene F un segundo, la palanca baja, cuenta atrás de 3 y empieza la secuencia. No se puede accionar con un jefe vivo. Si falláis, la secuencia se repite sola, como antes."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Charcos del ritual que se ven",
+        "texto": "Los charcos del Simon dice ya no se enseñan con fuego naranja (no se distinguía de la lava): ahora se encienden con una luz azul y suenan como las antorchas de Origins. Al acertar, luz verde; al fallar, roja. Solo se eligen charcos que se ven desde la palanca y que no estén pegados entre sí. El disparo del bastón cuenta donde impacta de verdad. Al completar la secuencia se apagan y un aviso explica el siguiente paso de la forja."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Vuelven las zombis mujeres",
+        "texto": "Desde que llegó Brutus no salían las zombis mujeres de Pueblo. Ya vuelven: salen los 8 tipos de zombi del mapa, y la Baby Gun también las encoge."
+      },
+      {
+        "tipo": "cambio",
+        "que": "La Bruja de verdad",
+        "texto": "La Bruja ya no es un zombi disfrazado: es el fantasma de Buried, con sus animaciones de aparecer y de drenar, su rastro, sus efectos y su sonido. Hace lo mismo que antes: aparece detrás de alguien, se desvanece y reaparece detrás de otro, te quita el 10 % de los puntos al tocarte y se sacia al segundo toque."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Leroy de verdad",
+        "texto": "Leroy ya no es un zombi disfrazado: es Arthur de Buried, con sus animaciones. Aparece bebiendo, corre a lo loco y cojea a arreones, se come la carta que te roba y a veces se pone a bailar. Cuando ya no le queda nada que robar, se para a comer caramelos. Lo demás sigue igual: una carta por golpe (hasta 3 por jugador) y los cuencos para recuperarlas al matarlo."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Cartas legendarias de armas",
+        "texto": "La Thundergun, la Wave Gun (nueva carta) y la Baby Gun son cartas legendarias: salen cuando te toca una carta legendaria, con las mismas posibilidades que el resto. Si ya llevas una de las tres, no te sale ninguna de las otras dos hasta que la sueltes; a tus compañeros sí, hasta que cojan una."
       }
     ]
   },
@@ -74,7 +122,6 @@
     "version": "1.10.14",
     "fecha": "2026-10-27",
     "titulo": "Who's Who llega a Pueblo",
-    "pruebas": true,
     "cambios": [
       {
         "tipo": "nuevo",

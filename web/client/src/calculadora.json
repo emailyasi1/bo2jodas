@@ -1166,6 +1166,27 @@
    "sufijo": ""
   },
   {
+   "id": "wavegun",
+   "nombre": "Wave Gun",
+   "desc": "Te da las Zap Guns (Wave Gun) de Black Ops 1",
+   "arquetipo": "",
+   "tipo": "instantanea",
+   "firma": false,
+   "requiere": [],
+   "valores": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "tope": 1,
+   "copias": 1,
+   "decimal": 0,
+   "prefijo": "",
+   "sufijo": ""
+  },
+  {
    "id": "babygun",
    "nombre": "Baby Gun",
    "desc": "Te da la Baby Gun de Black Ops 1",

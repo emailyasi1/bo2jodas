@@ -779,6 +779,25 @@
   "copias": 1
  },
  {
+  "id": "wavegun",
+  "nombre": "Wave Gun",
+  "arquetipo": "",
+  "tipo": "instantanea",
+  "firma": false,
+  "prefijo": "",
+  "sufijo": "",
+  "decimal": 0,
+  "tope": 1,
+  "valores": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "copias": 1
+ },
+ {
   "id": "babygun",
   "nombre": "Baby Gun",
   "arquetipo": "",
