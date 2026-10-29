@@ -1,5 +1,17 @@
 [
   {
+    "version": "1.10.16",
+    "fecha": "2026-10-29",
+    "titulo": "Leapers y torretas antes",
+    "cambios": [
+      {
+        "tipo": "cambio",
+        "que": "Manada y Cadena de montaje",
+        "texto": "El 2.º leaper (o torreta) llega con 3 copias y el 3.º con 5, en vez de con 5 y con 10. Lo que da cada copia (radio de caza de los leapers, aguante de las torretas) es el doble que antes: hasta +200 %."
+      }
+    ]
+  },
+  {
     "version": "Web",
     "fecha": "2026-10-28",
     "titulo": "Partidas en revisión",

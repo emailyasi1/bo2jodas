@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.15** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.16** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,10 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.16: leapers y torretas antes
+
+- **Manada y Cadena de montaje**: el 2.º leaper (o torreta) llega con 3 copias y el 3.º con 5 (antes con 5 y con 10). Lo que da cada copia (radio de caza de los leapers, aguante de las torretas) es el doble que antes: hasta +200 %.
 
 ## Novedades de la 1.10.15: Brutus, la Bruja y Leroy de verdad
 
@@ -83,7 +87,7 @@ Antes cada carta se cogía una y otra vez hasta su tope, así que con tiempo tod
 | Buscador de botín | 5 % | 4 % |
 | Una bala basta | 100 % | 60 % (hay que quitar antes el 40 % con el arma) |
 
-- **Manada y Cadena de montaje:** con 5 copias llega el 2.º leaper / torreta y con 10 el 3.º. Además, cada copia da algo según su rareza:
+- **Manada y Cadena de montaje:** con 3 copias llega el 2.º leaper / torreta y con 5 el 3.º (desde la 1.10.16). Además, cada copia da algo según su rareza:
   - Manada: + radio de caza de los leapers.
   - Cadena de montaje: + bajas que aguanta la torreta antes de romperse.
 - **Cartas de equipo** (Monos, Claymores, Semtex, EMP):
@@ -450,7 +454,7 @@ Cada arquetipo tiene **6 cartas** (el Mecánico, 7): las normales y una **firma*
 | Domador | Correa larga | Tus leapers se mueven +% más rápido | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
 | Domador | Collar de púas | Los mordiscos de tus leapers hacen +% | 5 / 8 / 11 / 15 / 20 % | 200 % |
 | Domador | Carne fresca | +vida cada vez que un leaper tuyo mata | 1.25 / 2 / 2.75 / 3.75 / 5 | 50 |
-| Domador | Manada | **Cada copia**: +% radio de caza de tus leapers (a qué distancia ven a un zombie y cuánto se alejan de ti; de serie 260 y 520). **2.º leaper con 5 copias y 3.º con 10** | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Domador | Manada | **Cada copia**: +% radio de caza de tus leapers (a qué distancia ven a un zombie y cuánto se alejan de ti; de serie 260 y 520). **2.º leaper con 3 copias y 3.º con 5** | 5 / 8 / 11 / 15 / 20 % | 200 % |
 | Domador | **Alfa** (firma) | Requiere Collar de púas + Manada. Durante 3 s tras cada baja tuya, tus leapers hacen ×2 y sus mordiscos incendian | — | — |
 | Suertudo | Pata de conejo | +rerolls al cogerla y +1 reroll cada 3 niveles | 0.5 / 0.8 / 1.1 / 1.5 / 2 | 20 |
 | Suertudo | Dados | % de que la carta que cojas valga el doble | 2 / 3.2 / 4.4 / 6 / 8 % | 80 % |
@@ -462,7 +466,7 @@ Cada arquetipo tiene **6 cartas** (el Mecánico, 7): las normales y una **firma*
 | Mecánico | Recarga rápida | Tus torretas recargan en −% de tiempo | 1.75 / 2.8 / 3.85 / 5.25 / 7 % | 70 % |
 | Mecánico | Calibre .50 | +% de daño por bala de tus torretas | 5 / 8 / 11 / 15 / 20 % | 200 % |
 | Mecánico | Rebote | % de que la bala salte al zombie más cercano (4 m) con el 60 % del daño | 2 / 3.2 / 4.4 / 6 / 8 % | 80 % |
-| Mecánico | Cadena de montaje | **Cada copia**: +% bajas que aguantan tus torretas antes de romperse (de serie 100). **2.ª torreta con 5 copias y 3.ª con 10** | 2.5 / 4 / 5.5 / 7.5 / 10 % | 100 % |
+| Mecánico | Cadena de montaje | **Cada copia**: +% bajas que aguantan tus torretas antes de romperse (de serie 100). **2.ª torreta con 3 copias y 3.ª con 5** | 5 / 8 / 11 / 15 / 20 % | 200 % |
 | Mecánico | **Mortero** (firma) | Requiere Calibre .50 + Cadena de montaje. Cada 8 s cada torreta lanza un mortero al zombie con más zombies alrededor (250 % del daño de una bala en 1.6 m) | — | — |
 
 </details>

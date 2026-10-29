@@ -2122,7 +2122,7 @@
   {
    "id": "manada",
    "nombre": "Manada",
-   "desc": "+% radio de caza; 2.o leaper a 5 copias, 3.o a 10",
+   "desc": "+% radio de caza; 2.o leaper a 3 copias, 3.o a 5",
    "arquetipo": "domador",
    "tipo": "normal",
    "firma": false,
@@ -2130,13 +2130,13 @@
     "silbato"
    ],
    "valores": [
-    2.5,
-    4,
-    5.5,
-    7.5,
-    10
+    5,
+    8,
+    11,
+    15,
+    20
    ],
-   "tope": 100,
+   "tope": 200,
    "copias": 10,
    "decimal": 0,
    "prefijo": "+",
@@ -2282,7 +2282,7 @@
   {
    "id": "montaje",
    "nombre": "Cadena de montaje",
-   "desc": "+% aguante; 2.a torreta a 5 copias, 3.a a 10",
+   "desc": "+% aguante; 2.a torreta a 3 copias, 3.a a 5",
    "arquetipo": "mecanico",
    "tipo": "normal",
    "firma": false,
@@ -2290,13 +2290,13 @@
     "herramientas"
    ],
    "valores": [
-    2.5,
-    4,
-    5.5,
-    7.5,
-    10
+    5,
+    8,
+    11,
+    15,
+    20
    ],
-   "tope": 100,
+   "tope": 200,
    "copias": 10,
    "decimal": 0,
    "prefijo": "+",
