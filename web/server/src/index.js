@@ -54,15 +54,34 @@ const TOKENS = cargarTokens(DATA_DIR); // tokens sueltos del administrador (opci
 const usuarios = await Usuarios.crear(almacen);
 
 // ---------------------------------------------------------------- partidas
+// La 1.10.16 y la 1.10.17 se publicaron sin subir level.jodas_version: sus JSON dicen
+// "1.10.15". Se corrige con la hora de subida y la de cada release en GitHub (una
+// partida de la 1.10.15 subida despues de salir la 1.10.17 cuenta como 1.10.17: se
+// acepta, la descarga ya era la nueva). version_mod guarda lo que escribio el mod.
+const VERSIONES_MAL = {
+  "1.10.15": [["1.10.17", "2026-10-30T00:07:34Z"], ["1.10.16", "2026-10-29T22:31:21Z"]],
+};
+function corregirVersion(p, cuando) {
+  const dicho = String(p.version_mod || p.version || "");
+  const real = (VERSIONES_MAL[dicho] || []).find(([, desde]) => Date.parse(cuando) >= Date.parse(desde));
+  if (!real) return;
+  p.version_mod = dicho;
+  p.version = real[0];
+}
+
 const partidas = new Map();
-for (const [, p] of await almacen.todos("run")) if (p && p.id) partidas.set(p.id, p);
+for (const [, p] of await almacen.todos("run")) {
+  if (!p || !p.id) continue;
+  corregirVersion(p, p.recibido || p.fecha);
+  partidas.set(p.id, p);
+}
 console.log(`${partidas.size} partidas y ${usuarios.total} cuentas cargadas (${almacen.nombre})`);
 
 // Huella de los datos clave de una partida (no cuenta lo que anaden el subidor
 // o la web, como la fecha o quien la subio).
 function huella(p) {
   const clave = {
-    version: p.version,
+    version: p.version_mod || p.version, // la del mod, aunque se haya corregido (corregirVersion)
     mapa: p.mapa,
     ronda: p.ronda,
     duracion_s: p.duracion_s,
@@ -174,6 +193,7 @@ async function recibirPartida(cuerpo, subidoPor, claveSubida) {
   // script de subida apunta los 422 para no reintentarlos.
   const { partida: p, error } = limpiar(cuerpo);
   if (error) return { estado: 422, json: { error, rechazada: true } };
+  corregirVersion(p, new Date().toISOString());
   // Resets (ronda < 10) y partidas de prueba (dvars cambiados) se guardan
   // marcadas: salen aparte y no cuentan para clasificaciones ni totales.
   p.categoria = categoria(p);
