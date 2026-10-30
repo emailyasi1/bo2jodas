@@ -1,5 +1,17 @@
 [
   {
+    "version": "Web",
+    "fecha": "2026-10-30",
+    "titulo": "Partidas de la 1.10.16 y 1.10.17 en su versión",
+    "cambios": [
+      {
+        "tipo": "arreglo",
+        "que": "Clasificación de la 1.10.17",
+        "texto": "La 1.10.16 y la 1.10.17 se publicaron diciendo que eran la 1.10.15, así que sus partidas acababan en la clasificación de la 1.10.15 y la de la versión actual salía vacía. La web ya las coloca en su versión según cuándo se subieron, también las que ya estaban subidas."
+      }
+    ]
+  },
+  {
     "version": "1.10.17",
     "fecha": "2026-10-30",
     "titulo": "Leroy ya no se cuela bajo el suelo",
