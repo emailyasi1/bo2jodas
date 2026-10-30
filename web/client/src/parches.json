@@ -1,5 +1,22 @@
 [
   {
+    "version": "1.10.17",
+    "fecha": "2026-10-30",
+    "titulo": "Leroy ya no se cuela bajo el suelo",
+    "cambios": [
+      {
+        "tipo": "arreglo",
+        "que": "Leroy al bajar de un agujero",
+        "texto": "Al bajar de un agujero (el bar, Titan) Leroy a veces aterrizaba debajo del suelo: sus animaciones de salto son las de Buried y en los agujeros de Pueblo acababan más abajo. Ahora, al terminar el salto, se recoloca donde toca."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Leroy bebiendo al aparecer",
+        "texto": "La animación de beber al aparecer no se veía porque sus arreones se la pisaban. Ahora bebe antes de echar a correr, y los arreones esperan mientras come o baila."
+      }
+    ]
+  },
+  {
     "version": "1.10.16",
     "fecha": "2026-10-29",
     "titulo": "Leapers y torretas antes",

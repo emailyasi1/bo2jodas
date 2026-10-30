@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.16** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.17** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,11 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.17: Leroy ya no se cuela bajo el suelo
+
+- **Leroy al bajar de un agujero**: a veces aterrizaba debajo del suelo (sus animaciones de salto son las de Buried). Ahora se recoloca al terminar el salto.
+- **Leroy bebiendo al aparecer**: la animación no se veía porque sus arreones se la pisaban; ahora bebe antes de echar a correr.
 
 ## Novedades de la 1.10.16: leapers y torretas antes
 
