@@ -428,7 +428,7 @@
   },
   "manada": {
    "tipo": "normal",
-   "tope": 100,
+   "tope": 200,
    "arquetipo": "domador"
   },
   "alfa": {
@@ -463,7 +463,7 @@
   },
   "montaje": {
    "tipo": "normal",
-   "tope": 100,
+   "tope": 200,
    "arquetipo": "mecanico"
   },
   "mortero": {

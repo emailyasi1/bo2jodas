@@ -1,5 +1,27 @@
 [
   {
+    "version": "1.10.18",
+    "fecha": "2026-11-01",
+    "titulo": "Adiós a la risa que quitaba todas las armas, y la subida tras reiniciar",
+    "cambios": [
+      {
+        "tipo": "arreglo",
+        "que": "La risa que quitaba armas y puntos",
+        "texto": "Al coger una carta de arma especial justo al empezar una ronda, el anti-trampas del juego podía ver un arma de más y quitarte todas las armas y todos los puntos entre risas. Ahora las armas llegan de una en una, si sobra una se quita al momento sin tocar tus puntos, y el castigo del juego ya no salta nunca."
+      },
+      {
+        "tipo": "cambio",
+        "que": "Wave Gun",
+        "texto": "Ya no se cambia por el arma de ronda al empezar una ronda, como la Thundergun, la Baby Gun y el bastón."
+      },
+      {
+        "tipo": "arreglo",
+        "que": "Subida automática tras reiniciar",
+        "texto": "Después de un fast_restart o de reiniciar desde el menú, la partida nueva vuelve a subirse sola a la web."
+      }
+    ]
+  },
+  {
     "version": "Web",
     "fecha": "2026-10-30",
     "titulo": "Partidas de la 1.10.16 y 1.10.17 en su versión",

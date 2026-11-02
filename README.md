@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.17** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.18** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,12 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.18: adiós a la risa que quitaba todas las armas
+
+- **La risa que te dejaba sin nada**: al coger una carta de arma especial (Baby Gun, Thundergun, Wave Gun) justo al empezar una ronda, el anti-trampas del juego podía ver un arma de más y quitarte todas las armas y todos los puntos entre risas. Ahora las armas llegan de una en una, si sobra una se quita al momento sin tocar tus puntos, y el castigo del juego ya no salta nunca.
+- **Wave Gun**: ya no se cambia por el arma de ronda al empezar una ronda, como la Thundergun, la Baby Gun y el bastón.
+- **Subida automática tras reiniciar**: después de un `fast_restart` o de reiniciar desde el menú, la partida nueva vuelve a subirse sola a la web.
 
 ## Novedades de la 1.10.17: Leroy ya no se cuela bajo el suelo
 
