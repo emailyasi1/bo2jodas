@@ -216,6 +216,26 @@
    "tope": 1,
    "arquetipo": ""
   },
+  "pikachu": {
+   "tipo": "instantanea",
+   "tope": 1,
+   "arquetipo": ""
+  },
+  "ditto": {
+   "tipo": "instantanea",
+   "tope": 1,
+   "arquetipo": ""
+  },
+  "articuno": {
+   "tipo": "instantanea",
+   "tope": 1,
+   "arquetipo": ""
+  },
+  "mew": {
+   "tipo": "instantanea",
+   "tope": 1,
+   "arquetipo": ""
+  },
   "pu_ammo": {
    "tipo": "powerup",
    "tope": 1,
@@ -613,6 +633,7 @@
   "amuleto",
   "arma",
   "armadura",
+  "articuno",
   "babygun",
   "bebida_cherry",
   "blindaje",
@@ -645,6 +666,7 @@
   "critico",
   "dados",
   "danio",
+  "ditto",
   "elites",
   "emp",
   "engranajes",
@@ -676,6 +698,7 @@
   "mejora",
   "melee",
   "mercenario",
+  "mew",
   "midas",
   "monos",
   "montaje",
@@ -687,6 +710,7 @@
   "pap",
   "pararrayos",
   "piedra",
+  "pikachu",
   "pirotecnico",
   "plomo",
   "plutocrata",

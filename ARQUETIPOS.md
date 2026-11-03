@@ -138,7 +138,7 @@ flowchart LR
         correa["Correa larga<br/>+2.5% / +4% / +5.5% / +7.5% / +10%"]
         collar["Collar de puas<br/>+5% / +8% / +11% / +15% / +20%"]
         carne["Carne fresca<br/>+1.25 / +2 / +2.75 / +3.75 / +5"]
-        manada["Manada<br/>+2.5% / +4% / +5.5% / +7.5% / +10%"]
+        manada["Manada<br/>+5% / +8% / +11% / +15% / +20%"]
         alfa["Alfa (firma)<br/>FIRMA (una vez)"]
     end
     subgraph mecanico["Mecanico: Torretas que disparan por ti"]
@@ -147,7 +147,7 @@ flowchart LR
         recargatorreta["Recarga rapida<br/>-1.75% / -2.8% / -3.85% / -5.25% / -7%"]
         calibre50["Calibre .50<br/>+5% / +8% / +11% / +15% / +20%"]
         rebote["Rebote<br/>2% / 3.2% / 4.4% / 6% / 8%"]
-        montaje["Cadena de montaje<br/>+2.5% / +4% / +5.5% / +7.5% / +10%"]
+        montaje["Cadena de montaje<br/>+5% / +8% / +11% / +15% / +20%"]
         mortero["Mortero (firma)<br/>FIRMA (una vez)"]
     end
     subgraph suertudo["Suertudo: Rerolls, dados y cartas mejores"]
@@ -213,8 +213,8 @@ flowchart LR
     mecha["Mecha corta"]
     pirotecnico{{"Pirotecnico (firma)"}}
     EXPLO(["Explosiones: granadas, Mecha corta, Bomberman, Reaccion en cadena, PhD"])
-    BALAS(["Impactos de bala (MOD_RIFLE_BULLET / MOD_PISTOL_BULLET)"])
     FUEGO(["Zombie ardiendo: pierde 4% de su vida maxima por segundo durante 6 s (cada impacto reinicia). El jefe, un cuarto. Al apagarse queda quemado: el Napalm ya no lo contagia"])
+    BALAS(["Impactos de bala (MOD_RIFLE_BULLET / MOD_PISTOL_BULLET)"])
     BALAS -->|"2-8% por impacto (tope 80%)"| fosforo
     fosforo -->|"prende (impacto directo: tambien a quemados)"| FUEGO
     FUEGO -->|"cada segundo, por zombie a menos de 80 u"| napalm
@@ -247,9 +247,9 @@ flowchart LR
     condensador["Condensador"]
     tormenta["Tormenta"]
     tesla{{"Tesla (firma)"}}
-    DISPARO(["Siguiente impacto de bala"])
-    RAYO(["Rayo: dano fijo en % de la vida maxima del zombie (100% o mas = mata; al jefe 15%) y luego se multiplica por tus cartas de dano. Alcance 350 u"])
     RECARGA(["Empezar a recargar"])
+    RAYO(["Rayo: dano fijo en % de la vida maxima del zombie (100% o mas = mata; al jefe 15%) y luego se multiplica por tus cartas de dano. Alcance 350 u"])
+    DISPARO(["Siguiente impacto de bala"])
     BAJA(["Baja tuya (cualquier arma)"])
     BAJA -->|"2-8% (tope 80%)"| pararrayos
     pararrayos -->|"1 rayo del 15% a otro zombie"| RAYO
@@ -316,11 +316,11 @@ flowchart LR
     pulso["Pulso firme"]
     unabala["Una bala basta"]
     elites{{"Cazador de elites (firma)"}}
-    QUIETO2S(["2 s sin disparar"])
     CABEZA(["Tiro a la cabeza (head / helmet; el arma ya multiplica por su locHead)"])
+    MATA(["Muerte instantanea"])
     MIRA(["Apuntando con la mira"])
     ELITE(["Tanque (x4 vida) o jefe"])
-    MATA(["Muerte instantanea"])
+    QUIETO2S(["2 s sin disparar"])
     CABEZA -->|"+8-32% (tope 320%)"| cabeza
     MIRA -->|"apuntando: +2.5-10% (tope 100%)"| punteria
     ELITE -->|"solo tanques: +10-40% (tope 400%)"| cazatanques
@@ -351,10 +351,10 @@ flowchart LR
     coraza["Coraza"]
     masa["Masa"]
     coloso{{"Coloso (firma)"}}
-    QUIETO(["Quieto (velocidad &lt; 10)"])
     CUCHILLO(["Cuchillo"])
-    PASIVA(["Pasiva del arquetipo: vida x2 con Juggernog (500) y escudo de zombies (2250 de dano) en la espalda, nuevo o reparado cada ronda"])
+    QUIETO(["Quieto (velocidad &lt; 10)"])
     GOLPE(["Golpe de zombie recibido (60; tanque x2; jefe x2.5)"])
+    PASIVA(["Pasiva del arquetipo: vida x2 con Juggernog (500) y escudo de zombies (2250 de dano) en la espalda, nuevo o reparado cada ronda"])
     GOLPE -->|"el zombie pierde 12.5-50% de su vida (tope 500%)"| espinas
     CUCHILLO -->|"+40-160% (tope 1600%)"| melee
     QUIETO -->|"golpes -1.5-6% (tope 60%)"| piedra
@@ -386,9 +386,9 @@ flowchart LR
     plutocrata{{"Plutocrata (firma)"}}
     CABEZA(["Baja a la cabeza"])
     PERKS(["Bebidas que llevas"])
-    BAJA(["Baja tuya"])
-    CAJA(["Caja de cartas (2500 x1.17 por tirada)"])
     PUNTOS(["Tus puntos (sin gastar)"])
+    CAJA(["Caja de cartas (2500 x1.17 por tirada)"])
+    BAJA(["Baja tuya"])
     BAJA -->|"+5-20 puntos (tope 200)"| puntos
     CABEZA -->|"+8-32 puntos (tope 320)"| oro
     PUNTOS -->|"+1% dano por cada 1000 puntos, tope 1.25-5% (maximo 50%)"| interes
@@ -420,10 +420,10 @@ flowchart LR
     cinta["Cinta de balas"]
     continuo{{"Fuego continuo (firma)"}}
     CARGADOR(["Cargador del arma de la mano"])
-    RAFAGA(["Disparando seguido (menos de 0.4 s entre tiros)"])
-    BAJA(["Baja tuya (cualquier arma)"])
-    DT(["Double Tap comprado"])
     COMBO10(["Combo 10: 10 bajas seguidas con menos de 2 s entre ellas"])
+    RAFAGA(["Disparando seguido (menos de 0.4 s entre tiros)"])
+    DT(["Double Tap comprado"])
+    BAJA(["Baja tuya (cualquier arma)"])
     cadencia -->|"da Double Tap gratis y +2.5-10% dano (tope 100%); con Double Tap comprado el % se dobla"| DT
     CARGADOR -->|"por debajo del 30%: +5-20% (tope 200%)"| ultimas
     RAFAGA -->|"tras 1 s seguido: +3.75-15% (tope 150%); se pierde al parar 0.5 s"| tambor
@@ -453,10 +453,10 @@ flowchart LR
     zancada["Zancada"]
     estela["Estela"]
     ciclon{{"Ciclon (firma)"}}
-    CERCA3(["3 o mas zombies a menos de 150 u"])
     ESPRINT(["Esprintando"])
     FRENO(["Zombie frenado (velocidad de animacion reducida; no al jefe ni a uno ya frenado por el Paralizador)"])
     BAJA(["Baja tuya"])
+    CERCA3(["3 o mas zombies a menos de 150 u"])
     GOLPE(["Golpe de zombie recibido"])
     BAJA -->|"+1.5-6% velocidad 3 s (tope 60%)"| sed
     GOLPE -->|"te ignoran 0.88%-3.5% (tope 35%)"| escurridizo
@@ -477,7 +477,7 @@ flowchart LR
 | Correa larga | Tus leapers van +% mas rapido | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% | variable |
 | Collar de puas | Mordiscos de tus leapers +% | +5% / +8% / +11% / +15% / +20% | +200% | variable |
 | Carne fresca | Vida por mordisco letal de tus leapers | +1.25 / +2 / +2.75 / +3.75 / +5 | +50 | variable |
-| Manada | +% radio de caza; 2.o leaper a 5 copias, 3.o a 10 | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% | variable |
+| Manada | +% radio de caza; 2.o leaper a 3 copias, 3.o a 5 | +5% / +8% / +11% / +15% / +20% | +200% | variable |
 | **Alfa** | FIRMA: al matar, tus leapers x2 e incendian | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -488,10 +488,10 @@ flowchart LR
     carne["Carne fresca"]
     manada["Manada"]
     alfa{{"Alfa (firma)"}}
-    BAJA(["Baja tuya"])
     LEAPER(["Leaper: mordisco de 1000 (o un tercio de la vida del zombie de la ronda si es mas), no se le puede matar, maximo 3 en total"])
+    BAJA(["Baja tuya"])
     silbato -->|"1 leaper (sin Silbato las demas no hacen nada; si lo pierdes se van todos)"| LEAPER
-    manada -->|"+1 leaper por carta (tope 100)"| LEAPER
+    manada -->|"+1 leaper por carta (tope 200)"| LEAPER
     correa -->|"+2.5-10% velocidad (tope 100%)"| LEAPER
     collar -->|"mordisco +5-20% (tope 200%)"| LEAPER
     LEAPER -->|"mordisco letal: +1.25-5 vida para ti (tope 50)"| carne
@@ -509,7 +509,7 @@ flowchart LR
 | Recarga rapida | Tus torretas recargan en -% de tiempo | -1.75% / -2.8% / -3.85% / -5.25% / -7% | -70% | variable |
 | Calibre .50 | Balas de tus torretas +% dano | +5% / +8% / +11% / +15% / +20% | +200% | variable |
 | Rebote | % de que la bala salte a otro zombie cercano | 2% / 3.2% / 4.4% / 6% / 8% | 80% | variable |
-| Cadena de montaje | +% aguante; 2.a torreta a 5 copias, 3.a a 10 | +2.5% / +4% / +5.5% / +7.5% / +10% | +100% | variable |
+| Cadena de montaje | +% aguante; 2.a torreta a 3 copias, 3.a a 5 | +5% / +8% / +11% / +15% / +20% | +200% | variable |
 | **Mortero** | FIRMA: cada 8 s tus torretas lanzan mortero | FIRMA (una vez) | — | Epica |
 
 ```mermaid
@@ -524,7 +524,7 @@ flowchart LR
     TORRETA(["Torreta: 6% de la vida del zombie de la ronda por bala (minimo 300), cargador de 30, recarga de 4 s, maximo 3 por jugador; sus bajas dan puntos y cuentan x0.75 para subir de nivel, no hace dano a jugadores y los zombies no la atacan"])
     DESGASTE(["A las 100 bajas se rompe: repararla cuesta 2500 (mantener USAR junto a ella)"])
     herramientas -->|"1 torreta (kit en la tecla de accion 1, se coloca como en TranZit; sin esta carta las demas no hacen nada)"| TORRETA
-    montaje -->|"+1 torreta por carta (tope 100, maximo 3)"| TORRETA
+    montaje -->|"+1 torreta por carta (tope 200, maximo 3)"| TORRETA
     engranajes -->|"+2.5-10% velocidad de disparo (tope 100%)"| TORRETA
     recargatorreta -->|"-1.75-7% tiempo de recarga (tope 70%)"| TORRETA
     calibre50 -->|"+5-20% dano por bala (tope 200%)"| TORRETA
@@ -556,8 +556,8 @@ flowchart LR
     jackpot{{"Jackpot (firma)"}}
     RONDA(["Empieza una ronda"])
     REROLL(["Rerolls (3 por partida, Granada)"])
-    BAJA(["Baja tuya"])
     NIVEL(["Subida de nivel (menu de 3 cartas)"])
+    BAJA(["Baja tuya"])
     BAJA -->|"0.1%-0.4% de soltar power-up (tope 4%)"| botin
     conejo -->|"+0.5-2 rerolls al cogerla (tope 20) y +1 cada 3 niveles"| REROLL
     NIVEL -->|"2-8% de que la carta cogida valga el doble (tope 80%; no a firmas ni Silbato)"| dados
@@ -597,6 +597,13 @@ flowchart LR
 | Semtex | equipo | equipo sticky_grenade_zm | +1/ronda / +1/ronda / +1/ronda / +1/ronda / +1/ronda | +1/ronda |
 | Granadas EMP | equipo | equipo emp_grenade_zm | +1/ronda / +1/ronda / +1/ronda / +1/ronda / +1/ronda | +1/ronda |
 | Pack-a-Punch | instantanea | Mejora el arma que llevas en la mano | 0 / 0 / 0 / 0 / 0 | 1 |
+| Thundergun | instantanea | Te da la Thundergun de Black Ops 1 | 0 / 0 / 0 / 0 / 0 | 1 |
+| Wave Gun | instantanea | Te da las Zap Guns (Wave Gun) de Black Ops 1 | 0 / 0 / 0 / 0 / 0 | 1 |
+| Baby Gun | instantanea | Te da la Baby Gun de Black Ops 1 | 0 / 0 / 0 / 0 / 0 | 1 |
+| Pikachu | instantanea | Pokeball: Pikachu pelea hasta hacer 31 bajas | 0 / 0 / 0 / 0 / 0 | 1 |
+| Ditto | instantanea | Ultraball: Ditto copia a un enemigo, 42 bajas | 0 / 0 / 0 / 0 / 0 | 1 |
+| Articuno | instantanea | Superball: Articuno lanza 7 ventiscas | 0 / 0 / 0 / 0 / 0 | 1 |
+| Mew | instantanea | Masterball: Mew lanza 10 rayos psiquicos | 0 / 0 / 0 / 0 / 0 | 1 |
 | Municion maxima | powerup | power-up full_ammo | — | — |
 | Instakill | powerup | power-up insta_kill | — | — |
 | Doble puntos | powerup | power-up double_points | — | — |

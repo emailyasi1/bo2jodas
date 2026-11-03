@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.18** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.19** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,15 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.19: cuatro Pokémon en las cartas, y Leroy ya no se va del mapa
+
+- **Pikachu, Ditto, Articuno y Mew**: cuatro cartas nuevas que te dan su bola (un lanzamiento, en la granada táctica; al lanzarla te vuelven los monos o la EMP que llevabas). Son de un solo uso, como el equipo: **no ocupan hueco**. Cada una sale cuando te toca una carta de su rareza, con las mismas posibilidades que el resto:
+  - **Pikachu** (poco común, Pokeball): Impactrueno en cadena; mata de un golpe hasta la ronda 15. Se va al hacer 31 bajas.
+  - **Ditto** (rara, Ultraball): se transforma en el primer enemigo que ve (zombie, Brutus, Leroy o la Bruja) y la copia anda y pega el doble de rápido; mata de un golpe hasta la ronda 22. Se va al hacer 42 bajas.
+  - **Articuno** (épica, Superball): la ventisca del Bastón de hielo mejorado de Origins, con su daño. Se va tras 7 ventiscas.
+  - **Mew** (legendaria, Masterball): dispara la Wave Gun y los zombies que ve en el rayo mueren siempre; a los jefes les quita el 25 % de su vida. Se va tras 10 disparos.
+- **Leroy ya no se va del mapa**: después de robar una carta, a veces se ponía a bailar o comer y, al volver a perseguir, la animación seguía puesta: corría recto atravesando las paredes del bar y la ronda no acababa. Ahora la animación se corta siempre, no se anima en mitad de un salto y, si un jefe se pierde por lo que sea, vuelve junto a vosotros.
 
 ## Novedades de la 1.10.18: adiós a la risa que quitaba todas las armas
 
@@ -700,6 +709,10 @@ Valores **por copia** (10 copias por carta): común / poco común / rara / épic
 | Thundergun | Legendaria | Te da la Thundergun de Black Ops 1 en la mano: el disparo lanza por los aires a los zombies cercanos y derriba a los lejanos (al jefe y a Brutus solo les hace daño, con su tope). No se cambia por el arma de ronda. Con Pack-a-Punch pasa a ser la Zeus Cannon. Es **legendaria**: sale cuando te toca una carta legendaria, con las mismas posibilidades que el resto, y nunca si ya llevas la Thundergun, la Wave Gun o la Baby Gun (en la mano o guardada). No ocupa hueco. |
 | Wave Gun | Legendaria | Te da las Zap Guns de Black Ops 1 (Wave Gun en modo alternativo) en la mano: sus rayos hinchan y revientan a los zombies. No se cambia por el arma de ronda. Es **legendaria**: sale cuando te toca una carta legendaria, con las mismas posibilidades que el resto, y nunca si ya llevas la Thundergun, la Wave Gun o la Baby Gun (en la mano o guardada). No ocupa hueco. |
 | Baby Gun | Legendaria | Te da la Baby Gun de Black Ops 1 en la mano: encoge unos segundos a los zombies que pilla (el doble con The Fractalizer, su mejora con Pack-a-Punch). Encogidos tienen 1 de vida: si andas hacia uno mirándolo le das una patada y sale volando; si no, lo pisas. Al jefe y a Brutus no los encoge, solo les hace un poco de daño. No se cambia por el arma de ronda. Es **legendaria**: sale cuando te toca una carta legendaria, con las mismas posibilidades que el resto, y nunca si ya llevas la Thundergun, la Wave Gun o la Baby Gun (en la mano o guardada). No ocupa hueco. |
+| Pikachu | Poco común | Te da una **Pokeball** (un lanzamiento, en la granada táctica; al lanzarla te vuelve la que llevabas). Sale Pikachu, persigue a los zombies que ve y les lanza Impactrueno, que salta a 2 más: mata **de un golpe hasta la ronda 15**, de 2 hasta la 20, de 3 hasta la 24 y de 4 hasta la 26. Se va al hacer **31 bajas**. Sale cuando te toca una carta poco común, con las mismas posibilidades que el resto. No ocupa hueco. |
+| Ditto | Rara | Te da una **Ultraball**. Sale Ditto, usa Transformación con el primer enemigo que ve (zombie, Brutus, Leroy o la Bruja) y se convierte en él, con su cara encima. La copia anda y pega **el doble de rápido** que el original y mata **de un golpe hasta la ronda 22** (de 2 hasta la 27, de 3 hasta la 30); copiando a Brutus pega a todos los de alrededor. Se va al hacer **42 bajas**. Sale cuando te toca una carta rara. No ocupa hueco. |
+| Articuno | Épica | Te da una **Superball**. Sale Articuno volando y lanza el disparo cargado del Bastón de hielo mejorado de Origins: una ventisca de 6 s que congela a los zombies y les hace el daño del bastón (3300 por congelación: los rompe hasta la ronda 17, y a los de más vida los vuelve a congelar). Se va tras **7 ventiscas**. Sale cuando te toca una carta épica. No ocupa hueco. |
+| Mew | Legendaria | Te da una **Masterball**. Sale Mew flotando y dispara la Wave Gun desde sus ojos: los zombies que ve en el rayo **mueren siempre** (sin aguante ni cartas que lo eviten) y revientan como con la Wave Gun; a los jefes les quita el 25 % de su vida por disparo. Se va tras **10 disparos**. Sale cuando te toca una carta legendaria. No ocupa hueco. |
 
 ### Míticas
 

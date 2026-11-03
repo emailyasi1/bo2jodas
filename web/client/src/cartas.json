@@ -817,6 +817,82 @@
   "copias": 1
  },
  {
+  "id": "pikachu",
+  "nombre": "Pikachu",
+  "arquetipo": "",
+  "tipo": "instantanea",
+  "firma": false,
+  "prefijo": "",
+  "sufijo": "",
+  "decimal": 0,
+  "tope": 1,
+  "valores": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "copias": 1
+ },
+ {
+  "id": "ditto",
+  "nombre": "Ditto",
+  "arquetipo": "",
+  "tipo": "instantanea",
+  "firma": false,
+  "prefijo": "",
+  "sufijo": "",
+  "decimal": 0,
+  "tope": 1,
+  "valores": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "copias": 1
+ },
+ {
+  "id": "articuno",
+  "nombre": "Articuno",
+  "arquetipo": "",
+  "tipo": "instantanea",
+  "firma": false,
+  "prefijo": "",
+  "sufijo": "",
+  "decimal": 0,
+  "tope": 1,
+  "valores": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "copias": 1
+ },
+ {
+  "id": "mew",
+  "nombre": "Mew",
+  "arquetipo": "",
+  "tipo": "instantanea",
+  "firma": false,
+  "prefijo": "",
+  "sufijo": "",
+  "decimal": 0,
+  "tope": 1,
+  "valores": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "copias": 1
+ },
+ {
   "id": "pu_ammo",
   "nombre": "Municion maxima",
   "arquetipo": "",
