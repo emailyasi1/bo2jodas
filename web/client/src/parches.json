@@ -1,5 +1,17 @@
 [
   {
+    "version": "1.10.20",
+    "fecha": "2026-11-03",
+    "titulo": "La Bruja ya no cierra la partida al morir",
+    "cambios": [
+      {
+        "tipo": "arreglo",
+        "que": "La Bruja al morir",
+        "texto": "Al matar a la Bruja el juego se cerraba con el error \"dobj for xmodel c_zom_zombie_buried_ghost_woman_fb has more than 160 bones\": moría como un zombie y dejaba cadáver, y el cuerpo del fantasma de Buried tiene más huesos de los que admite un cadáver. Ahora muere como en Buried: hace su animación y desaparece, sin cuerpo. Sigue dando sus puntos, su power-up y cuenta para la ronda."
+      }
+    ]
+  },
+  {
     "version": "1.10.19",
     "fecha": "2026-11-03",
     "titulo": "Cuatro Pokémon en las cartas, y Leroy ya no se va del mapa",

@@ -1,6 +1,6 @@
 # bo2jodas
 
-**Versión actual: 1.10.19** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
+**Versión actual: 1.10.20** · Black Ops II Zombies · Plutonium T6 · Pueblo (funciona en el resto de mapas)
 
 ---
 
@@ -16,6 +16,10 @@ Todos los jugadores de la partida necesitan **la misma versión**.
 Diagramas de los arquetipos, sus cartas, la vida de los zombies por ronda y el daño de cada carta: [ARQUETIPOS.md](ARQUETIPOS.md).
 
 ---
+
+## Novedades de la 1.10.20: la Bruja ya no cierra la partida al morir
+
+- Al matar a la Bruja el juego se cerraba con el error "dobj for xmodel c_zom_zombie_buried_ghost_woman_fb has more than 160 bones": moría como un zombie y dejaba cadáver, y el cuerpo del fantasma de Buried tiene más huesos de los que admite un cadáver. Ahora muere como en Buried: hace su animación y desaparece, sin cuerpo. Sigue dando sus puntos, su power-up y cuenta para la ronda.
 
 ## Novedades de la 1.10.19: cuatro Pokémon en las cartas, y Leroy ya no se va del mapa
 
